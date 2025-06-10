@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你之解憂雜貨店 - 魔法服務訂購平台</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --pink-primary: #ff1744;
+      --pink-dark: #c51162;
+      --pink-light: #ff5983;
+      --black-primary: #212121;
+      --black-light: #424242;
+    }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #fdf2f7;
+      color: var(--black-primary);
+    }
+
+    .btn-primary {
+      background-color: var(--pink-primary);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--pink-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--black-primary);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--black-light);
+    }
+
+    .card {
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .header-gradient {
+      background: linear-gradient(135deg, var(--pink-primary) 0%, var(--pink-dark) 100%);
+    }
+
+    .tab-active {
+      border-bottom: 3px solid var(--pink-primary);
+      color: var(--pink-primary);
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .modal {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Custom animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--pink-light);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--pink-primary);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header-gradient shadow-lg">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <h1 class="text-2xl font-bold text-white">你之解憂雜貨店</h1>
+            <span class="ml-3 text-pink-200 text-sm">為您解憂的魔法小店</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <button v-if="view === 'customer'" @click="toggleCart()" class="relative text-white hover:text-pink-200 transition-colors">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m2.6 8L6 6H2m5 7v10a1 1 0 001 1h8a1 1 0 001-1V13m-9 0h10" />
+              </svg>
+              <span v-if="cart.items.length > 0" class="absolute -top-2 -right-2 bg-yellow-400 text-black rounded-full text-xs w-5 h-5 flex items-center justify-center">
+                {{cart.items.length}}
+              </span>
+            </button>
+            <button @click="toggleView()" class="btn-secondary px-4 py-2 rounded-md text-sm">
+              {{view === 'customer' ? '管理員模式' : '顧客模式'}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Customer View -->
+    <main v-if="view === 'customer'" class="flex-grow container mx-auto px-4 py-8">
+      <!-- Category Tabs -->
+      <div class="mb-8 overflow-x-auto whitespace-nowrap pb-2">
+        <div class="inline-flex space-x-2">
+          <button 
+            v-for="(category, index) in categories" 
+            :key="index" 
+            @click="selectCategory(category)"
+            class="px-4 py-2 text-lg font-medium transition-all duration-200"
+            :class="selectedCategory === category ? 'tab-active' : 'text-gray-600 hover:text-pink-500'"
+          >
+            {{category}}
+          </button>
+        </div>
+      </div>
+
+      <!-- Products Section -->
+      <div class="product-grid">
+        <!-- Magic Candles -->
+        <div v-if="selectedCategory === '魔法蠟燭'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">魔法蠟燭</h2>
+          
+          <!-- Seven Day Candles -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">七日星體蠟燭</h3>
+            <p class="text-gray-700 mb-4">美國原裝魔法蠟燭，蠟燭報告解讀及續後配搭。所有七日星體蠟燭儀式會配合魔法油及草藥進行都由資深巫師純手工打造和精心配調創造無限魔力</p>
+            <div class="flex justify-between items-center">
+              <span class="text-pink-600 font-bold">HK$988</span>
+              <button @click="addToCart('七日星體蠟燭', 988)" class="btn-primary px-4 py-2 rounded-md">
+                加入購物車
+              </button>
+            </div>
+          </div>
+          
+          <!-- Lover Candles -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">戀人蠟燭儀式</h3>
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <label class="flex items-center">
+                  <input type="radio" v-model="loverCandle" name="loverCandle" value="紅戀人蠟燭儀式" class="mr-2">
+                  <span>紅戀人蠟燭儀式</span>
+                </label>
+                <span class="text-pink-600">HK$688</span>
+              </div>
+              <div class="flex justify-between items-center mb-2 pl-6">
+                <label class="flex items-center">
+                  <input type="checkbox" v-model="redLoverTie" class="mr-2">
+                  <span>綁紅線</span>
+                </label>
+                <span class="text-pink-600">+HK$12</span>
+              </div>
+              
+              <div class="flex justify-between items-center mb-2">
+                <label class="flex items-center">
+                  <input type="radio" v-model="loverCandle" name="loverCandle" value="玫瑰白戀人蠟燭儀式" class="mr-2">
+                  <span>玫瑰白戀人蠟燭儀式</span>
+                </label>
+                <span class="text-pink-600">HK$688</span>
+              </div>
+              <div class="flex justify-between items-center mb-2 pl-6">
+                <label class="flex items-center">
+                  <input type="checkbox" v-model="whiteLoverTie" class="mr-2">
+                  <span>綁紅線</span>
+                </label>
+                <span class="text-pink-600">+HK$12</span>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button @click="addLoverCandle()" class="btn-primary px-4 py-2 rounded-md">
+                加入購物車
+              </button>
+            </div>
+          </div>
+          
+          <!-- Custom Candles -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">自家款魔法蠟燭</h3>
+            <div class="mb-4">
+              <div class="mb-4">
+                <label class="block mb-2 font-medium">尺寸</label>
+                <div class="flex space-x-4">
+                  <label class="flex items-center">
+                    <input type="radio" v-model="customCandleSize" name="candleSize" value="小" class="mr-2">
+                    <span>小 (HK$95)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" v-model="customCandleSize" name="candleSize" value="中" class="mr-2">
+                    <span>中 (HK$280)</span>
+                  </label>
+                  <label class="flex items-center">
+                    <input type="radio" v-model="customCandleSize" name="candleSize" value="大" class="mr-2">
+                    <span>大 (HK$398)</span>
+                  </label>
+                </div>
+              </div>
+              
+              <div class="mb-4">
+                <label class="block mb-2 font-medium">款式</label>
+                <select v-model="customCandleType" class="w-full p-2 border border-gray-300 rounded-md">
+                  <option value="">請選擇款式</option>
+                  <option value="RETURN TO ME">RETURN TO ME #下一位前度</option>
+                  <option value="BRING BACK MY LOVE">BRING BACK MY LOVE #帶回我的愛人</option>
+                  <option value="COME_TO ME">COME_TO ME #桃花朵朵開</option>
+                  <option value="ADAM AND EVE">ADAM AND EVE #亞當夏娃</option>
+                  <option value="HOLD YOUR MAN">HOLD YOUR MAN #留在我身邊</option>
+                  <option value="MAGNET">MAGNET #吸引力法寶</option>
+                  <option value="HOT SEX">HOT SEX #性愛自修室</option>
+                  <option value="IMPROVE">IMPROVE #愛情推進器</option>
+                  <option value="MISS ME MORE">MISS ME MORE #想見你</option>
+                  <option value="NO ONE BUT ME">NO ONE BUT ME #非你不可</option>
+                  <option value="ATTRACTION">ATTRACTION #萬人迷</option>
+                  <option value="UNBLOCKER">UNBLOCKER #打開心鎖</option>
+                  <option value="CLEANSING">CLEANSING #去去障礙走</option>
+                  <option value="OPEN ROAD">OPEN ROAD #萬能開路資</option>
+                  <option value="HEALING">HEALING #源癒自身</option>
+                  <option value="MONEY RAIN">MONEY RAIN #豐盛金雨</option>
+                  <option value="BETTER BUSINESS">BETTER BUSINESS #工作狂人</option>
+                  <option value="DRAGON BLOOD">DRAGON BLOOD #龍血 (+HK$55)</option>
+                </select>
+              </div>
+              
+              <div v-if="customCandleType" class="mb-4">
+                <h4 class="font-medium mb-1">功效:</h4>
+                <p class="text-sm text-gray-700">{{getCandleEffect(customCandleType)}}</p>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button @click="addCustomCandle()" class="btn-primary px-4 py-2 rounded-md">
+                加入購物車
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Pendulum Frequency -->
+        <div v-if="selectedCategory === '靈擺調頻'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">靈擺調頻</h2>
+          
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">調頻PLAN</h3>
+            <div class="mb-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="3日5項" class="mr-2">
+                    <span>3日5項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$255</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="3日7項" class="mr-2">
+                    <span>3日7項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$333</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="5日5項" class="mr-2">
+                    <span>5日5項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$388</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="5日7項" class="mr-2">
+                    <span>5日7項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$500</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="7日5項" class="mr-2">
+                    <span>7日5項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$555</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="7日7項" class="mr-2">
+                    <span>7日7項</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$688</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="包月5項" class="mr-2">
+                    <span>包月5項 (隔日做一次)</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$1250</span>
+                </label>
+                <label class="flex items-center justify-between p-3 border rounded-md hover:bg-pink-50">
+                  <div class="flex items-center">
+                    <input type="radio" v-model="pendulumPlan" name="pendulumPlan" value="包月7項" class="mr-2">
+                    <span>包月7項 (隔日做一次)</span>
+                  </div>
+                  <span class="text-pink-600 font-medium">HK$1580</span>
+                </label>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <label class="block mb-2 font-medium">調頻類型</label>
+              <select v-model="pendulumType" class="w-full p-2 border border-gray-300 rounded-md">
+                <option value="">請選擇調頻類型</option>
+                <optgroup label="愛情調頻plan">
+                  <option value="暗戀Plan">暗戀Plan</option>
+                  <option value="曖昧Plan">曖昧Plan</option>
+                  <option value="戀愛升溫Plan A">戀愛升溫Plan A</option>
+                  <option value="戀愛升溫Plan B">戀愛升溫Plan B</option>
+                  <option value="戀愛升溫Plan C">戀愛升溫Plan C</option>
+                  <option value="桃花脫單Plan">桃花脫單Plan</option>
+                  <option value="斷聯冷淡Plan A">斷聯冷淡Plan A</option>
+                  <option value="斷聯冷淡Plan B">斷聯冷淡Plan B</option>
+                  <option value="冷戰爭吵Plan A">冷戰爭吵Plan A</option>
+                  <option value="冷戰爭吵Plan B">冷戰爭吵Plan B</option>
+                  <option value="鎖心專一Plan A">鎖心專一Plan A</option>
+                  <option value="鎖心專一Plan B">鎖心專一Plan B</option>
+                  <option value="分手復合Plan A">分手復合Plan A</option>
+                  <option value="分手復合Plan B">分手復合Plan B</option>
+                  <option value="婚姻關係Plan A">婚姻關係Plan A</option>
+                  <option value="婚姻關係Plan B">婚姻關係Plan B</option>
+                  <option value="婚姻關係Plan C">婚姻關係Plan C</option>
+                  <option value="放下過去Move on Plan">放下過去Move on Plan</option>
+                </optgroup>
+                <optgroup label="事業財運調頻">
+                  <option value="財源滾滾Plan">財源滾滾Plan</option>
+                  <option value="尋找工作Plan">尋找工作Plan</option>
+                  <option value="跑數Plan">跑數Plan</option>
+                  <option value="做生意Plan">做生意Plan</option>
+                  <option value="上司關係Plan">上司關係Plan</option>
+                  <option value="上班族Plan">上班族Plan</option>
+                </optgroup>
+                <optgroup label="自身調頻">
+                  <option value="個人情緒">個人情緒</option>
+                  <option value="人際關係">人際關係</option>
+                  <option value="身體健康">身體健康</option>
+                </optgroup>
+              </select>
+            </div>
+            
+            <div class="flex justify-end">
+              <button @click="addPendulum()" class="btn-primary px-4 py-2 rounded-md">
+                加入購物車
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tarot -->
+        <div v-if="selectedCategory === '塔羅占卜'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">塔羅占卜</h2>
+          
+          <!-- Other Services -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">其他服務</h3>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>Yes No Maybe</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$15</span>
+                  <button @click="addToCart('Yes No Maybe 占卜', 15)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>神諭卡建議牌</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$20</span>
+                  <button @click="addToCart('神諭卡建議牌', 20)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>一條問題占卜</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$60</span>
+                  <button @click="addToCart('一條問題占卜', 60)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Online Tarot -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">線上占卜</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div v-for="(item, index) in tarotOnlineItems" :key="'online-'+index" class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>{{item.name}}</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK${{item.price}}</span>
+                  <button @click="addToCart(item.name + ' 線上占卜', item.price)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- In-store Tarot -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">門市占卜</h3>
+            <p class="text-gray-700 mb-4">一個範疇任問30分鐘$250其後每10分鐘加$50</p>
+            <div class="flex justify-end">
+              <button @click="addToCart('門市占卜 (30分鐘)', 250)" class="btn-primary px-4 py-2 rounded-md">
+                加入購物車
+              </button>
+            </div>
+          </div>
+          
+          <!-- Phone Tarot -->
+          <div class="card bg-white p-6 mb-6">
+            <h3 class="text-xl font-bold mb-2">電話占卜</h3>
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>30分鐘</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$200</span>
+                  <button @click="addToCart('電話占卜 (30分鐘)', 200)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>45分鐘</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$280</span>
+                  <button @click="addToCart('電話占卜 (45分鐘)', 280)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>60分鐘</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$350</span>
+                  <button @click="addToCart('電話占卜 (60分鐘)', 350)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Bazi & Ziwei -->
+        <div v-if="selectedCategory === '八字&紫微斗數'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">八字&紫微斗數</h2>
+          
+          <div class="card bg-white p-6 mb-6">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>流年運程</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$688</span>
+                  <button @click="addToCart('流年運程', 688)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>雙人合盤</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$988</span>
+                  <button @click="addToCart('雙人合盤', 988)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Red String -->
+        <div v-if="selectedCategory === '月老紅線'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">月老紅線</h2>
+          
+          <div class="card bg-white p-6 mb-6">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>紅線查詢</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$100</span>
+                  <button @click="addToCart('紅線查詢', 100)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>紅線調頻 (一次)</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$150</span>
+                  <button @click="addToCart('紅線調頻 (一次)', 150)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>紅線調頻 (三次)</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$400</span>
+                  <button @click="addToCart('紅線調頻 (三次)', 400)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Subconscious Reading -->
+        <div v-if="selectedCategory === '潛意識讀心'" class="animate-fadeIn">
+          <h2 class="text-2xl font-bold mb-6 text-center bg-pink-100 py-2 rounded-lg">潛意識讀心</h2>
+          
+          <div class="card bg-white p-6 mb-6">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>一題</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$100</span>
+                  <button @click="addToCart('潛意識讀心 (一題)', 100)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>三題</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$280</span>
+                  <button @click="addToCart('潛意識讀心 (三題)', 280)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+              <div class="flex justify-between items-center p-3 border rounded-md hover:bg-pink-50">
+                <span>五題</span>
+                <div class="flex items-center">
+                  <span class="text-pink-600 font-medium mr-3">HK$450</span>
+                  <button @click="addToCart('潛意識讀心 (五題)', 450)" class="btn-primary px-3 py-1 rounded-md text-sm">
+                    加入購物車
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Admin View -->
+    <main v-if="view === 'admin'" class="flex-grow container mx-auto px-4 py-8">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold mb-6 text-center">管理員後台</h2>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-4">訂單列表</h3>
+          <div v-if="orders.length === 0" class="text-center py-8 text-gray-500">
+            暫無訂單記錄
+          </div>
+          <div v-else class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    訂單編號
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    顧客資料
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    訂單內容
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    總金額
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    付款方式
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    訂單狀態
+                  </th>
+                  <th class="py-3 px-4 border-b border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    操作
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(order, index) in orders" :key="index" class="hover:bg-gray-50">
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    {{order.id}}
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    <div>電話: {{order.phone}}</div>
+                    <div>IG: {{order.instagram}}</div>
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    <div v-for="(item, itemIndex) in order.items" :key="itemIndex" class="mb-1">
+                      {{item.name}} x {{item.quantity}} (HK${{item.price}})
+                    </div>
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200 font-bold">
+                    HK${{order.total}}
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    {{order.paymentMethod}}
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    <span :class="{
+                      'bg-yellow-100 text-yellow-800': order.status === '待處理',
+                      'bg-green-100 text-green-800': order.status === '已完成',
+                      'bg-red-100 text-red-800': order.status === '已取消'
+                    }" class="px-2 py-1 rounded-full text-xs">
+                      {{order.status}}
+                    </span>
+                  </td>
+                  <td class="py-4 px-4 border-b border-gray-200">
+                    <div class="flex space-x-2">
+                      <button @click="updateOrderStatus(index, '已完成')" class="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded text-xs">
+                        完成
+                      </button>
+                      <button @click="updateOrderStatus(index, '已取消')" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">
+                        取消
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <div v-if="showCart" class="fixed inset-0 z-50 overflow-hidden">
+      <div class="absolute inset-0 bg-black bg-opacity-50" @click="toggleCart()"></div>
+      <div class="absolute inset-y-0 right-0 max-w-full flex">
+        <div class="relative w-screen max-w-md">
+          <div class="h-full flex flex-col bg-white shadow-xl overflow-y-auto">
+            <div class="flex-1 py-6 overflow-y-auto px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <h2 class="text-lg font-medium text-gray-900">購物車</h2>
+                <div class="ml-3 h-7 flex items-center">
+                  <button @click="toggleCart()" class="bg-white rounded-md text-gray-400 hover:text-gray-500">
+                    <span class="sr-only">關閉面板</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="mt-8">
+                <div class="flow-root">
+                  <ul role="list" class="-my-6 divide-y divide-gray-200">
+                    <li v-for="(item, index) in cart.items" :key="index" class="py-6 flex">
+                      <div class="flex-1 flex flex-col">
+                        <div>
+                          <div class="flex justify-between text-base font-medium text-gray-900">
+                            <h3>{{item.name}}</h3>
+                            <p class="ml-4">HK${{item.price}}</p>
+                          </div>
+                        </div>
+                        <div class="flex-1 flex items-end justify-between text-sm">
+                          <div class="flex items-center">
+                            <button @click="decreaseQuantity(index)" class="text-gray-500 px-2 py-1 border rounded-l">-</button>
+                            <span class="px-4 py-1 border-t border-b">{{item.quantity}}</span>
+                            <button @click="increaseQuantity(index)" class="text-gray-500 px-2 py-1 border rounded-r">+</button>
+                          </div>
+                          <div class="flex">
+                            <button @click="removeFromCart(index)" class="font-medium text-pink-600 hover:text-pink-500">移除</button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
+              <div class="flex justify-between text-base font-medium text-gray-900">
+                <p>總計</p>
+                <p>HK${{calculateTotal()}}</p>
+              </div>
+              <p class="mt-0.5 text-sm text-gray-500">結帳時計算運費和稅費。</p>
+              <div class="mt-6">
+                <button @click="proceedToCheckout()" class="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-pink-600 hover:bg-pink-700">
+                  結帳
+                </button>
+              </div>
+              <div class="mt-6 flex justify-center text-sm text-center text-gray-500">
+                <p>
+                  或 <button @click="toggleCart()" class="text-pink-600 font-medium hover:text-pink-500">繼續購物<span aria-hidden="true"> &rarr;</span></button>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div v-if="showCheckout" class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">完成訂單</h3>
+            
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                電話號碼
+              </label>
+              <input v-model="checkout.phone" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="phone" type="text" placeholder="請輸入電話號碼">
+            </div>
+            
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2" for="instagram">
+                Instagram 用戶名
+              </label>
+              <input v-model="checkout.instagram" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="instagram" type="text" placeholder="請輸入 Instagram 用戶名">
+            </div>
+            
+            <div class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2">
+                付款方式
+              </label>
+              <div class="mt-2 space-y-2">
+                <label class="inline-flex items-center">
+                  <input type="radio" v-model="checkout.paymentMethod" value="FPS" class="form-radio">
+                  <span class="ml-2">FPS</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" v-model="checkout.paymentMethod" value="PayMe" class="form-radio">
+                  <span class="ml-2">PayMe</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" v-model="checkout.paymentMethod" value="Alipay" class="form-radio">
+                  <span class="ml-2">Alipay</span>
+                </label>
+              </div>
+            </div>
+            
+            <div v-if="checkout.paymentMethod" class="mb-4">
+              <label class="block text-gray-700 text-sm font-bold mb-2">
+                付款截圖
+              </label>
+              <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div class="space-y-1 text-center">
+                  <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <div class="flex text-sm text-gray-600">
+                    <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-pink-600 hover:text-pink-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-pink-500">
+                      <span>上傳文件</span>
+                      <input id="file-upload" name="file-upload" type="file" class="sr-only" @change="handleFileUpload">
+                    </label>
+                    <p class="pl-1">或拖放文件</p>
+                  </div>
+                  <p class="text-xs text-gray-500">
+                    PNG, JPG, GIF 最大 10MB
+                  </p>
+                </div>
+              </div>
+              <div v-if="checkout.paymentProof" class="mt-2 text-sm text-green-600">
+                已上傳: {{checkout.paymentProof.name}}
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h4 class="font-bold text-gray-700 mb-2">訂單摘要</h4>
+              <div class="border-t border-b py-2">
+                <div v-for="(item, index) in cart.items" :key="index" class="flex justify-between py-1">
+                  <span>{{item.name}} x {{item.quantity}}</span>
+                  <span>HK${{item.price * item.quantity}}</span>
+                </div>
+              </div>
+              <div class="flex justify-between font-bold mt-2">
+                <span>總計</span>
+                <span>HK${{calculateTotal()}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button @click="submitOrder()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-pink-600 text-base font-medium text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 sm:ml-3 sm:w-auto sm:text-sm">
+              提交訂單
+            </button>
+            <button @click="showCheckout = false" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+              取消
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div v-if="showOrderSuccess" class="fixed inset-0 z-50 overflow-y-auto">
+      <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+          <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+        </div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div class="sm:flex sm:items-start">
+              <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-green-100 sm:mx-0 sm:h-10 sm:w-10">
+                <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  訂單提交成功！
+                </h3>
+                <div class="mt-2">
+                  <p class="text-sm text-gray-500">
+                    您的訂單已成功提交。訂單編號：{{latestOrderId}}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+            <button @click="closeOrderSuccess()" type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-pink-600 text-base font-medium text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 sm:ml-3 sm:w-auto sm:text-sm">
+              確定
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-6">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-4 md:mb-0">
+            <h2 class="text-xl font-bold">你之解憂雜貨店</h2>
+            <p class="text-gray-400 mt-1">為您解憂的魔法小店</p>
+          </div>
+          <div class="flex space-x-4">
+            <a href="#" class="hover:text-pink-400">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
+            <a href="#" class="hover:text-pink-400">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+              </svg>
+            </a>
+            <a href="#" class="hover:text-pink-400">
+              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="mt-4 text-center text-gray-400 text-sm">
+          &copy; 2023 你之解憂雜貨店. 版權所有.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          view: 'customer',
+          categories: ['魔法蠟燭', '靈擺調頻', '塔羅占卜', '八字&紫微斗數', '月老紅線', '潛意識讀心'],
+          selectedCategory: '魔法蠟燭',
+          
+          // Cart
+          cart: {
+            items: []
+          },
+          showCart: false,
+          showCheckout: false,
+          showOrderSuccess: false,
+          latestOrderId: '',
+          
+          // Customer info
+          checkout: {
+            phone: '',
+            instagram: '',
+            paymentMethod: '',
+            paymentProof: null
+          },
+          
+          // Product selections
+          loverCandle: '',
+          redLoverTie: false,
+          whiteLoverTie: false,
+          customCandleSize: '',
+          customCandleType: '',
+          pendulumPlan: '',
+          pendulumType: '',
+          
+          // Tarot data
+          tarotOnlineItems: [
+            { name: '戀愛全面運程', price: 120 },
+            { name: '感情現況', price: 80 },
+            { name: '是否喜歡我', price: 80 },
+            { name: '複合機會', price: 80 },
+            { name: '未來發展', price: 80 },
+            { name: '財運事業', price: 80 },
+            { name: '學業考試', price: 80 },
+            { name: '人際關係', price: 80 },
+            { name: '身心健康', price: 80 },
+            { name: '未來半年運程', price: 120 },
+            { name: '未來一年運程', price: 200 }
+          ],
+          
+          // Orders (for admin)
+          orders: []
+        }
+      },
+      
+      methods: {
+        toggleView() {
+          this.view = this.view === 'customer' ? 'admin' : 'customer';
+        },
+        
+        selectCategory(category) {
+          this.selectedCategory = category;
+        },
+        
+        toggleCart() {
+          this.showCart = !this.showCart;
+        },
+        
+        addToCart(name, price) {
+          const existingItem = this.cart.items.find(item => item.name === name);
+          if (existingItem) {
+            existingItem.quantity++;
+          } else {
+            this.cart.items.push({
+              name: name,
+              price: price,
+              quantity: 1
+            });
+          }
+        },
+        
+        addLoverCandle() {
+          if (!this.loverCandle) {
+            alert('請選擇戀人蠟燭類型');
+            return;
+          }
+          
+          let price = 688;
+          let name = this.loverCandle;
+          
+          if (this.loverCandle === '紅戀人蠟燭儀式' && this.redLoverTie) {
+            price += 12;
+            name += ' + 綁紅線';
+          }
+          
+          if (this.loverCandle === '玫瑰白戀人蠟燭儀式' && this.whiteLoverTie) {
+            price += 12;
+            name += ' + 綁紅線';
+          }
+          
+          this.addToCart(name, price);
+          this.resetLoverCandle();
+        },
+        
+        resetLoverCandle() {
+          this.loverCandle = '';
+          this.redLoverTie = false;
+          this.whiteLoverTie = false;
+        },
+        
+        addCustomCandle() {
+          if (!this.customCandleSize || !this.customCandleType) {
+            alert('請選擇蠟燭尺寸和款式');
+            return;
+          }
+          
+          let price = 0;
+          switch(this.customCandleSize) {
+            case '小': price = 95; break;
+            case '中': price = 280; break;
+            case '大': price = 398; break;
+          }
+          
+          if (this.customCandleType === 'DRAGON BLOOD') {
+            price += 55;
+          }
+          
+          const name = `自家款魔法蠟燭 (${this.customCandleSize}) - ${this.customCandleType}`;
+          this.addToCart(name, price);
+          this.resetCustomCandle();
+        },
+        
+        resetCustomCandle() {
+          this.customCandleSize = '';
+          this.customCandleType = '';
+        },
+        
+        addPendulum() {
+          if (!this.pendulumPlan || !this.pendulumType) {
+            alert('請選擇調頻計劃和類型');
+            return;
+          }
+          
+          let price = 0;
+          switch(this.pendulumPlan) {
+            case '3日5項': price = 255; break;
+            case '3日7項': price = 333; break;
+            case '5日5項': price = 388; break;
+            case '5日7項': price = 500; break;
+            case '7日5項': price = 555; break;
+            case '7日7項': price = 688; break;
+            case '包月5項': price = 1250; break;
+            case '包月7項': price = 1580; break;
+          }
+          
+          const name = `靈擺調頻 ${this.pendulumPlan} - ${this.pendulumType}`;
+          this.addToCart(name, price);
+          this.resetPendulum();
+        },
+        
+        resetPendulum() {
+          this.pendulumPlan = '';
+          this.pendulumType = '';
+        },
+        
+        getCandleEffect(type) {
+          const effects = {
+            'RETURN TO ME': '讓前度回心轉意，重新燃起對你的愛意',
+            'BRING BACK MY LOVE': '召回失去的愛人，修復破裂的感情',
+            'COME_TO ME': '增強個人魅力，吸引理想對象',
+            'ADAM AND EVE': '加強兩人之間的親密連結與愛情',
+            'HOLD YOUR MAN': '讓伴侶更加專一，不被外界誘惑',
+            'MAGNET': '如磁鐵般吸引心儀對象的注意',
+            'HOT SEX': '增進情侶間的親密關係與激情',
+            'IMPROVE': '改善現有感情關係，讓愛情更進一步',
+            'MISS ME MORE': '讓對方更加思念你，無法忘懷',
+            'NO ONE BUT ME': '讓對方眼中只有你，排除其他競爭者',
+            'ATTRACTION': '大幅提升個人魅力，成為眾人焦點',
+            'UNBLOCKER': '移除感情路上的障礙與阻礙',
+            'CLEANSING': '清除負能量，淨化感情環境',
+            'OPEN ROAD': '打開機會之門，創造各種可能性',
+            'HEALING': '療癒內心創傷，恢復自信與愛的能力',
+            'MONEY RAIN': '招財進寶，帶來豐盛的財富',
+            'BETTER BUSINESS': '提升工作運勢，事業蒸蒸日上',
+            'DRAGON BLOOD': '龍血加持，大幅增強蠟燭威力'
+          };
+          return effects[type] || '';
+        },
+        
+        increaseQuantity(index) {
+          this.cart.items[index].quantity++;
+        },
+        
+        decreaseQuantity(index) {
+          if (this.cart.items[index].quantity > 1) {
+            this.cart.items[index].quantity--;
+          }
+        },
+        
+        removeFromCart(index) {
+          this.cart.items.splice(index, 1);
+        },
+        
+        calculateTotal() {
+          return this.cart.items.reduce((total, item) => {
+            return total + (item.price * item.quantity);
+          }, 0);
+        },
+        
+        proceedToCheckout() {
+          if (this.cart.items.length === 0) {
+            alert('購物車是空的');
+            return;
+          }
+          this.showCart = false;
+          this.showCheckout = true;
+        },
+        
+        handleFileUpload(event) {
+          this.checkout.paymentProof = event.target.files[0];
+        },
+        
+        submitOrder() {
+          if (!this.checkout.phone || !this.checkout.instagram || !this.checkout.paymentMethod || !this.checkout.paymentProof) {
+            alert('請填寫所有必要資訊');
+            return;
+          }
+          
+          const orderId = 'ORDER' + Date.now();
+          const order = {
+            id: orderId,
+            phone: this.checkout.phone,
+            instagram: this.checkout.instagram,
+            paymentMethod: this.checkout.paymentMethod,
+            paymentProof: this.checkout.paymentProof.name,
+            items: [...this.cart.items],
+            total: this.calculateTotal(),
+            status: '待處理',
+            timestamp: new Date().toLocaleString()
+          };
+          
+          this.orders.push(order);
+          this.latestOrderId = orderId;
+          
+          // Reset
+          this.cart.items = [];
+          this.checkout = {
+            phone: '',
+            instagram: '',
+            paymentMethod: '',
+            paymentProof: null
+          };
+          
+          this.showCheckout = false;
+          this.showOrderSuccess = true;
+        },
+        
+        closeOrderSuccess() {
+          this.showOrderSuccess = false;
+        },
+        
+        updateOrderStatus(index, status) {
+          this.orders[index].status = status;
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
