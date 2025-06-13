@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<!-- saved from url=(0140)https://bdgnq3rx5dvzkkhh.canva-hosted-embed.com/codelet/AAEAEGJkZ25xM3J4NWR2emtraGgAAAAAAZdfpoBIPlqaxB68Xvm63n9YyMldwpOUZbRgwhvLAgHfCNoX0bw/ -->
+<html lang="zh-HK"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你之解憂雜貨店 - 價格計算器</title>
+    <script src="./saved_resource"></script>
+    <link href="./css2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #0f0f1a;
+            color: #e0e0ff;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(90, 20, 120, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 80% 30%, rgba(30, 60, 190, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 40% 70%, rgba(180, 60, 120, 0.2) 0%, transparent 30%);
+        }
+        .magical-border {
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        .magical-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff3bff, #5c24ff, #00b8ff, #ff3bff);
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: borderGlow 6s ease infinite;
+            opacity: 0.5;
+            border-radius: inherit;
+        }
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .tab-active {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid #a855f7;
+        }
+        .service-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        .sparkle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: white;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .candle-icon {
+            filter: drop-shadow(0 0 3px rgba(255, 200, 100, 0.7));
+        }
+        .tarot-icon {
+            filter: drop-shadow(0 0 3px rgba(100, 200, 255, 0.7));
+        }
+        .pendulum-icon {
+            filter: drop-shadow(0 0 3px rgba(255, 100, 255, 0.7));
+        }
+        .astrology-icon {
+            filter: drop-shadow(0 0 3px rgba(255, 255, 100, 0.7));
+        }
+        .redstring-icon {
+            filter: drop-shadow(0 0 3px rgba(255, 100, 100, 0.7));
+        }
+        .subconscious-icon {
+            filter: drop-shadow(0 0 3px rgba(100, 255, 200, 0.7));
+        }
+        select, input {
+            background-color: rgba(30, 30, 50, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        select:focus, input:focus {
+            border-color: #a855f7;
+            outline: none;
+        }
+        .quantity-btn {
+            transition: all 0.2s;
+        }
+        .quantity-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+        .candle-style-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .candle-style-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(168, 85, 247, 0.3);
+        }
+        .candle-style-item.selected {
+            border-color: #a855f7;
+            background-color: rgba(168, 85, 247, 0.2);
+        }
+        .tooltip {
+            position: relative;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(30, 30, 50, 0.95);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mr-1{margin-right:0.25rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-3{margin-top:0.75rem}.mb-3{margin-bottom:0.75rem}.ml-3{margin-left:0.75rem}.mt-6{margin-top:1.5rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-5{height:1.25rem}.max-h-80{max-height:20rem}.max-h-60{max-height:15rem}.min-h-screen{min-height:100vh}.w-5{width:1.25rem}.w-full{width:100%}.w-16{width:4rem}.w-20{width:5rem}.max-w-4xl{max-width:56rem}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-3{gap:0.75rem}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.whitespace-nowrap{white-space:nowrap}.rounded{border-radius:0.25rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.rounded-t-lg{border-top-left-radius:0.5rem;border-top-right-radius:0.5rem}.rounded-l-lg{border-top-left-radius:0.5rem;border-bottom-left-radius:0.5rem}.rounded-r-lg{border-top-right-radius:0.5rem;border-bottom-right-radius:0.5rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-indigo-800\/50{border-color:rgb(55 48 163 / 0.5)}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252 / var(--tw-border-opacity, 1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247 / var(--tw-border-opacity, 1))}.bg-indigo-900{--tw-bg-opacity:1;background-color:rgb(49 46 129 / var(--tw-bg-opacity, 1))}.bg-indigo-900\/20{background-color:rgb(49 46 129 / 0.2)}.bg-purple-800\/50{background-color:rgb(107 33 168 / 0.5)}.bg-transparent{background-color:transparent}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-gray-900\/90{--tw-gradient-from:rgb(17 24 39 / 0.9) var(--tw-gradient-from-position);--tw-gradient-to:rgb(17 24 39 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-400{--tw-gradient-from:#c084fc var(--tw-gradient-from-position);--tw-gradient-to:rgb(192 132 252 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-600{--tw-gradient-from:#9333ea var(--tw-gradient-from-position);--tw-gradient-to:rgb(147 51 234 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-purple-900\/50{--tw-gradient-from:rgb(88 28 135 / 0.5) var(--tw-gradient-from-position);--tw-gradient-to:rgb(88 28 135 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-pink-300{--tw-gradient-to:rgb(249 168 212 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #f9a8d4 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-indigo-400{--tw-gradient-to:#818cf8 var(--tw-gradient-to-position)}.to-indigo-900\/40{--tw-gradient-to:rgb(49 46 129 / 0.4) var(--tw-gradient-to-position)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-indigo-900\/50{--tw-gradient-to:rgb(49 46 129 / 0.5) var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-2{padding:0.5rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pb-1{padding-bottom:0.25rem}.pr-1{padding-right:0.25rem}.text-center{text-align:center}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-2xl{font-size:1.5rem;line-height:2rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.italic{font-style:italic}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255 / var(--tw-text-opacity, 1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-purple-300\/70{color:rgb(216 180 254 / 0.7)}.opacity-80{opacity:0.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:from-purple-500:hover{--tw-gradient-from:#a855f7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(168 85 247 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.hover\:to-indigo-500:hover{--tw-gradient-to:#6366f1 var(--tw-gradient-to-position)}.hover\:shadow-purple-500\/30:hover{--tw-shadow-color:rgb(168 85 247 / 0.3);--tw-shadow:var(--tw-shadow-colored)}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:p-6{padding:1.5rem}.md\:p-8{padding:2rem}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}}</style></head>
+<body class="min-h-screen p-4 md:p-6">
+    <div class="max-w-4xl mx-auto">
+        <!-- 標題 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-300 to-indigo-400 mb-2">你之解憂雜貨店</h1>
+            <p class="text-lg text-purple-200 opacity-80">尋找心靈平靜，計算您的專屬服務</p>
+        </div>
+
+        <!-- 主要計算器卡片 -->
+        <div class="magical-border rounded-xl bg-gradient-to-br from-gray-900/90 to-indigo-900/40 backdrop-blur-sm p-5 md:p-8 shadow-2xl">
+            <!-- 服務類別選項卡 -->
+            <div class="flex overflow-x-auto mb-6 pb-1 scrollbar-hide">
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap mr-1 transition-all flex items-center tab-active" data-category="candles">
+                    <span class="candle-icon mr-2">🕯️</span>魔法蠟燭
+                </button>
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap mr-1 transition-all flex items-center" data-category="pendulum">
+                    <span class="pendulum-icon mr-2">🔮</span>靈擺調頻
+                </button>
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap mr-1 transition-all flex items-center" data-category="tarot">
+                    <span class="tarot-icon mr-2">🃏</span>塔羅占卜
+                </button>
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap mr-1 transition-all flex items-center" data-category="astrology">
+                    <span class="astrology-icon mr-2">⭐</span>八字紫微
+                </button>
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap mr-1 transition-all flex items-center" data-category="redstring">
+                    <span class="redstring-icon mr-2">🧵</span>月老紅線
+                </button>
+                <button class="tab-btn px-4 py-2 rounded-t-lg whitespace-nowrap transition-all flex items-center" data-category="subconscious">
+                    <span class="subconscious-icon mr-2">🧠</span>潛意識讀心
+                </button>
+            </div>
+
+            <!-- 服務選擇區域 -->
+            <div class="mb-6">
+                <div class="service-container" id="candles-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">蠟燭類型</label>
+                        <select id="candle-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇蠟燭類型</option>
+                            <option value="seven-day">七日星體蠟燭</option>
+                            <option value="herb-large">意念草藥蠟燭 (大)</option>
+                            <option value="herb-small">意念草藥蠟燭 (小)</option>
+                            <option value="lover">戀人蠟燭儀式</option>
+                            <option value="house-large">自家款魔法蠟燭 (大)</option>
+                            <option value="house-medium">自家款魔法蠟燭 (中)</option>
+                            <option value="house-small">自家款魔法蠟燭 (小)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4 hidden" id="herb-large-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">草藥蠟燭類型 (大)</label>
+                        <select id="herb-large-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="love-enchantment">Love enchantment</option>
+                            <option value="attraction-love">Attraction love</option>
+                            <option value="soulmate">Soulmate</option>
+                            <option value="success">Success</option>
+                            <option value="energy">Energy and will</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4 hidden" id="herb-small-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">草藥蠟燭類型 (小)</label>
+                        <select id="herb-small-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="love">Love</option>
+                            <option value="cleansing">Cleansing</option>
+                            <option value="money">Money</option>
+                            <option value="miracle">顯化奇蹟</option>
+                            <option value="motivation">Motivation</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4 hidden" id="lover-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">戀人蠟燭類型</label>
+                        <select id="lover-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="red">紅戀人蠟燭儀式</option>
+                            <option value="white">玫瑰白戀人蠟燭儀式</option>
+                        </select>
+                        <div class="mt-3 flex items-center">
+                            <input type="checkbox" id="red-string-addon" class="mr-2 h-5 w-5 rounded bg-indigo-900 border-purple-400">
+                            <label for="red-string-addon" class="text-sm text-purple-200">加購綁紅線 (+$12)</label>
+                        </div>
+                    </div>
+
+                    <!-- 自家款魔法蠟燭款式選擇 -->
+                    <div class="mb-4" id="house-candle-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">選擇蠟燭款式</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 max-h-80 overflow-y-auto pr-1">
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="return-to-me">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">RETURN TO ME</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#下一位前度</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">適合復合&amp;修復關係，鎖住對方的心&amp;牽起紅線</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">適合復合&amp;修復關係<br>鎖住對方的心&amp;牽起紅線</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="bring-back-my-love">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">BRING BACK MY LOVE</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#帶回我的愛人</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">讓前任想起你從而回到你身邊，你們的愛情得以繼續發展</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">讓前任想起你從而回到你身邊<br>你們的愛情得以繼續發展</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="come-to-me">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">COME TO ME</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#桃花朵朵開</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">提升桃花運&amp;拉進關係，吸引姻緣/有質素的感情關係</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">提升桃花運&amp;拉進關係<br>吸引姻緣/有質素的感情關係</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="adam-and-eve">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">ADAM AND EVE</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#亞當夏娃</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">保持戀愛熱度&amp;增加情侶連結，讓二人關係日益穩固</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">保持戀愛熱度&amp;增加情侶連結<br>讓二人關係日益穩固</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="hold-your-man">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">HOLD YOUR MAN</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#留在我身邊</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">可以留住你所喜歡的人，讓對方更堅定的愛你</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">可以留住你所喜歡的人<br>讓對方更堅定的愛你</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="magnet">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">MAGNET</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#吸引力法寶</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">令對方主動接近你，使處於冷戰關係僵硬和好如初</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">令對方主動接近你<br>使處於冷戰關係僵硬和好如初</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="hot-sex">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">HOT SEX</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#性愛自修室</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">令對方對你增加激情和渴望，增加雙方性生活契合度</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">令對方對你增加激情和渴望<br>增加雙方性生活契合度</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="improve">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">IMPROVE</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#愛情推進器</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">提升和改善雙方關係，促進溝通&amp;促使和好如初</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">提升和改善雙方關係<br>促進溝通&amp;促使和好如初</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="miss-me-more">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">MISS ME MORE</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#想見你</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">讓對方時常想念你&amp;夢見你，讓對方回味與你的甜蜜回憶</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">讓對方時常想念你&amp;夢見你<br>讓對方回味與你的甜蜜回憶</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="no-one-but-me">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">NO ONE BUT ME</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#非你不可</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">令出軌的愛人回到自己身邊，只對你一心一意&amp;願意安定下來</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">令出軌的愛人回到自己身邊<br>只對你一心一意&amp;願意安定下來</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="attraction">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">ATTRACTION</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#萬人迷</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">有助於讓你吸引到你所喜歡的人，讓別人對你產生好感</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">有助於讓你吸引到你所喜歡的人<br>*不太熟悉的階段或陌生的人*<br>讓別人對你產生好感（不限愛情）</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="unblocker">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">UNBLOCKER</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#打開心鎖</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">打開你與對方的心結，解除封鎖</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">*如果對方封鎖你就燒UNBLOCKER*<br>打開你與對方的心結 解除封鎖</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="cleansing">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">CLEANSING</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#去去障礙走</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">消除雙方的負能量&amp;障礙物，令關係更加融洽</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">消除雙方的負能量&amp;障礙物<br>令關係更加融洽</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="open-road">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">OPEN ROAD</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#萬能開路資</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">萬能為你清理路上障礙，為你打開新的道路 走出瓶頸</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">萬能為你清理路上障礙<br>為你打開新的道路 走出瓶頸</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="healing">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">HEALING</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#源癒自身</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">緩解焦慮 增加正能量，可以加快療癒 讓早日康復</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">緩解焦慮 增加正能量<br>可以加快療癒 讓早日康復<br>*當你感到疲倦和虚弱的時候*</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="money-rain">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">MONEY RAIN</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#豐盛金雨</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">解決財務問题，吸引到更多的金錢和財富</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">解決財務問题<br>吸引到更多的金錢和財富<br>讓豐盛不斷接近你形成財富氣場</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip" data-style="better-business">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">BETTER BUSINESS</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#工作狂人</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">提升事業運&amp;令你在事業上成功，提升業績 招財</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">提升事業運&amp;令你在事業上成功"上班族*<br>提升業績 招財*跑數&amp;自僱人士*<br>給店鋪吸引到更多的客戶生意和金錢</p>
+                                </div>
+                            </div>
+                            
+                            <div class="candle-style-item p-3 rounded-lg border border-indigo-800/50 bg-indigo-900/20 tooltip selected" data-style="dragon-blood">
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-medium text-white">DRAGON BLOOD</h4>
+                                    <span class="text-xs bg-purple-800/50 px-2 py-0.5 rounded-full text-purple-200">#龍血 (+$55)</span>
+                                </div>
+                                <p class="text-xs text-purple-300 mt-1">提升自身勇氣，讓人果斷克服困難，增加好運</p>
+                                <div class="tooltip-text">
+                                    <p class="text-xs">提升自身勇氣<br>讓人果斷克服困難<br>增加（愛情/事業）好運<br>抵抗外來惡煞</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-container hidden" id="pendulum-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">調頻計劃</label>
+                        <select id="pendulum-plan" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇調頻計劃</option>
+                            <option value="3d5i">3日5項 ($255)</option>
+                            <option value="3d7i">3日7項 ($333)</option>
+                            <option value="5d5i">5日5項 ($388)</option>
+                            <option value="5d7i">5日7項 ($500)</option>
+                            <option value="7d5i">7日5項 ($555)</option>
+                            <option value="7d7i">7日7項 ($688)</option>
+                            <option value="m5i">包月5項 ($1250)</option>
+                            <option value="m7i">包月7項 ($1580)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">調頻類型</label>
+                        <select id="pendulum-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇調頻類型</option>
+                            <optgroup label="愛情調頻plan">
+                                <option value="crush">暗戀Plan</option>
+                                <option value="ambiguous">曖昧Plan</option>
+                                <option value="love-a">戀愛升溫Plan A</option>
+                                <option value="love-b">戀愛升溫Plan B</option>
+                                <option value="love-c">戀愛升溫Plan C</option>
+                                <option value="single">桃花脫單Plan</option>
+                                <option value="cold-a">斷聯冷淡Plan A</option>
+                                <option value="cold-b">斷聯冷淡Plan B</option>
+                                <option value="fight-a">冷戰爭吵Plan A</option>
+                                <option value="fight-b">冷戰爭吵Plan B</option>
+                                <option value="lock-a">鎖心專一Plan A</option>
+                                <option value="lock-b">鎖心專一Plan B</option>
+                                <option value="back-a">分手復合Plan A</option>
+                                <option value="back-b">分手復合Plan B</option>
+                                <option value="marriage-a">婚姻關係Plan A</option>
+                                <option value="marriage-b">婚姻關係Plan B</option>
+                                <option value="marriage-c">婚姻關係Plan C</option>
+                                <option value="moveon">放下過去Move on Plan</option>
+                            </optgroup>
+                            <optgroup label="事業財運調頻">
+                                <option value="wealth">財源滾滾Plan</option>
+                                <option value="job-search">尋找工作Plan</option>
+                                <option value="sales">跑數Plan</option>
+                                <option value="business">做生意Plan</option>
+                                <option value="boss">上司關係Plan</option>
+                                <option value="employee">上班族Plan</option>
+                            </optgroup>
+                            <optgroup label="自身調頻">
+                                <option value="emotion">個人情緒</option>
+                                <option value="relationship">人際關係</option>
+                                <option value="health">身體健康</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="service-container hidden" id="tarot-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">塔羅服務類型</label>
+                        <select id="tarot-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇塔羅服務</option>
+                            <optgroup label="其他服務">
+                                <option value="yes-no">Yes No Maybe ($15)</option>
+                                <option value="oracle">神諭卡建議牌 ($20)</option>
+                                <option value="one-q">一條問題占卜 ($60)</option>
+                            </optgroup>
+                            <optgroup label="線上占卜">
+                                <option value="online">線上占卜 ($200)</option>
+                                <option value="study">學業plan ($100)</option>
+                            </optgroup>
+                            <optgroup label="門市占卜">
+                                <option value="store">門市占卜 (30分鐘$250)</option>
+                            </optgroup>
+                            <optgroup label="電話占卜">
+                                <option value="phone-30">電話占卜 30分鐘 ($200)</option>
+                                <option value="phone-45">電話占卜 45分鐘 ($280)</option>
+                                <option value="phone-60">電話占卜 60分鐘 ($350)</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="mb-4 hidden" id="online-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">線上占卜類型</label>
+                        <select id="online-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="single">脫單plan</option>
+                            <option value="crush">暗戀曖昧plan</option>
+                            <option value="relationship">有對象plan</option>
+                            <option value="cold">斷聯冷淡plan</option>
+                            <option value="back">分手復合plan</option>
+                            <option value="love-choice">愛情選擇plan</option>
+                            <option value="work-chance">工作機會plan</option>
+                            <option value="job-search">求職plan</option>
+                            <option value="job-change">轉工打算plan</option>
+                            <option value="business">生意發展plan</option>
+                            <option value="startup">創業打算plan</option>
+                            <option value="work-choice">工作選擇plan</option>
+                            <option value="wealth">財運plan</option>
+                            <option value="relationship">人際關係plan</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4 hidden" id="store-options">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">額外時間 (每10分鐘 +$50)</label>
+                        <div class="flex items-center">
+                            <button class="quantity-btn px-3 py-1 rounded-l-lg border border-purple-500 text-purple-300" id="store-time-minus">-</button>
+                            <input type="number" id="store-extra-time" class="w-16 text-center py-1 border-t border-b border-purple-500 bg-transparent text-white" value="0" min="0" max="6">
+                            <button class="quantity-btn px-3 py-1 rounded-r-lg border border-purple-500 text-purple-300" id="store-time-plus">+</button>
+                            <span class="ml-3 text-sm text-purple-200">額外 <span id="store-time-display">0</span> 分鐘</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-container hidden" id="astrology-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">八字&amp;紫微斗數服務</label>
+                        <select id="astrology-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇服務</option>
+                            <option value="yearly">流年運程 ($688)</option>
+                            <option value="couple">雙人合盤 ($988)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="service-container hidden" id="redstring-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">月老紅線服務</label>
+                        <select id="redstring-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇服務</option>
+                            <option value="check">紅線查詢 ($100)</option>
+                            <option value="tune-once">紅線調頻 一次 ($150)</option>
+                            <option value="tune-three">紅線調頻 三次 ($400)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="service-container hidden" id="subconscious-container">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-purple-300 mb-2">潛意識讀心</label>
+                        <select id="subconscious-type" class="w-full px-4 py-2 rounded-lg text-white">
+                            <option value="">請選擇服務</option>
+                            <option value="one">一題 ($100)</option>
+                            <option value="three">三題 ($280)</option>
+                            <option value="five">五題 ($450)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 數量選擇 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-purple-300 mb-2">數量</label>
+                <div class="flex items-center">
+                    <button class="quantity-btn px-4 py-2 rounded-l-lg border border-purple-500 text-purple-300" id="quantity-minus">-</button>
+                    <input type="number" id="quantity" class="w-20 text-center py-2 border-t border-b border-purple-500 bg-transparent text-white" value="1" min="1" max="99">
+                    <button class="quantity-btn px-4 py-2 rounded-r-lg border border-purple-500 text-purple-300" id="quantity-plus">+</button>
+                </div>
+            </div>
+
+            <!-- 已選服務列表 -->
+            <div class="mb-6">
+                <h3 class="text-lg font-medium text-purple-200 mb-3">已選服務</h3>
+                <div id="selected-services" class="space-y-2 max-h-60 overflow-y-auto p-2 rounded-lg bg-indigo-900/20">
+                    <p class="text-gray-400 italic text-sm text-center py-4">尚未選擇任何服務</p>
+                </div>
+            </div>
+
+            <!-- 總價 -->
+            <div class="flex justify-between items-center p-4 rounded-lg bg-gradient-to-r from-purple-900/50 to-indigo-900/50 backdrop-blur-sm">
+                <div>
+                    <p class="text-sm text-purple-300">總計金額</p>
+                    <p class="text-2xl font-bold text-white" id="total-price">$0</p>
+                </div>
+                <button id="add-service" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 rounded-lg text-white font-medium transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-purple-500/30">
+                    加入服務
+                </button>
+            </div>
+        </div>
+
+        <!-- 底部資訊 -->
+        <div class="mt-6 text-center text-sm text-purple-300/70">
+            <p>你之解憂雜貨店 © 2023 - 尋找心靈平靜的專屬空間</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 服務價格表
+            const prices = {
+                candles: {
+                    'seven-day': 988,
+                    'herb-large': 488,
+                    'herb-small': 100,
+                    'lover': 688,
+                    'house-large': 398,
+                    'house-medium': 280,
+                    'house-small': 95
+                },
+                pendulum: {
+                    '3d5i': 255,
+                    '3d7i': 333,
+                    '5d5i': 388,
+                    '5d7i': 500,
+                    '7d5i': 555,
+                    '7d7i': 688,
+                    'm5i': 1250,
+                    'm7i': 1580
+                },
+                tarot: {
+                    'yes-no': 15,
+                    'oracle': 20,
+                    'one-q': 60,
+                    'online': 200,
+                    'study': 100,
+                    'store': 250,
+                    'phone-30': 200,
+                    'phone-45': 280,
+                    'phone-60': 350
+                },
+                astrology: {
+                    'yearly': 688,
+                    'couple': 988
+                },
+                redstring: {
+                    'check': 100,
+                    'tune-once': 150,
+                    'tune-three': 400
+                },
+                subconscious: {
+                    'one': 100,
+                    'three': 280,
+                    'five': 450
+                },
+                // 自家款魔法蠟燭款式額外價格
+                candleStyles: {
+                    'dragon-blood': 55 // 龍血款式額外加價
+                }
+            };
+
+            // 服務名稱對照表
+            const serviceNames = {
+                candles: {
+                    'seven-day': '七日星體蠟燭',
+                    'herb-large': '意念草藥蠟燭 (大)',
+                    'herb-small': '意念草藥蠟燭 (小)',
+                    'lover': '戀人蠟燭儀式',
+                    'house-large': '自家款魔法蠟燭 (大)',
+                    'house-medium': '自家款魔法蠟燭 (中)',
+                    'house-small': '自家款魔法蠟燭 (小)'
+                },
+                'herb-large': {
+                    'love-enchantment': 'Love enchantment',
+                    'attraction-love': 'Attraction love',
+                    'soulmate': 'Soulmate',
+                    'success': 'Success',
+                    'energy': 'Energy and will'
+                },
+                'herb-small': {
+                    'love': 'Love',
+                    'cleansing': 'Cleansing',
+                    'money': 'Money',
+                    'miracle': '顯化奇蹟',
+                    'motivation': 'Motivation'
+                },
+                'lover': {
+                    'red': '紅戀人蠟燭儀式',
+                    'white': '玫瑰白戀人蠟燭儀式'
+                },
+                // 自家款魔法蠟燭款式
+                'house-candle': {
+                    'return-to-me': 'RETURN TO ME #下一位前度',
+                    'bring-back-my-love': 'BRING BACK MY LOVE #帶回我的愛人',
+                    'come-to-me': 'COME TO ME #桃花朵朵開',
+                    'adam-and-eve': 'ADAM AND EVE #亞當夏娃',
+                    'hold-your-man': 'HOLD YOUR MAN #留在我身邊',
+                    'magnet': 'MAGNET #吸引力法寶',
+                    'hot-sex': 'HOT SEX #性愛自修室',
+                    'improve': 'IMPROVE #愛情推進器',
+                    'miss-me-more': 'MISS ME MORE #想見你',
+                    'no-one-but-me': 'NO ONE BUT ME #非你不可',
+                    'attraction': 'ATTRACTION #萬人迷',
+                    'unblocker': 'UNBLOCKER #打開心鎖',
+                    'cleansing': 'CLEANSING #去去障礙走',
+                    'open-road': 'OPEN ROAD #萬能開路資',
+                    'healing': 'HEALING #源癒自身',
+                    'money-rain': 'MONEY RAIN #豐盛金雨',
+                    'better-business': 'BETTER BUSINESS #工作狂人',
+                    'dragon-blood': 'DRAGON BLOOD #龍血'
+                },
+                pendulum: {
+                    '3d5i': '3日5項',
+                    '3d7i': '3日7項',
+                    '5d5i': '5日5項',
+                    '5d7i': '5日7項',
+                    '7d5i': '7日5項',
+                    '7d7i': '7日7項',
+                    'm5i': '包月5項',
+                    'm7i': '包月7項'
+                },
+                tarot: {
+                    'yes-no': 'Yes No Maybe',
+                    'oracle': '神諭卡建議牌',
+                    'one-q': '一條問題占卜',
+                    'online': '線上占卜',
+                    'study': '學業plan',
+                    'store': '門市占卜',
+                    'phone-30': '電話占卜 30分鐘',
+                    'phone-45': '電話占卜 45分鐘',
+                    'phone-60': '電話占卜 60分鐘'
+                },
+                'online': {
+                    'single': '脫單plan',
+                    'crush': '暗戀曖昧plan',
+                    'relationship': '有對象plan',
+                    'cold': '斷聯冷淡plan',
+                    'back': '分手復合plan',
+                    'love-choice': '愛情選擇plan',
+                    'work-chance': '工作機會plan',
+                    'job-search': '求職plan',
+                    'job-change': '轉工打算plan',
+                    'business': '生意發展plan',
+                    'startup': '創業打算plan',
+                    'work-choice': '工作選擇plan',
+                    'wealth': '財運plan',
+                    'relationship': '人際關係plan'
+                },
+                astrology: {
+                    'yearly': '流年運程',
+                    'couple': '雙人合盤'
+                },
+                redstring: {
+                    'check': '紅線查詢',
+                    'tune-once': '紅線調頻 一次',
+                    'tune-three': '紅線調頻 三次'
+                },
+                subconscious: {
+                    'one': '一題',
+                    'three': '三題',
+                    'five': '五題'
+                }
+            };
+
+            // 當前選擇的服務類別
+            let currentCategory = 'candles';
+            
+            // 已選服務列表
+            let selectedServices = [];
+            
+            // 總價
+            let totalPrice = 0;
+
+            // 當前選擇的自家款魔法蠟燭款式
+            let selectedCandleStyle = '';
+
+            // 切換服務類別
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有活躍狀態
+                    tabBtns.forEach(b => b.classList.remove('tab-active'));
+                    // 添加當前活躍狀態
+                    this.classList.add('tab-active');
+                    
+                    // 隱藏所有服務容器
+                    document.querySelectorAll('.service-container').forEach(container => {
+                        container.classList.add('hidden');
+                    });
+                    
+                    // 顯示當前服務容器
+                    currentCategory = this.dataset.category;
+                    document.getElementById(`${currentCategory}-container`).classList.remove('hidden');
+                    
+                    // 重置子選項
+                    resetSubOptions();
+                });
+            });
+
+            // 蠟燭類型變更
+            document.getElementById('candle-type').addEventListener('change', function() {
+                resetSubOptions();
+                const value = this.value;
+                
+                if (value === 'herb-large') {
+                    document.getElementById('herb-large-options').classList.remove('hidden');
+                } else if (value === 'herb-small') {
+                    document.getElementById('herb-small-options').classList.remove('hidden');
+                } else if (value === 'lover') {
+                    document.getElementById('lover-options').classList.remove('hidden');
+                } else if (value === 'house-large' || value === 'house-medium' || value === 'house-small') {
+                    document.getElementById('house-candle-options').classList.remove('hidden');
+                    initCandleStyleSelection();
+                }
+            });
+
+            // 初始化蠟燭款式選擇
+            function initCandleStyleSelection() {
+                const candleStyleItems = document.querySelectorAll('.candle-style-item');
+                candleStyleItems.forEach(item => {
+                    item.classList.remove('selected');
+                    item.addEventListener('click', function() {
+                        // 移除所有選中狀態
+                        candleStyleItems.forEach(i => i.classList.remove('selected'));
+                        // 添加當前選中狀態
+                        this.classList.add('selected');
+                        selectedCandleStyle = this.dataset.style;
+                        
+                        // 創建閃爍效果
+                        createSparklesOnElement(this);
+                    });
+                });
+                
+                // 重置選擇
+                selectedCandleStyle = '';
+            }
+
+            // 塔羅服務變更
+            document.getElementById('tarot-type').addEventListener('change', function() {
+                resetSubOptions();
+                const value = this.value;
+                
+                if (value === 'online' || value === 'study') {
+                    document.getElementById('online-options').classList.remove('hidden');
+                } else if (value === 'store') {
+                    document.getElementById('store-options').classList.remove('hidden');
+                }
+            });
+
+            // 門市占卜額外時間
+            document.getElementById('store-time-minus').addEventListener('click', function() {
+                const input = document.getElementById('store-extra-time');
+                if (parseInt(input.value) > 0) {
+                    input.value = parseInt(input.value) - 1;
+                    document.getElementById('store-time-display').textContent = parseInt(input.value) * 10;
+                }
+            });
+
+            document.getElementById('store-time-plus').addEventListener('click', function() {
+                const input = document.getElementById('store-extra-time');
+                if (parseInt(input.value) < 6) {
+                    input.value = parseInt(input.value) + 1;
+                    document.getElementById('store-time-display').textContent = parseInt(input.value) * 10;
+                }
+            });
+
+            // 數量增減
+            document.getElementById('quantity-minus').addEventListener('click', function() {
+                const input = document.getElementById('quantity');
+                if (parseInt(input.value) > 1) {
+                    input.value = parseInt(input.value) - 1;
+                }
+            });
+
+            document.getElementById('quantity-plus').addEventListener('click', function() {
+                const input = document.getElementById('quantity');
+                if (parseInt(input.value) < 99) {
+                    input.value = parseInt(input.value) + 1;
+                }
+            });
+
+            // 添加服務
+            document.getElementById('add-service').addEventListener('click', function() {
+                let serviceInfo = getSelectedServiceInfo();
+                
+                if (serviceInfo) {
+                    // 添加到已選服務列表
+                    selectedServices.push(serviceInfo);
+                    
+                    // 更新UI
+                    updateSelectedServicesUI();
+                    updateTotalPrice();
+                    
+                    // 重置選擇
+                    resetSelections();
+                    
+                    // 添加閃爍效果
+                    createSparkles();
+                }
+            });
+
+            // 獲取當前選擇的服務信息
+            function getSelectedServiceInfo() {
+                let serviceInfo = {
+                    category: currentCategory,
+                    name: '',
+                    details: [],
+                    price: 0,
+                    quantity: parseInt(document.getElementById('quantity').value)
+                };
+                
+                switch (currentCategory) {
+                    case 'candles':
+                        const candleType = document.getElementById('candle-type').value;
+                        if (!candleType) return null;
+                        
+                        serviceInfo.name = serviceNames.candles[candleType];
+                        serviceInfo.price = prices.candles[candleType];
+                        
+                        if (candleType === 'herb-large') {
+                            const herbType = document.getElementById('herb-large-type').value;
+                            serviceInfo.details.push(serviceNames['herb-large'][herbType]);
+                        } else if (candleType === 'herb-small') {
+                            const herbType = document.getElementById('herb-small-type').value;
+                            serviceInfo.details.push(serviceNames['herb-small'][herbType]);
+                        } else if (candleType === 'lover') {
+                            const loverType = document.getElementById('lover-type').value;
+                            serviceInfo.details.push(serviceNames['lover'][loverType]);
+                            
+                            if (document.getElementById('red-string-addon').checked) {
+                                serviceInfo.details.push('綁紅線');
+                                serviceInfo.price += 12;
+                            }
+                        } else if (candleType === 'house-large' || candleType === 'house-medium' || candleType === 'house-small') {
+                            if (!selectedCandleStyle) {
+                                alert('請選擇蠟燭款式');
+                                return null;
+                            }
+                            
+                            serviceInfo.details.push(serviceNames['house-candle'][selectedCandleStyle]);
+                            
+                            // 如果是龍血款式，額外加價
+                            if (selectedCandleStyle === 'dragon-blood') {
+                                serviceInfo.price += prices.candleStyles['dragon-blood'];
+                            }
+                        }
+                        break;
+                        
+                    case 'pendulum':
+                        const pendulumPlan = document.getElementById('pendulum-plan').value;
+                        const pendulumType = document.getElementById('pendulum-type').value;
+                        if (!pendulumPlan || !pendulumType) return null;
+                        
+                        serviceInfo.name = serviceNames.pendulum[pendulumPlan];
+                        serviceInfo.price = prices.pendulum[pendulumPlan];
+                        
+                        // 獲取選擇的調頻類型文本
+                        const pendulumTypeText = document.getElementById('pendulum-type').options[document.getElementById('pendulum-type').selectedIndex].text;
+                        serviceInfo.details.push(pendulumTypeText);
+                        break;
+                        
+                    case 'tarot':
+                        const tarotType = document.getElementById('tarot-type').value;
+                        if (!tarotType) return null;
+                        
+                        serviceInfo.name = serviceNames.tarot[tarotType];
+                        serviceInfo.price = prices.tarot[tarotType];
+                        
+                        if (tarotType === 'online' || tarotType === 'study') {
+                            const onlineType = document.getElementById('online-type').value;
+                            if (onlineType) {
+                                serviceInfo.details.push(serviceNames['online'][onlineType]);
+                            }
+                        } else if (tarotType === 'store') {
+                            const extraTime = parseInt(document.getElementById('store-extra-time').value);
+                            if (extraTime > 0) {
+                                serviceInfo.details.push(`額外 ${extraTime * 10} 分鐘`);
+                                serviceInfo.price += extraTime * 50;
+                            }
+                        }
+                        break;
+                        
+                    case 'astrology':
+                        const astrologyType = document.getElementById('astrology-type').value;
+                        if (!astrologyType) return null;
+                        
+                        serviceInfo.name = serviceNames.astrology[astrologyType];
+                        serviceInfo.price = prices.astrology[astrologyType];
+                        break;
+                        
+                    case 'redstring':
+                        const redstringType = document.getElementById('redstring-type').value;
+                        if (!redstringType) return null;
+                        
+                        serviceInfo.name = serviceNames.redstring[redstringType];
+                        serviceInfo.price = prices.redstring[redstringType];
+                        break;
+                        
+                    case 'subconscious':
+                        const subconsciousType = document.getElementById('subconscious-type').value;
+                        if (!subconsciousType) return null;
+                        
+                        serviceInfo.name = serviceNames.subconscious[subconsciousType];
+                        serviceInfo.price = prices.subconscious[subconsciousType];
+                        break;
+                }
+                
+                return serviceInfo;
+            }
+
+            // 更新已選服務UI
+            function updateSelectedServicesUI() {
+                const container = document.getElementById('selected-services');
+                container.innerHTML = '';
+                
+                if (selectedServices.length === 0) {
+                    container.innerHTML = '<p class="text-gray-400 italic text-sm text-center py-4">尚未選擇任何服務</p>';
+                    return;
+                }
+                
+                selectedServices.forEach((service, index) => {
+                    const serviceElement = document.createElement('div');
+                    serviceElement.className = 'flex justify-between items-start p-3 rounded-lg bg-indigo-800/20 hover:bg-indigo-800/30 transition-all';
+                    
+                    let detailsHtml = '';
+                    if (service.details.length > 0) {
+                        detailsHtml = `<div class="text-xs text-purple-300 mt-1">${service.details.join(' • ')}</div>`;
+                    }
+                    
+                    serviceElement.innerHTML = `
+                        <div class="flex-1">
+                            <div class="flex items-center">
+                                <span class="text-sm font-medium text-white">${service.name}</span>
+                                ${service.quantity > 1 ? `<span class="ml-2 px-2 py-0.5 bg-purple-800/50 rounded-full text-xs text-purple-200">x${service.quantity}</span>` : ''}
+                            </div>
+                            ${detailsHtml}
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-sm font-medium text-white mr-3">$${service.price * service.quantity}</span>
+                            <button class="remove-service text-red-400 hover:text-red-300 p-1" data-index="${index}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(serviceElement);
+                });
+                
+                // 添加刪除服務事件
+                document.querySelectorAll('.remove-service').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        selectedServices.splice(index, 1);
+                        updateSelectedServicesUI();
+                        updateTotalPrice();
+                    });
+                });
+            }
+
+            // 更新總價
+            function updateTotalPrice() {
+                totalPrice = selectedServices.reduce((sum, service) => sum + (service.price * service.quantity), 0);
+                document.getElementById('total-price').textContent = `$${totalPrice}`;
+            }
+
+            // 重置選擇
+            function resetSelections() {
+                document.getElementById('quantity').value = 1;
+                
+                switch (currentCategory) {
+                    case 'candles':
+                        document.getElementById('candle-type').value = '';
+                        resetSubOptions();
+                        break;
+                        
+                    case 'pendulum':
+                        document.getElementById('pendulum-plan').value = '';
+                        document.getElementById('pendulum-type').value = '';
+                        break;
+                        
+                    case 'tarot':
+                        document.getElementById('tarot-type').value = '';
+                        resetSubOptions();
+                        break;
+                        
+                    case 'astrology':
+                        document.getElementById('astrology-type').value = '';
+                        break;
+                        
+                    case 'redstring':
+                        document.getElementById('redstring-type').value = '';
+                        break;
+                        
+                    case 'subconscious':
+                        document.getElementById('subconscious-type').value = '';
+                        break;
+                }
+            }
+
+            // 重置子選項
+            function resetSubOptions() {
+                document.getElementById('herb-large-options').classList.add('hidden');
+                document.getElementById('herb-small-options').classList.add('hidden');
+                document.getElementById('lover-options').classList.add('hidden');
+                document.getElementById('house-candle-options').classList.add('hidden');
+                document.getElementById('online-options').classList.add('hidden');
+                document.getElementById('store-options').classList.add('hidden');
+                
+                document.getElementById('red-string-addon').checked = false;
+                document.getElementById('store-extra-time').value = 0;
+                document.getElementById('store-time-display').textContent = '0';
+                
+                // 重置蠟燭款式選擇
+                document.querySelectorAll('.candle-style-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                selectedCandleStyle = '';
+            }
+
+            // 在特定元素上創建閃爍效果
+            function createSparklesOnElement(element) {
+                const rect = element.getBoundingClientRect();
+                
+                for (let i = 0; i < 10; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    document.body.appendChild(sparkle);
+                    
+                    const size = Math.random() * 3 + 1;
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    
+                    const startX = rect.left + Math.random() * rect.width;
+                    const startY = rect.top + Math.random() * rect.height;
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 40 + 10;
+                    const endX = startX + Math.cos(angle) * distance;
+                    const endY = startY + Math.sin(angle) * distance;
+                    
+                    sparkle.style.left = `${startX}px`;
+                    sparkle.style.top = `${startY}px`;
+                    
+                    const hue = Math.random() * 60 + 240; // 紫色到藍色範圍
+                    sparkle.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                    sparkle.style.boxShadow = `0 0 ${size}px ${size/2}px hsl(${hue}, 100%, 70%)`;
+                    
+                    setTimeout(() => {
+                        sparkle.style.transition = `all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)`;
+                        sparkle.style.opacity = '1';
+                        sparkle.style.left = `${endX}px`;
+                        sparkle.style.top = `${endY}px`;
+                        
+                        setTimeout(() => {
+                            sparkle.style.opacity = '0';
+                            setTimeout(() => {
+                                sparkle.remove();
+                            }, 600);
+                        }, 200);
+                    }, Math.random() * 100);
+                }
+            }
+
+            // 創建閃爍效果
+            function createSparkles() {
+                const totalBtn = document.getElementById('add-service');
+                const rect = totalBtn.getBoundingClientRect();
+                
+                for (let i = 0; i < 15; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    document.body.appendChild(sparkle);
+                    
+                    const size = Math.random() * 4 + 2;
+                    sparkle.style.width = `${size}px`;
+                    sparkle.style.height = `${size}px`;
+                    
+                    const startX = rect.left + rect.width / 2;
+                    const startY = rect.top + rect.height / 2;
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 80 + 20;
+                    const endX = startX + Math.cos(angle) * distance;
+                    const endY = startY + Math.sin(angle) * distance;
+                    
+                    sparkle.style.left = `${startX}px`;
+                    sparkle.style.top = `${startY}px`;
+                    
+                    const hue = Math.random() * 60 + 240; // 紫色到藍色範圍
+                    sparkle.style.backgroundColor = `hsl(${hue}, 100%, 70%)`;
+                    sparkle.style.boxShadow = `0 0 ${size}px ${size/2}px hsl(${hue}, 100%, 70%)`;
+                    
+                    setTimeout(() => {
+                        sparkle.style.transition = `all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1)`;
+                        sparkle.style.opacity = '1';
+                        sparkle.style.left = `${endX}px`;
+                        sparkle.style.top = `${endY}px`;
+                        
+                        setTimeout(() => {
+                            sparkle.style.opacity = '0';
+                            setTimeout(() => {
+                                sparkle.remove();
+                            }, 800);
+                        }, 300);
+                    }, Math.random() * 100);
+                }
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'94d9f7e38148afca',t:'MTc0OTU3MDAzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;" src="./saved_resource(2).html"></iframe>
+
+</body></html>

@@ -1,35 +1,54 @@
-import { useEffect, useState } from 'react';
-import { api } from '../services/api';
-import ServiceCard from '../components/ServiceCard';
-
 const HomePage = ({ onNavigate }) => {
-  const [popularServices, setPopularServices] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadPopularServices = async () => {
-      try {
-        const services = await api.getServices();
-        // Show first 3 services as popular
-        setPopularServices(services.slice(0, 3));
-      } catch (error) {
-        console.error('Failed to load services:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPopularServices();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-      </div>
-    );
-  }
-
+  const serviceCategories = [
+    {
+      id: 'candles',
+      name: '魔法蠟燭',
+      description: '注入能量的神聖蠟燭，為您帶來好運與保護',
+      icon: '🕯️',
+      color: 'from-orange-400 to-red-400',
+      page: 'candles'
+    },
+    {
+      id: 'tarot',
+      name: '塔羅占卜',
+      description: '透過古老智慧解讀人生的過去、現在與未來',
+      icon: '🔮',
+      color: 'from-purple-400 to-indigo-400',
+      page: 'tarot'
+    },
+    {
+      id: 'love',
+      name: '月老紅線',
+      description: '月老牽線，為您尋找命中注定的良緣',
+      icon: '💕',
+      color: 'from-pink-400 to-red-400',
+      page: 'love'
+    },
+    {
+      id: 'astrology',
+      name: '八字 & 紫微斗數',
+      description: '根據出生時間解讀命盤奧秘，了解人生軌跡',
+      icon: '⭐',
+      color: 'from-amber-400 to-orange-400',
+      page: 'astrology'
+    },
+    {
+      id: 'frequency',
+      name: '靈擺調頻',
+      description: '運用靈擺的能量共振，調整您的能量頻率',
+      icon: '🔄',
+      color: 'from-teal-400 to-blue-400',
+      page: 'frequency'
+    },
+    {
+      id: 'psychic',
+      name: '潛意識讀心',
+      description: '深入探索潛意識世界，發掘內心智慧',
+      icon: '🧠',
+      color: 'from-blue-400 to-indigo-400',
+      page: 'psychic'
+    }
+  ];
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -49,19 +68,34 @@ const HomePage = ({ onNavigate }) => {
         </button>
       </div>
 
-      {/* Popular Services Section */}
+      {/* Service Categories Section */}
       <section>
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          熱門服務
+          服務項目
         </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {popularServices.map((service) => (
-            <ServiceCard 
-              key={service.id} 
-              service={service}
-              onClick={() => onNavigate('services')}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {serviceCategories.map((category) => (
+            <div 
+              key={category.id}
+              className={`bg-gradient-to-br ${category.color} text-white rounded-xl p-6 cursor-pointer transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl`}
+              onClick={() => onNavigate(category.page)}
+            >
+              <div className="text-center">
+                <div className="text-4xl mb-4">{category.icon}</div>
+                <h3 className="text-xl font-bold mb-3">{category.name}</h3>
+                <p className="text-white/90 text-sm leading-relaxed">
+                  {category.description}
+                </p>
+                <div className="mt-4">
+                  <div className="inline-flex items-center text-sm font-medium">
+                    立即體驗 
+                    <svg className="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
         

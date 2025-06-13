@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { getMembershipName } from '../services/api';
@@ -8,18 +8,32 @@ import LoginModal from './LoginModal';
 const Navigation = ({ currentPage, onNavigate }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const { user, logout } = useAuth();
   const { getCartCount } = useCart();
-
   const navItems = [
     { id: 'home', label: '首頁' },
-    { id: 'services', label: '服務與產品' },
     { id: 'membership', label: '會員制度' },
     { id: 'cart', label: '購物車' }
+  ];  const serviceCategories = [
+    { id: 'candles', label: '魔法蠟燭', page: 'candles' },
+    { id: 'frequency', label: '靈擺調頻', page: 'frequency' },
+    { id: 'tarot', label: '塔羅占卜', page: 'tarot' },
+    { id: 'astrology', label: '八字 & 紫微斗數', page: 'astrology' },
+    { id: 'love', label: '月老紅線', page: 'love' },
+    { id: 'psychic', label: '潛意識讀心', page: 'psychic' }
   ];
 
   const handleNavClick = (pageId) => {
     onNavigate(pageId);
+    setIsMobileMenuOpen(false);
+    setIsServicesDropdownOpen(false);
+  };
+
+  const handleServiceClick = (page) => {
+    // Navigate directly to the service page
+    onNavigate(page);
+    setIsServicesDropdownOpen(false);
     setIsMobileMenuOpen(false);
   };
 
@@ -42,9 +56,7 @@ const Navigation = ({ currentPage, onNavigate }) => {
             className="text-2xl font-bold text-pink-400 hover:text-pink-300 transition-colors"
           >
             你之解憂雜貨店
-          </button>
-
-          {/* Desktop Navigation */}
+          </button>          {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
             {navItems.map((item) => (
               <button
@@ -62,6 +74,34 @@ const Navigation = ({ currentPage, onNavigate }) => {
                 )}
               </button>
             ))}
+            
+            {/* Services Dropdown */}
+            <div className="relative">              <button
+                onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                onMouseEnter={() => setIsServicesDropdownOpen(true)}                className={`nav-link py-2 text-white hover:text-pink-300 transition-colors flex items-center ${
+                  ['candles', 'frequency', 'tarot', 'astrology', 'love', 'psychic'].includes(currentPage) ? 'active-nav' : ''
+                }`}
+              >
+                服務與產品
+                <ChevronDownIcon className="h-4 w-4 ml-1" />
+              </button>
+                {isServicesDropdownOpen && (
+                <div 
+                  className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg py-2 z-50"
+                  onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                >
+                  {serviceCategories.map((service) => (
+                    <button
+                      key={service.id}
+                      onClick={() => handleServiceClick(service.page)}
+                      className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-pink-50 hover:text-pink-600 transition-colors"
+                    >
+                      {service.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* User Status & Actions */}
@@ -106,9 +146,7 @@ const Navigation = ({ currentPage, onNavigate }) => {
               )}
             </button>
           </div>
-        </div>
-
-        {/* Mobile Menu */}
+        </div>        {/* Mobile Menu */}
         {isMobileMenuOpen && (
           <div className="md:hidden px-4 py-3 bg-black border-t border-gray-700">
             {navItems.map((item) => (
@@ -125,6 +163,20 @@ const Navigation = ({ currentPage, onNavigate }) => {
                 )}
               </button>
             ))}
+              {/* Mobile Services Menu */}
+            <div className="border-t border-gray-700 pt-3 mt-3">
+              <div className="space-y-1">
+                {serviceCategories.map((service) => (
+                  <button
+                    key={service.id}
+                    onClick={() => handleServiceClick(service.page)}
+                    className="block w-full text-left py-2 text-white hover:text-pink-300 transition-colors"
+                  >
+                    {service.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             
             {user && (
               <div className="border-t border-gray-700 pt-3 mt-3">

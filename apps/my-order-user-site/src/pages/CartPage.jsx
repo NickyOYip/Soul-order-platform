@@ -4,6 +4,7 @@ import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { membershipDiscounts, getMembershipName, api } from '../services/api';
 import OrderSuccessModal from '../components/OrderSuccessModal';
+import Toast from '../components/Toast';
 
 const CartPage = ({ onNavigate }) => {
   const { cart, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart();
@@ -15,10 +16,10 @@ const CartPage = ({ onNavigate }) => {
     paymentMethod: '',
     paymentProof: null
   });
-  
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   const subtotal = getCartTotal();
   const discount = user?.membership ? subtotal * membershipDiscounts[user.membership] : 0;

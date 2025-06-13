@@ -3,23 +3,40 @@ import { AuthProvider } from './contexts/AuthContext';
 import { CartProvider } from './contexts/CartContext';
 import Navigation from './components/Navigation';
 import HomePage from './pages/HomePage';
-import ServicesPage from './pages/ServicesPage';
+import CandlesPage from './pages/CandlesPage';
+import FrequencyPage from './pages/FrequencyPage';
+import TarotPage from './pages/TarotPage';
+import AstrologyPage from './pages/AstrologyPage';
+import LovePage from './pages/LovePage';
+import PsychicPage from './pages/PsychicPage';
 import MembershipPage from './pages/MembershipPage';
 import CartPage from './pages/CartPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [pageParams, setPageParams] = useState({});
 
-  const navigateToPage = (pageId) => {
+  const navigateToPage = (pageId, params = {}) => {
     setCurrentPage(pageId);
+    setPageParams(params);
   };
 
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'home':
         return <HomePage onNavigate={navigateToPage} />;
-      case 'services':
-        return <ServicesPage onNavigate={navigateToPage} />;
+      case 'candles':
+        return <CandlesPage onNavigate={navigateToPage} />;
+      case 'frequency':
+        return <FrequencyPage onNavigate={navigateToPage} />;
+      case 'tarot':
+        return <TarotPage onNavigate={navigateToPage} />;
+      case 'astrology':
+        return <AstrologyPage onNavigate={navigateToPage} />;
+      case 'love':
+        return <LovePage onNavigate={navigateToPage} />;
+      case 'psychic':
+        return <PsychicPage onNavigate={navigateToPage} />;
       case 'membership':
         return <MembershipPage onNavigate={navigateToPage} />;
       case 'cart':

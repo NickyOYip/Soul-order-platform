@@ -1,25 +1,20 @@
 import { useEffect, useState } from 'react';
-import { api } from '../services/api';
-import ServiceCard from '../components/ServiceCard';
+import { api, serviceCategories } from '../services/api';
+import ProductCard from '../components/ProductCard';
 
-const ServicesPage = () => {
+const ServicesPage = ({ initialCategory = 'all' }) => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
 
-  const categories = [
-    { id: 'all', label: '全部服務' },
-    { id: 'divination', label: '占卜服務' },
-    { id: 'products', label: '魔法商品' },
-    { id: 'love', label: '愛情運勢' },
-    { id: 'astrology', label: '命理分析' },
-    { id: 'psychic', label: '心靈療癒' }
-  ];
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
 
   useEffect(() => {
     const loadServices = async () => {
       try {
-        const data = await api.getServices();
+        const data = await api.getServicesByCategory(selectedCategory);
         setServices(data);
       } catch (error) {
         console.error('Failed to load services:', error);
@@ -29,11 +24,12 @@ const ServicesPage = () => {
     };
 
     loadServices();
-  }, []);
+  }, [selectedCategory]);
 
-  const filteredServices = selectedCategory === 'all' 
-    ? services 
-    : services.filter(service => service.category === selectedCategory);
+  const handleServiceClick = (service) => {
+    // Future: Navigate to service detail page
+    console.log('Service clicked:', service);
+  };
 
   if (loading) {
     return (
@@ -54,7 +50,7 @@ const ServicesPage = () => {
 
       {/* Category Filter */}
       <div className="flex flex-wrap justify-center gap-2 mb-8">
-        {categories.map((category) => (
+        {serviceCategories.map((category) => (
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
@@ -64,16 +60,31 @@ const ServicesPage = () => {
                 : 'bg-white text-gray-700 border border-gray-300 hover:border-pink-500 hover:text-pink-500'
             }`}
           >
-            {category.label}
+            {category.name}
           </button>
         ))}
       </div>
 
+      {/* Category Description */}
+      {selectedCategory !== 'all' && (
+        <div className="text-center mb-8">
+          <div className="bg-pink-50 rounded-lg p-4 max-w-2xl mx-auto">
+            <p className="text-pink-700">
+              {serviceCategories.find(cat => cat.id === selectedCategory)?.description}
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* Services Grid */}
-      {filteredServices.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
+      {services.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">          {services.map((service) => (
+            <ProductCard 
+              key={service.id} 
+              service={service} 
+              onClick={handleServiceClick}
+              cardType="service"
+            />
           ))}
         </div>
       ) : (
@@ -87,16 +98,54 @@ const ServicesPage = () => {
         </div>
       )}
 
+      {/* Featured Services Section */}
+      <div className="bg-gradient-to-r from-pink-100 to-pink-50 rounded-xl p-8">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">熱門服務推薦</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-pink-500 mb-3">
+              <svg className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 className="font-bold text-gray-800 mb-2">愛情運勢</h3>
+            <p className="text-gray-600 text-sm">專業的感情諮詢與月老紅線服務</p>
+          </div>
+          <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-pink-500 mb-3">
+              <svg className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+            </div>
+            <h3 className="font-bold text-gray-800 mb-2">命理占星</h3>
+            <p className="text-gray-600 text-sm">深度八字與紫微斗數解析</p>
+          </div>
+          <div className="bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-pink-500 mb-3">
+              <svg className="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </div>
+            <h3 className="font-bold text-gray-800 mb-2">能量療癒</h3>
+            <p className="text-gray-600 text-sm">魔法蠟燭與能量調頻服務</p>
+          </div>
+        </div>
+      </div>
+
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-pink-100 to-pink-50 rounded-xl p-8 text-center">
+      <div className="bg-gradient-to-r from-pink-200 to-pink-100 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">需要個人化諮詢？</h2>
         <p className="text-gray-600 mb-6">
-          我們的專業團隊隨時為您提供量身訂做的服務建議
+          我們的專業團隊隨時為您提供量身訂做的服務建議，歡迎透過Instagram私訊聯絡
         </p>
-        <button className="btn-primary px-6 py-3 rounded-full font-medium">
-          聯絡我們
-        </button>
-      </div>
+        <div className="flex justify-center space-x-4">
+          <button className="btn-primary px-6 py-3 rounded-full font-medium">
+            Instagram 諮詢
+          </button>
+          <button className="border border-pink-500 text-pink-500 px-6 py-3 rounded-full font-medium hover:bg-pink-50 transition-colors">
+            查看會員方案
+          </button>
+        </div>      </div>
     </div>
   );
 };
