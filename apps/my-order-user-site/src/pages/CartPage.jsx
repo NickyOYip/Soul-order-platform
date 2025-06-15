@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ShoppingCartIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ShoppingCartIcon, TrashIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { membershipDiscounts, getMembershipName, api } from '../services/api';
@@ -106,11 +106,23 @@ const CartPage = ({ onNavigate }) => {
       </div>
     );
   }
-
   return (
     <>
-      <div className="space-y-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800">購物車</h1>
+      <div className="space-y-8">        {/* Header with Back Button and Title */}
+        <div className="flex items-center justify-between">
+          <button
+            onClick={() => onNavigate('home')}
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors"
+          >
+            <ArrowLeftIcon className="h-5 w-5" />
+            <span>返回首頁</span>
+          </button>
+          
+          <h1 className="text-3xl font-bold text-gray-800 flex-1 text-center">購物車</h1>
+          
+          {/* Spacer for centering */}
+          <div className="w-16"></div>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}

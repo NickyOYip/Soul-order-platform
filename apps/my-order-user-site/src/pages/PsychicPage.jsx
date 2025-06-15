@@ -1,180 +1,198 @@
 import { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import ProductCard from '../components/ProductCard';
+import Toast from '../components/Toast';
+import { useCart } from '../contexts/CartContext';
 
 const PsychicPage = ({ onNavigate }) => {
-  const [services, setServices] = useState([]);
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   useEffect(() => {
-    const loadServices = async () => {
+    const loadProducts = async () => {
       try {
-        const data = await api.getServicesByCategory('psychic');
-        setServices(data);
+        const data = await api.getPsychicProducts();
+        setProducts(data);
       } catch (error) {
-        console.error('Failed to load psychic services:', error);
+        console.error('Failed to load psychic products:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    loadServices();
+    loadProducts();
   }, []);
 
-  const handleServiceClick = (service) => {
-    console.log('Service clicked:', service);
+  const showToast = (message, type = 'success') => {
+    setToast({ show: true, message, type });
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-      </div>
-    );
-  }
+  const hideToast = () => {
+    setToast({ show: false, message: '', type: 'success' });
+  };
 
+  const handleAddToCart = (product) => {
+    // Convert psychic product to cart item format
+    const cartItem = {
+      id: `psychic_${product.id}`,
+      name: product.name,
+      price: product.basePrice,
+      type: 'psychic_reading',
+      description: product.detail,
+      details: {
+        category: product.subCategory,
+        tag: product.tag
+      }
+    };
+    
+    addToCart(cartItem);
+    showToast(`已將「${product.name}」加入購物車！`, 'success');
+    console.log('Added to cart:', cartItem);
+  };
   return (
-    <div className="space-y-8">      {/* Hero Section */}
+    <div className="space-y-8">
+      {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl p-8 text-center">
         <h1 className="text-4xl font-bold mb-4">潛意識讀心</h1>
         <p className="text-xl mb-6">
-          深入探索你的潛意識世界，發掘內心深處的秘密與智慧 🧠✨
+          拿著你的問題，直接去對方的潛意識找答案！一針見血地了解對方內心深處的想法
         </p>
         <div className="flex justify-center space-x-6 text-sm">
           <div className="flex items-center">
             <div className="w-3 h-3 bg-white rounded-full mr-2"></div>
-            <span>自由提問</span>
+            <span>心靈圖卡</span>
           </div>
           <div className="flex items-center">
             <div className="w-3 h-3 bg-white rounded-full mr-2"></div>
-            <span>深度療癒</span>
+            <span>一針見血</span>
           </div>
           <div className="flex items-center">
             <div className="w-3 h-3 bg-white rounded-full mr-2"></div>
-            <span>內在成長</span>
+            <span>潛意識探索</span>
           </div>
         </div>
       </div>
 
+      {/* Main Content */}
+      <div className="bg-white rounded-xl p-8 shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">潛意識讀心服務</h2>
+        
+        {loading ? (
+          <div className="flex items-center justify-center min-h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          </div>
+        ) : (
+          <>
+            {/* Product Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  service={product}
+                  cardType="service"
+                  onAddToCart={handleAddToCart}
+                  onNavigate={onNavigate}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
-      {/* Services Grid */}
-      {services.length > 0 ? (
-        <div>
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">選擇您的提問方案</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">            {services.map((service) => (
-              <ProductCard 
-                key={service.id} 
-                service={service} 
-                onClick={handleServiceClick}
-                cardType="service"
-              />
-            ))}
+        {/* Information Section */}
+        <div className="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg p-6 mb-6">
+          <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">潛意識讀心說明</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-bold text-gray-700 mb-3">服務特色</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• 直接讀取潛意識想法</li>
+                <li>• 心靈圖卡一針見血</li>
+                <li>• 完全隱密不被發現</li>
+                <li>• 僅接受開放式問題</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-700 mb-3">注意事項</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li>• 讀心前請確定能接受真相</li>
+                <li>• 對方不會有任何感覺</li>
+                <li>• 不會得悉被讀心</li>
+                <li>• 結果可能出乎意料</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="text-center mt-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <p className="text-yellow-800 font-medium mb-2">問題類型說明</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="text-green-700">
+                <strong>✓ 開放式問題（接受）</strong><br />
+                「你對我有什麼感覺？」
+              </div>
+              <div className="text-red-700">
+                <strong>✗ 是否題（不接受）</strong><br />
+                「你對我有沒有好感？」
+              </div>
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">暫無可用的提問方案</p>
-        </div>
-      )}
-
-      {/* Process Section */}
+      </div>      {/* How It Works Section */}
       <div className="bg-gradient-to-r from-blue-100 to-indigo-100 rounded-xl p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">心靈探索流程</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">讀心流程</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <div className="text-center">
             <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">1</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">初步連結</h3>
-            <p className="text-gray-600 text-sm">建立心靈能量連結</p>
+            <h3 className="font-bold text-gray-800 mb-2">提出問題</h3>
+            <p className="text-gray-600 text-sm">準備開放式問題</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">2</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">深度掃描</h3>
-            <p className="text-gray-600 text-sm">探索潛意識深層訊息</p>
+            <h3 className="font-bold text-gray-800 mb-2">連結潛意識</h3>
+            <p className="text-gray-600 text-sm">進入對方潛意識層面</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">3</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">訊息解讀</h3>
-            <p className="text-gray-600 text-sm">解析並整理獲得的訊息</p>
+            <h3 className="font-bold text-gray-800 mb-2">圖卡解讀</h3>
+            <p className="text-gray-600 text-sm">心靈圖卡呈現真相</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">4</span>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">療癒指導</h3>
-            <p className="text-gray-600 text-sm">提供具體的療癒建議</p>
+            <h3 className="font-bold text-gray-800 mb-2">獲得答案</h3>
+            <p className="text-gray-600 text-sm">一針見血的真實回答</p>
           </div>
         </div>
       </div>
 
-      {/* Benefits Section */}
-      <div className="bg-white rounded-xl p-8 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">服務效益</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg">
-            <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-gray-800 mb-2">釋放內在阻礙</h3>
-            <p className="text-gray-600 text-sm">清除限制性信念與情緒創傷</p>
-          </div>
-          <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg">
-            <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-gray-800 mb-2">發掘內在潛能</h3>
-            <p className="text-gray-600 text-sm">發現隱藏的才能與天賦</p>
-          </div>
-          <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg">
-            <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="font-bold text-gray-800 mb-2">提升自我認識</h3>
-            <p className="text-gray-600 text-sm">更深層地了解自己的內在世界</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Privacy Section */}
-      <div className="bg-gradient-to-r from-gray-100 to-blue-100 rounded-xl p-8">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <h3 className="text-xl font-bold text-gray-800 mb-2">隱私保護承諾</h3>
-          <p className="text-gray-600">
-            我們嚴格保護您的隱私，所有心靈探索內容絕對保密，<br />
-            讓您能夠安心地進行深度的內在探索。
-          </p>
-        </div>
-      </div>      {/* CTA Section */}
+      {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-200 to-indigo-200 rounded-xl p-8 text-center">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索您的內在世界了嗎？</h2>
-        <p className="text-gray-600 mb-4">
-          開放式問題讓你自由探索內心世界，發掘真正的自己 🌟
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索真相了嗎？</h2>
+        <p className="text-gray-600 mb-6">
+          直接從潛意識找到最真實的答案，但請確保您能承受真相
         </p>
-        <div className="bg-white/50 rounded-lg p-4 mb-6">
-          <p className="text-gray-700 font-medium">
-            💭 想問什麼就問什麼 • 沒有限制的自由探索
-          </p>
-        </div>
-        <button className="btn-primary px-6 py-3 rounded-full font-medium">
-          開始提問探索
+        <button 
+          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
+        >
+          開始潛意識讀心
         </button>
       </div>
+
+      {/* Toast Component */}
+      <Toast 
+        show={toast.show} 
+        message={toast.message} 
+        type={toast.type} 
+        onClose={hideToast} 
+      />
     </div>
   );
 };

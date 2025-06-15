@@ -43,9 +43,8 @@ const FrequencyPage = ({ onNavigate }) => {
           setCareerProducts(products);
         } else if (selectedSubCategory === 'personal') {
           const products = await api.getFrequencyPersonalProducts();
-          setPersonalProducts(products);
-        } else if (selectedSubCategory === 'consultation') {
-          const products = await api.getConsultationProducts();
+          setPersonalProducts(products);        } else if (selectedSubCategory === 'consultation') {
+          const products = await api.getFrequencySingleProducts();
           setConsultationProducts(products);
         }
       } catch (error) {
@@ -163,9 +162,10 @@ const FrequencyPage = ({ onNavigate }) => {
                 {loveProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
-                    product={product}
+                    service={product}
                     cardType="service"
                     onAddToCart={handleAddToCart}
+                    onNavigate={onNavigate}
                   />
                 ))}
               </div>
@@ -188,9 +188,10 @@ const FrequencyPage = ({ onNavigate }) => {
                 {careerProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
-                    product={product}
+                    service={product}
                     cardType="service"
                     onAddToCart={handleAddToCart}
+                    onNavigate={onNavigate}
                   />
                 ))}
               </div>
@@ -213,9 +214,10 @@ const FrequencyPage = ({ onNavigate }) => {
                 {personalProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
-                    product={product}
+                    service={product}
                     cardType="service"
                     onAddToCart={handleAddToCart}
+                    onNavigate={onNavigate}
                   />
                 ))}
               </div>
@@ -230,16 +232,15 @@ const FrequencyPage = ({ onNavigate }) => {
           {loading ? (
             <div className="flex items-center justify-center min-h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
-            </div>          ) : (
-            <>
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            </div>          ) : (            <>
+              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {consultationProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
-                    product={product}
+                    service={product}
                     cardType="service"
                     onAddToCart={handleAddToCart}
+                    onNavigate={onNavigate}
                   />
                 ))}
               </div>

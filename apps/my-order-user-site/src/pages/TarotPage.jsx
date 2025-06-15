@@ -6,38 +6,17 @@ import { useCart } from '../contexts/CartContext';
 
 const TarotPage = ({ onNavigate }) => {
   const { addToCart } = useCart();
-  const [selectedSubCategory, setSelectedSubCategory] = useState('online');
-  const [onlineProducts, setOnlineProducts] = useState([]);
-  const [storeProducts, setStoreProducts] = useState([]);
-  const [phoneProducts, setPhoneProducts] = useState([]);
-  const [otherProducts, setOtherProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedSubCategory, setSelectedSubCategory] = useState('線上占卜');
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-
-  const subCategories = [
-    { id: 'online', label: '線上占卜', description: '24小時內回報，文字或語音報告' },
-    { id: 'store', label: '門市占卜', description: '面對面專業諮詢，即時互動解讀' },
-    { id: 'phone', label: '電話占卜', description: '語音即時諮詢，靈活時間安排' },
-    { id: 'other', label: '其他服務', description: '快速簡單占卜，即時回覆' }
-  ];
 
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
       try {
-        if (selectedSubCategory === 'online') {
-          const products = await api.getTarotOnlineProducts();
-          setOnlineProducts(products);
-        } else if (selectedSubCategory === 'store') {
-          const products = await api.getTarotStoreProducts();
-          setStoreProducts(products);
-        } else if (selectedSubCategory === 'phone') {
-          const products = await api.getTarotPhoneProducts();
-          setPhoneProducts(products);
-        } else if (selectedSubCategory === 'other') {
-          const products = await api.getTarotOtherProducts();
-          setOtherProducts(products);
-        }
+        const tarotProducts = await api.getTarotProducts();
+        setProducts(tarotProducts);
       } catch (error) {
         console.error('Failed to load tarot products:', error);
       } finally {
@@ -46,7 +25,7 @@ const TarotPage = ({ onNavigate }) => {
     };
 
     loadProducts();
-  }, [selectedSubCategory]);
+  }, []);
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -54,22 +33,17 @@ const TarotPage = ({ onNavigate }) => {
 
   const hideToast = () => {
     setToast({ show: false, message: '', type: 'success' });
-  };
-
-  const handleAddToCart = (product) => {
+  };  const handleAddToCart = (product) => {
     // Convert tarot product to cart item format
     const cartItem = {
-      id: `tarot_${selectedSubCategory}_${product.id}`,
+      id: `tarot_${product.subCategory}_${product.id}`,
       name: product.name,
-      price: product.price,
+      price: product.basePrice,
       type: 'tarot_reading',
-      description: product.description,
+      description: product.detail,
       details: {
-        category: selectedSubCategory,
-        duration: product.duration,
-        includes: product.includes,
-        reportType: product.reportType,
-        serviceType: product.serviceType
+        category: product.subCategory,
+        tag: product.tag
       }
     };
     
@@ -78,15 +52,21 @@ const TarotPage = ({ onNavigate }) => {
     console.log('Added to cart:', cartItem);
   };
 
+  // Filter products by selected subcategory
+  const filteredProducts = products.filter(product => 
+    product.subCategory === selectedSubCategory
+  );
+
   const getCurrentProducts = () => {
-    switch (selectedSubCategory) {
-      case 'online': return onlineProducts;
-      case 'store': return storeProducts;
-      case 'phone': return phoneProducts;
-      case 'other': return otherProducts;
-      default: return [];
-    }
-  };  return (
+    return products.filter(product => product.subCategory === selectedSubCategory);
+  };
+  const subCategories = [
+    { key: '線上占卜', label: '線上占卜', icon: '🔮', color: 'indigo' },
+    { key: '其他服務', label: '其他服務', icon: '⚡', color: 'teal' },
+    { key: '門市占卜', label: '門市占卜', icon: '🏪', color: 'purple' }
+  ];
+
+  return (
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-xl p-8 text-center">
@@ -107,265 +87,115 @@ const TarotPage = ({ onNavigate }) => {
             <div className="w-3 h-3 bg-white rounded-full mr-2"></div>
             <span>人生指引</span>
           </div>
-        </div>
-      </div>
-
-      {/* Subcategory Filter */}
-      <div className="bg-white rounded-xl p-6 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜方式</h2>
+        </div>      </div>      {/* Main Content */}
+      <div className="bg-white rounded-xl p-8 shadow-lg">
+        {/* Subcategory Filter */}
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {subCategories.map((category) => (
+          {subCategories.map((subCat) => (
             <button
-              key={category.id}
-              onClick={() => setSelectedSubCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
-                selectedSubCategory === category.id
+              key={subCat.key}
+              onClick={() => setSelectedSubCategory(subCat.key)}
+              className={`px-6 py-3 rounded-full font-medium transition-all flex items-center gap-2 ${
+                selectedSubCategory === subCat.key
                   ? 'bg-indigo-500 text-white shadow-lg'
                   : 'bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100'
               }`}
             >
-              {category.label}
+              <span className="text-lg">{subCat.icon}</span>
+              <span>{subCat.label}</span>
             </button>
           ))}
-        </div>
-        
-        {/* Category Description */}
-        <div className="text-center">
-          <div className="bg-indigo-50 rounded-lg p-4 max-w-2xl mx-auto">
-            <p className="text-indigo-700">
-              {subCategories.find(cat => cat.id === selectedSubCategory)?.description}
-            </p>
+        </div>        
+        {loading ? (
+          <div className="flex items-center justify-center min-h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
           </div>
-        </div>
-      </div>
-
-      {/* Online Reading Services */}
-      {selectedSubCategory === 'online' && (
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">線上占卜服務</h2>
-          
-          {loading ? (
-            <div className="flex items-center justify-center min-h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-500"></div>
+        ) : (
+          <>
+            {/* Product Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {filteredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  service={product}
+                  cardType="service"
+                  onAddToCart={handleAddToCart}
+                  onNavigate={onNavigate}
+                />
+              ))}
             </div>
-          ) : (
-            <>
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {getCurrentProducts().map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Information Section */}
-          <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">線上占卜服務說明</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-bold text-gray-700 mb-3">服務特色</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• 24小時內完成解讀</li>
-                  <li>• 提供文字或語音報告</li>
-                  <li>• 專業塔羅師親自解讀</li>
-                  <li>• 詳細分析與具體建議</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-700 mb-3">適合對象</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• 時間靈活的客戶</li>
-                  <li>• 需要深度思考的問題</li>
-                  <li>• 希望保留報告的客戶</li>
-                  <li>• 不方便面談的情況</li>
-                </ul>
-              </div>
+          </>
+        )}        {/* Information Section */}
+        <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 mb-6">
+          <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">
+            {selectedSubCategory === '線上占卜' ? '線上塔羅占卜說明' : 
+             selectedSubCategory === '門市占卜' ? '門市塔羅占卜說明' : '快速占卜服務說明'}
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-bold text-gray-700 mb-3">服務特色</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                {selectedSubCategory === '線上占卜' ? (
+                  <>
+                    <li>• 深度專業分析</li>
+                    <li>• 針對性主題解讀</li>
+                    <li>• 詳細文字報告</li>
+                    <li>• 具體行動建議</li>
+                  </>
+                ) : selectedSubCategory === '門市占卜' ? (
+                  <>
+                    <li>• 面對面專業占卜</li>
+                    <li>• 即時互動解讀</li>
+                    <li>• 舒適門市環境</li>
+                    <li>• 30分鐘深度占卜</li>
+                  </>
+                ) : (
+                  <>
+                    <li>• 快速回覆服務</li>
+                    <li>• 經濟實惠價格</li>
+                    <li>• 簡潔精準解讀</li>
+                    <li>• 即時指引建議</li>
+                  </>
+                )}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-bold text-gray-700 mb-3">適合對象</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                {selectedSubCategory === '線上占卜' ? (
+                  <>
+                    <li>• 需要深度分析的問題</li>
+                    <li>• 重要人生決策時刻</li>
+                    <li>• 感情事業規劃需求</li>
+                    <li>• 希望詳細了解趨勢</li>
+                  </>
+                ) : selectedSubCategory === '門市占卜' ? (
+                  <>
+                    <li>• 喜歡面對面交流</li>
+                    <li>• 需要即時回饋互動</li>
+                    <li>• 一個範疇深度探討</li>
+                    <li>• 追求完整占卜體驗</li>
+                  </>
+                ) : (
+                  <>
+                    <li>• 需要快速答案的時候</li>
+                    <li>• 簡單是非題決策</li>
+                    <li>• 尋求即時指引</li>
+                    <li>• 初次體驗塔羅占卜</li>
+                  </>
+                )}
+              </ul>
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-6">
             <button className="bg-indigo-500 text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-indigo-600 transition-colors">
-              了解更多線上占卜
+              了解更多塔羅占卜
             </button>
           </div>
         </div>
-      )}
-
-      {/* Store Reading Services */}
-      {selectedSubCategory === 'store' && (
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">門市占卜服務</h2>
-          
-          {loading ? (
-            <div className="flex items-center justify-center min-h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
-            </div>
-          ) : (
-            <>
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {getCurrentProducts().map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Store Information */}
-          <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">門市占卜優勢</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-3xl mb-2">🤝</div>
-                <h4 className="font-bold text-gray-700 mb-2">面對面互動</h4>
-                <p className="text-sm text-gray-600">即時溝通，深度交流</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl mb-2">⚡</div>
-                <h4 className="font-bold text-gray-700 mb-2">即時解答</h4>
-                <p className="text-sm text-gray-600">問題立即釐清</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl mb-2">🎯</div>
-                <h4 className="font-bold text-gray-700 mb-2">精準指導</h4>
-                <p className="text-sm text-gray-600">個人化建議</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button className="bg-purple-500 text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-purple-600 transition-colors">
-              預約門市占卜
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Phone Reading Services */}
-      {selectedSubCategory === 'phone' && (
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">電話占卜服務</h2>
-          
-          {loading ? (
-            <div className="flex items-center justify-center min-h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500"></div>
-            </div>
-          ) : (
-            <>
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {getCurrentProducts().map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Phone Reading Information */}
-          <div className="bg-gradient-to-r from-pink-100 to-red-100 rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">電話占卜特色</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-bold text-gray-700 mb-3">服務優勢</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• 時間地點靈活安排</li>
-                  <li>• 語音即時互動</li>
-                  <li>• 保護個人隱私</li>
-                  <li>• 多種時長選擇</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-bold text-gray-700 mb-3">預約方式</h4>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li>• 提前24小時預約</li>
-                  <li>• 緊急服務當日安排</li>
-                  <li>• 彈性改期服務</li>
-                  <li>• 專業客服協助</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button className="bg-pink-500 text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-pink-600 transition-colors">
-              預約電話占卜
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Other Services */}
-      {selectedSubCategory === 'other' && (
-        <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">其他占卜服務</h2>
-          
-          {loading ? (
-            <div className="flex items-center justify-center min-h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
-            </div>
-          ) : (
-            <>
-              {/* Product Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                {getCurrentProducts().map((product) => (
-                  <ProductCard
-                    key={product.id}
-                    service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-
-          {/* Quick Services Information */}
-          <div className="bg-gradient-to-r from-teal-100 to-blue-100 rounded-lg p-6 mb-6">
-            <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">快速服務特色</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-3xl mb-2">⚡</div>
-                <h4 className="font-bold text-gray-700 mb-2">快速回覆</h4>
-                <p className="text-sm text-gray-600">最快即時回覆</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl mb-2">💰</div>
-                <h4 className="font-bold text-gray-700 mb-2">經濟實惠</h4>
-                <p className="text-sm text-gray-600">親民的價格</p>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl mb-2">🎯</div>
-                <h4 className="font-bold text-gray-700 mb-2">精準簡潔</h4>
-                <p className="text-sm text-gray-600">直接有效</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center">
-            <button className="bg-teal-500 text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-teal-600 transition-colors">
-              立即開始占卜
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* How It Works Section */}
+      </div>      {/* How It Works Section */}
       <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜流程</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -398,16 +228,13 @@ const TarotPage = ({ onNavigate }) => {
             <p className="text-gray-600 text-sm">收到詳細建議</p>
           </div>
         </div>
-      </div>
-
-      {/* CTA Section */}
+      </div>      {/* CTA Section */}
       <div className="bg-gradient-to-r from-indigo-200 to-purple-200 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索您的未來了嗎？</h2>
         <p className="text-gray-600 mb-6">
           讓塔羅牌為您揭示人生的奧秘與可能性
         </p>
         <button 
-          onClick={() => setSelectedSubCategory('online')}
           className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-3 rounded-full font-medium hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
         >
           開始塔羅占卜

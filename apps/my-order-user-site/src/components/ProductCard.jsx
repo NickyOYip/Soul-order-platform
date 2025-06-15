@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { PlusIcon, EyeIcon } from '@heroicons/react/24/outline';
 
-const ProductCard = ({ product, service, onAddToCart, onClick, cardType = 'planetary' }) => {
+const ProductCard = ({ product, service, onAddToCart, onClick, onNavigate, cardType = 'planetary' }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedOption, setSelectedOption] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -24,56 +25,96 @@ const ProductCard = ({ product, service, onAddToCart, onClick, cardType = 'plane
       setSelectedAddOns(selectedAddOns.filter(addon => addon.name !== addOn.name));
     }
   };
-
   const handleSizeChange = (size) => {
     setSelectedSize(size);
   };
 
-  const getTotalPrice = () => {
+  const handleQuantityChange = (newQuantity) => {
+    if (newQuantity >= 1 && newQuantity <= 99) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  const incrementQuantity = () => {
+    if (quantity < 99) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };  const getTotalPrice = () => {
     let basePrice = 0;
     
     // Handle different product/service structures
     if (cardType === 'custom' && selectedSize) {
       basePrice = selectedSize.price;
     } else if (cardType === 'service' && item.hasOptions && item.options) {
-      basePrice = item.options[selectedOption]?.price || item.basePrice || item.price || 0;
+      // Handle new option structure with basePrice + additionalPrice
+      const selectedOptionData = item.options[selectedOption];
+      if (selectedOptionData && selectedOptionData.optionDetails) {
+        // New structure: options contain optionDetails array
+        const selectedDetail = selectedOptionData.optionDetails[0]; // Default to first option
+        basePrice = item.basePrice + (selectedDetail?.additionalPrice || 0);
+      } else {
+        // Legacy structure
+        basePrice = selectedOptionData?.price || item.basePrice || item.price || 0;
+      }
     } else {
       basePrice = item.price || item.basePrice || 0;
     }
     
     const addOnTotal = selectedAddOns.reduce((sum, addOn) => sum + addOn.price, 0);
-    return basePrice + addOnTotal;
-  };  const handleAddToCart = () => {
+    return (basePrice + addOnTotal) * quantity;
+  };const handleAddToCart = () => {
     if (onAddToCart) {
       setIsAdding(true);
       
       let cartItem;
-      
-      if (cardType === 'custom') {
+        if (cardType === 'custom') {
         // Handle custom candles with size selection
         cartItem = {
           ...item,
           selectedSize: selectedSize,
           selectedAddOns: selectedAddOns,
+          quantity: quantity,
           totalPrice: getTotalPrice()
-        };
-      } else if (cardType === 'service') {
+        };      } else if (cardType === 'service') {
         // Handle service cards with options
         if (item.hasOptions && item.options) {
-          const option = item.options[selectedOption];
-          cartItem = {
-            ...item,
-            selectedOption: option,
-            price: option.price,
-            name: `${item.name} - ${option.name}`,
-            selectedAddOns: selectedAddOns,
-            totalPrice: getTotalPrice()
-          };
+          if (item.options[0]?.optionDetails) {
+            // New structure with dropdown options
+            const selectedDetail = item.options[0].optionDetails[selectedOption];
+            cartItem = {
+              ...item,
+              selectedOption: selectedDetail,
+              price: item.basePrice + selectedDetail.additionalPrice,
+              name: `${item.name} - ${selectedDetail.name}`,
+              selectedAddOns: selectedAddOns,
+              quantity: quantity,
+              totalPrice: getTotalPrice()
+            };
+          } else {
+            // Legacy structure
+            const option = item.options[selectedOption];
+            cartItem = {
+              ...item,
+              selectedOption: option,
+              price: option.price,
+              name: `${item.name} - ${option.name}`,
+              selectedAddOns: selectedAddOns,
+              quantity: quantity,
+              totalPrice: getTotalPrice()
+            };
+          }
         } else {
           cartItem = {
             ...item,
             price: item.basePrice || item.price || 0,
             selectedAddOns: selectedAddOns,
+            quantity: quantity,
             totalPrice: getTotalPrice()
           };
         }
@@ -82,17 +123,22 @@ const ProductCard = ({ product, service, onAddToCart, onClick, cardType = 'plane
         cartItem = {
           ...item,
           selectedAddOns: selectedAddOns,
+          quantity: quantity,
           totalPrice: getTotalPrice()
         };
       }
-      
-      onAddToCart(cartItem);
+        onAddToCart(cartItem);
       
       // Show success feedback
       setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
         setIsAdding(false);
+        
+        // Redirect to cart page after showing success message
+        if (onNavigate) {
+          onNavigate('cart');
+        }
       }, 2000);
     }
   };
@@ -185,25 +231,48 @@ const ProductCard = ({ product, service, onAddToCart, onClick, cardType = 'plane
             {item.day || item.color || item.category}
             {item.color && item.day && ` | ${item.color}`}
           </span>
-          <span className={`text-2xl font-bold ${styling.price}`}>
-            ${cardType === 'custom' && selectedSize ? selectedSize.price : getTotalPrice()}
-          </span>
+          <div className="text-right">
+            {quantity > 1 && (
+              <div className="text-xs text-gray-500">
+                ${Math.round((getTotalPrice() / quantity) * 100) / 100} × {quantity}
+              </div>
+            )}
+            <span className={`text-2xl font-bold ${styling.price}`}>
+              ${getTotalPrice()}
+            </span>
+          </div>
         </div>
       </div>      {/* Service Options (for service cards and lovers cards with options) */}
       {(cardType === 'service' || cardType === 'lovers') && item.hasOptions && item.options && (
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">選擇方案</label>
-          <select
-            value={selectedOption}
-            onChange={(e) => setSelectedOption(parseInt(e.target.value))}
-            className="w-full p-2 border border-gray-300 rounded-md text-sm"
-          >
-            {item.options.map((option, index) => (
-              <option key={index} value={index}>
-                {option.name} - ${option.price}
-              </option>
-            ))}
-          </select>
+          {item.options[0]?.optionDetails ? (
+            // New structure with dropdown options
+            <select
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(parseInt(e.target.value))}
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+            >
+              {item.options[0].optionDetails.map((detail, index) => (
+                <option key={index} value={index}>
+                  {detail.name} - ${item.basePrice + detail.additionalPrice}
+                </option>
+              ))}
+            </select>
+          ) : (
+            // Legacy structure
+            <select
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(parseInt(e.target.value))}
+              className="w-full p-2 border border-gray-300 rounded-md text-sm"
+            >
+              {item.options.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.name} - ${option.price}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
       )}
 
@@ -354,9 +423,41 @@ const ProductCard = ({ product, service, onAddToCart, onClick, cardType = 'plane
                 ))}
               </ul>
             </div>
-          )}
-        </div>
+          )}        </div>
       )}
+
+      {/* Quantity Selector */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700 mb-2">數量</label>
+        <div className="flex items-center justify-center border rounded-lg p-2 bg-gray-50">
+          <button
+            onClick={decrementQuantity}
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors"
+            disabled={quantity <= 1}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
+            </svg>
+          </button>
+          <input
+            type="number"
+            min="1"
+            max="99"
+            value={quantity}
+            onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
+            className="mx-3 w-16 text-center text-lg font-medium bg-transparent border-none outline-none"
+          />
+          <button
+            onClick={incrementQuantity}
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 transition-colors"
+            disabled={quantity >= 99}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       {/* Action Buttons */}
       <div className="flex flex-col gap-2">
