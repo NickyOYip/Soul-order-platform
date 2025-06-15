@@ -160,46 +160,69 @@ const CartPage = ({ onNavigate }) => {
                       }
                     });
                   }
-                  
-                  return (
-                  <div key={`${item.id}-${index}`} className="flex items-center justify-between border-b border-gray-200 pb-4">                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-800">{item.name}</h3>
-                      <p className="text-gray-600">${itemPrice} x {item.quantity}</p>
-                        {/* Display selected options */}
-                      {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
-                        <div className="text-xs text-gray-500 mt-1">
-                          {item.options?.map(option => {
+                    return (                  <div key={`${item.id}-${index}`} className="border-b border-gray-200 pb-4">
+                    {/* Product Info Section */}
+                    <div className="mb-3">
+                      {/* Product Name */}
+                      <h3 className="font-medium text-gray-800 mb-2">{item.name}</h3>
+                      
+                      {/* Base Price */}
+                      <div className="text-sm text-gray-600 mb-2">
+                        基本價格: ${item.basePrice || item.price || 0}
+                      </div>
+                      
+                      {/* Selected Options */}
+                      {((item.selectedOptions && Object.keys(item.selectedOptions).length > 0) || 
+                        (item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0)) && (
+                        <div className="text-sm mb-3 bg-gray-50 p-2 rounded">
+                          <div className="font-medium text-gray-700 mb-1">已選擇的選項:</div>
+                          
+                          {/* Dropdown and Detail Card Options */}
+                          {item.selectedOptions && item.options?.map(option => {
                             const selectedValue = item.selectedOptions[option.optionNo];
                             if (selectedValue && (option.optionType === 'dropdown' || option.optionType === 'detail card')) {
                               const selectedDetail = option.optionDetails.find(
                                 detail => detail.name === selectedValue
                               );
                               return (
-                                <div key={option.optionNo}>
-                                  {option.optionTitle}: {selectedValue}
-                                  {selectedDetail?.additionalPrice > 0 && ` (+$${selectedDetail.additionalPrice})`}
+                                <div key={option.optionNo} className="mb-1">
+                                  <div className="text-gray-600">
+                                    {option.optionTitle}: {selectedValue}
+                                  </div>
+                                  {selectedDetail?.additionalPrice > 0 && (
+                                    <div className="text-pink-600 text-sm">
+                                      +${selectedDetail.additionalPrice}
+                                    </div>
+                                  )}
                                 </div>
                               );
                             }
                             return null;
                           })}
-                        </div>
-                      )}
-                      
-                      {/* Display selected multiple options */}
-                      {item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0 && (
-                        <div className="text-xs text-gray-500 mt-1">
-                          {item.options?.map(option => {
+                          
+                          {/* Multiple Selection Options */}
+                          {item.selectedMultiple && item.options?.map(option => {
                             const selectedValues = item.selectedMultiple[option.optionNo];
                             if (selectedValues && selectedValues.length > 0 && option.optionType === 'multiple selection') {
                               return (
-                                <div key={option.optionNo}>
-                                  {option.optionTitle}: {selectedValues.map(value => {
+                                <div key={option.optionNo} className="mb-1">
+                                  {selectedValues.map(value => {
                                     const selectedDetail = option.optionDetails.find(
                                       detail => detail.name === value
                                     );
-                                    return `${value}${selectedDetail?.additionalPrice > 0 ? ` (+$${selectedDetail.additionalPrice})` : ''}`;
-                                  }).join(', ')}
+                                    return (
+                                      <div key={value}>
+                                        <div className="text-gray-600">
+                                          {option.optionTitle}: {value}
+                                        </div>
+                                        {selectedDetail?.additionalPrice > 0 && (
+                                          <div className="text-pink-600 text-sm">
+                                            +${selectedDetail.additionalPrice}
+                                          </div>
+                                        )}
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               );
                             }
@@ -209,31 +232,43 @@ const CartPage = ({ onNavigate }) => {
                       )}
                     </div>
                     
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                        >
-                          -
-                        </button>
-                        <span className="w-8 text-center">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                          className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                        >
-                          +
-                        </button>                      </div>
-                        <span className="font-medium text-gray-800 w-20 text-right">
-                        ${itemPrice * item.quantity}
-                      </span>
+                    {/* Bottom Section - Total Price, Quantity Controls and Delete Button - Same Level */}
+                    <div className="flex items-center justify-between">
+                      {/* Total Price */}
+                      <div className="font-medium text-gray-800 text-base">
+                        總計: ${itemPrice} x {item.quantity}
+                      </div>
                       
-                      <button
-                        onClick={() => removeFromCart(index)}
-                        className="text-gray-500 hover:text-red-500 transition-colors"
-                      >
-                        <TrashIcon className="h-5 w-5" />
-                      </button>
+                      <div className="flex items-center space-x-4">
+                        {/* Quantity Controls */}
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => updateQuantity(index, item.quantity - 1)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            -
+                          </button>
+                          <span className="w-8 text-center">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(index, item.quantity + 1)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            +
+                          </button>
+                        </div>
+                        
+                        {/* Total Amount */}
+                        <span className="font-medium text-gray-800 w-20 text-right">
+                          ${itemPrice * item.quantity}
+                        </span>
+                          {/* Delete Button */}
+                        <button
+                          onClick={() => removeFromCart(index)}
+                          className="text-gray-500 hover:text-red-500 transition-colors"
+                        >
+                          <TrashIcon className="h-5 w-5" />
+                        </button>
+                      </div>
                     </div>                  </div>
                   );
                 })}

@@ -16,19 +16,76 @@ export const CartProvider = ({ children }) => {
     console.log('Received service:', service);
     
     setCart(prevCart => {
-      const existingItem = prevCart.find(item => item.id === service.id);
+      // Create a more comprehensive comparison function that includes options
+      const isSameCartItem = (cartItem, newItem) => {
+        // First check if it's the same product
+        if (cartItem.id !== newItem.id) {
+          return false;
+        }
+        
+        // Compare selectedOptions
+        const cartOptions = cartItem.selectedOptions || {};
+        const newOptions = newItem.selectedOptions || {};
+        const cartOptionsKeys = Object.keys(cartOptions);
+        const newOptionsKeys = Object.keys(newOptions);
+        
+        if (cartOptionsKeys.length !== newOptionsKeys.length) {
+          return false;
+        }
+        
+        for (const key of cartOptionsKeys) {
+          if (cartOptions[key] !== newOptions[key]) {
+            return false;
+          }
+        }
+        
+        // Compare selectedMultiple
+        const cartMultiple = cartItem.selectedMultiple || {};
+        const newMultiple = newItem.selectedMultiple || {};
+        const cartMultipleKeys = Object.keys(cartMultiple);
+        const newMultipleKeys = Object.keys(newMultiple);
+        
+        if (cartMultipleKeys.length !== newMultipleKeys.length) {
+          return false;
+        }
+        
+        for (const key of cartMultipleKeys) {
+          const cartArray = cartMultiple[key] || [];
+          const newArray = newMultiple[key] || [];
+          
+          if (cartArray.length !== newArray.length) {
+            return false;
+          }
+          
+          // Sort arrays for comparison
+          const sortedCartArray = [...cartArray].sort();
+          const sortedNewArray = [...newArray].sort();
+          
+          for (let i = 0; i < sortedCartArray.length; i++) {
+            if (sortedCartArray[i] !== sortedNewArray[i]) {
+              return false;
+            }
+          }
+        }
+        
+        return true;
+      };
+      
+      const existingItemIndex = prevCart.findIndex(item => isSameCartItem(item, service));
       
       let newCart;
-      if (existingItem) {
-        newCart = prevCart.map(item =>
-          item.id === service.id
+      if (existingItemIndex !== -1) {
+        // Same item with same options - update quantity
+        newCart = prevCart.map((item, index) =>
+          index === existingItemIndex
             ? { ...item, quantity: item.quantity + service.quantity }
             : item
         );
-        console.log('Updated existing item quantity');
+        console.log('Updated existing item quantity (same product + same options)');
       } else {
+        // Different item or same item with different options - add as new item
         newCart = [...prevCart, { ...service, quantity: service.quantity }];
-        console.log('Added new item to cart');
+        console.log('Added new item to cart (different product or different options)');
       }
       
       console.log('Previous cart:', prevCart);
@@ -42,14 +99,13 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = (index) => {
     setCart(prevCart => prevCart.filter((_, i) => i !== index));
   };
-
-  const updateQuantity = (id, newQuantity) => {
+  const updateQuantity = (index, newQuantity) => {
     if (newQuantity <= 0) {
-      setCart(prevCart => prevCart.filter(item => item.id !== id));
+      setCart(prevCart => prevCart.filter((_, i) => i !== index));
     } else {
       setCart(prevCart =>
-        prevCart.map(item =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
+        prevCart.map((item, i) =>
+          i === index ? { ...item, quantity: newQuantity } : item
         )
       );
     }

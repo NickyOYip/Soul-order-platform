@@ -72,12 +72,11 @@ export const candleProducts = [
         optionNo: 1,
         optionType: 'multiple selection',
         optionTitle: '額外服務',
-        optionDetails: [
-          {
+        optionDetails: [          {
             name: '綁紅線',
             description: '月老紅線加持，增強愛情連結',
             additionalPrice: 12,
-            tag: ''
+            tag: 'Add-on'
           }
         ]
       }
@@ -164,12 +163,11 @@ export const candleProducts = [
             description: '令對方對你增加激情和渴望 | 增加雙方性生活契合度',
             additionalPrice: 0,
             tag: 'Passion'
-          },
-          {
+          },          {
             name: 'IMPROVE #愛情推進器',
             description: '提升和改善雙方開係 | 促進溝通&促使和好如初',
             additionalPrice: 0,
-            tag: ''
+            tag: 'Love'
           },
           {
             name: 'MISS ME MORE #想見你',
