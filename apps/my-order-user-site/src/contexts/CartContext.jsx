@@ -11,21 +11,31 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
-
-  const addToCart = (service) => {
+  const [cart, setCart] = useState([]);  const addToCart = (service) => {
+    console.log('=== Cart Context Debug ===');
+    console.log('Received service:', service);
+    
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === service.id);
       
+      let newCart;
       if (existingItem) {
-        return prevCart.map(item =>
+        newCart = prevCart.map(item =>
           item.id === service.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + service.quantity }
             : item
         );
+        console.log('Updated existing item quantity');
       } else {
-        return [...prevCart, { ...service, quantity: 1 }];
+        newCart = [...prevCart, { ...service, quantity: service.quantity }];
+        console.log('Added new item to cart');
       }
+      
+      console.log('Previous cart:', prevCart);
+      console.log('New cart:', newCart);
+      console.log('========================');
+      
+      return newCart;
     });
   };
 
@@ -48,9 +58,8 @@ export const CartProvider = ({ children }) => {
   const clearCart = () => {
     setCart([]);
   };
-
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    return cart.reduce((total, item) => total + ((item.basePrice || item.price || 0) * item.quantity), 0);
   };
 
   const getCartCount = () => {

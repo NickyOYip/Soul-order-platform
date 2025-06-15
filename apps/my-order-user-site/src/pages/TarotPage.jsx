@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, tarotSubCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Toast from '../components/Toast';
-import { useCart } from '../contexts/CartContext';
 
 const TarotPage = ({ onNavigate }) => {
-  const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState('線上占卜');
@@ -30,41 +28,17 @@ const TarotPage = ({ onNavigate }) => {
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
   };
-
   const hideToast = () => {
     setToast({ show: false, message: '', type: 'success' });
-  };  const handleAddToCart = (product) => {
-    // Convert tarot product to cart item format
-    const cartItem = {
-      id: `tarot_${product.subCategory}_${product.id}`,
-      name: product.name,
-      price: product.basePrice,
-      type: 'tarot_reading',
-      description: product.detail,
-      details: {
-        category: product.subCategory,
-        tag: product.tag
-      }
-    };
-    
-    addToCart(cartItem);
-    showToast(`已將「${product.name}」加入購物車！`, 'success');
-    console.log('Added to cart:', cartItem);
   };
 
   // Filter products by selected subcategory
   const filteredProducts = products.filter(product => 
     product.subCategory === selectedSubCategory
   );
-
   const getCurrentProducts = () => {
     return products.filter(product => product.subCategory === selectedSubCategory);
   };
-  const subCategories = [
-    { key: '線上占卜', label: '線上占卜', icon: '🔮', color: 'indigo' },
-    { key: '其他服務', label: '其他服務', icon: '⚡', color: 'teal' },
-    { key: '門市占卜', label: '門市占卜', icon: '🏪', color: 'purple' }
-  ];
 
   return (
     <div className="space-y-8">
@@ -92,7 +66,7 @@ const TarotPage = ({ onNavigate }) => {
         {/* Subcategory Filter */}
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {subCategories.map((subCat) => (
+          {tarotSubCategories.map((subCat) => (
             <button
               key={subCat.key}
               onClick={() => setSelectedSubCategory(subCat.key)}
@@ -115,12 +89,9 @@ const TarotPage = ({ onNavigate }) => {
           <>
             {/* Product Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {filteredProducts.map((product) => (
-                <ProductCard
+              {filteredProducts.map((product) => (                <ProductCard
                   key={product.id}
                   service={product}
-                  cardType="service"
-                  onAddToCart={handleAddToCart}
                   onNavigate={onNavigate}
                 />
               ))}

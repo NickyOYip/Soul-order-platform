@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
-import { getMembershipName } from '../services/api';
+import { getMembershipName, navigationItems, serviceNavigationCategories } from '../services/api';
 import LoginModal from './LoginModal';
 
 const Navigation = ({ currentPage, onNavigate }) => {
@@ -10,19 +10,8 @@ const Navigation = ({ currentPage, onNavigate }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const { user, logout } = useAuth();
-  const { getCartCount } = useCart();
-  const navItems = [
-    { id: 'home', label: '首頁' },
-    { id: 'membership', label: '會員制度' },
-    { id: 'cart', label: '購物車' }
-  ];  const serviceCategories = [
-    { id: 'candles', label: '魔法蠟燭', page: 'candles' },
-    { id: 'frequency', label: '靈擺調頻', page: 'frequency' },
-    { id: 'tarot', label: '塔羅占卜', page: 'tarot' },
-    { id: 'astrology', label: '八字 & 紫微斗數', page: 'astrology' },
-    { id: 'love', label: '月老紅線', page: 'love' },
-    { id: 'psychic', label: '潛意識讀心', page: 'psychic' }
-  ];
+  const { getCartCount } = useCart();  const navItems = navigationItems;
+  const serviceCategories = serviceNavigationCategories;
 
   const handleNavClick = (pageId) => {
     onNavigate(pageId);

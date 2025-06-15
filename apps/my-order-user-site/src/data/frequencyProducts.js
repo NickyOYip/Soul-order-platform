@@ -1,8 +1,7 @@
 // 靈擺調頻 - Frequency Products Data
 // This file contains all frequency adjustment products including love, career, and personal
 
-export const frequencyProducts = [
-  {
+export const frequencyProducts = [  {
     id: 1,
     name: '暗戀Plan',
     category: 'frequency',
@@ -20,22 +19,22 @@ export const frequencyProducts = [
           {
             name: '3日',
             description: '3日調頻服務',
-            additionalPrice: 0
+            additionalPrice: 255
           },
           {
             name: '5日',
             description: '5日調頻服務',
-            additionalPrice: 167
+            additionalPrice: 422
           },
           {
             name: '7日',
             description: '7日調頻服務',
-            additionalPrice: 355
+            additionalPrice: 610
           },
           {
             name: '包月調頻PLAN（隔日做一次）',
             description: '包月調頻服務（隔日做一次）',
-            additionalPrice: 1247
+            additionalPrice: 1502
           }
         ]
       }

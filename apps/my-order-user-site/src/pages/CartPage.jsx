@@ -2,13 +2,20 @@ import { useState } from 'react';
 import { ShoppingCartIcon, TrashIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
-import { membershipDiscounts, getMembershipName, api } from '../services/api';
+import { membershipDiscounts, getMembershipName, api, paymentMethods } from '../services/api';
 import OrderSuccessModal from '../components/OrderSuccessModal';
 import Toast from '../components/Toast';
 
 const CartPage = ({ onNavigate }) => {
   const { cart, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart();
   const { user } = useAuth();
+  
+  // Debug logging for cart page
+  console.log('=== CartPage Debug ===');
+  console.log('Current cart:', cart);
+  console.log('Cart count:', cart.length);
+  console.log('User:', user);
+  console.log('===================');
   
   const [checkoutData, setCheckoutData] = useState({
     phone: user?.phone || '',
@@ -20,16 +27,9 @@ const CartPage = ({ onNavigate }) => {
   const [showOrderSuccess, setShowOrderSuccess] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-
   const subtotal = getCartTotal();
   const discount = user?.membership ? subtotal * membershipDiscounts[user.membership] : 0;
   const total = subtotal - discount;
-
-  const paymentMethods = [
-    { id: 'FPS', name: 'FPS', icon: '💳' },
-    { id: 'PayMe', name: 'PayMe', icon: '📱' },
-    { id: 'Alipay', name: 'Alipay', icon: '💰' }
-  ];
 
   const handleInputChange = (e) => {
     setCheckoutData({
@@ -132,10 +132,9 @@ const CartPage = ({ onNavigate }) => {
               
               <div className="space-y-4">
                 {cart.map((item, index) => (
-                  <div key={`${item.id}-${index}`} className="flex items-center justify-between border-b border-gray-200 pb-4">
-                    <div className="flex-1">
+                  <div key={`${item.id}-${index}`} className="flex items-center justify-between border-b border-gray-200 pb-4">                    <div className="flex-1">
                       <h3 className="font-medium text-gray-800">{item.name}</h3>
-                      <p className="text-gray-600">${item.price} x {item.quantity}</p>
+                      <p className="text-gray-600">${item.basePrice || item.price || 0} x {item.quantity}</p>
                     </div>
                     
                     <div className="flex items-center space-x-4">
@@ -154,9 +153,8 @@ const CartPage = ({ onNavigate }) => {
                           +
                         </button>
                       </div>
-                      
-                      <span className="font-medium text-gray-800 w-20 text-right">
-                        ${item.price * item.quantity}
+                        <span className="font-medium text-gray-800 w-20 text-right">
+                        ${(item.basePrice || item.price || 0) * item.quantity}
                       </span>
                       
                       <button

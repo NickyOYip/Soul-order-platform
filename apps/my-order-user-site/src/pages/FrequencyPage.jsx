@@ -1,36 +1,15 @@
 import { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, frequencySubCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Toast from '../components/Toast';
-import { useCart } from '../contexts/CartContext';
 
 const FrequencyPage = ({ onNavigate }) => {
-  const { addToCart } = useCart();  const [selectedSubCategory, setSelectedSubCategory] = useState('love');
+  const [selectedSubCategory, setSelectedSubCategory] = useState('love');
   const [loveProducts, setLoveProducts] = useState([]);
   const [careerProducts, setCareerProducts] = useState([]);
   const [personalProducts, setPersonalProducts] = useState([]);
   const [consultationProducts, setConsultationProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  
-  const subCategories = [
-    { 
-      id: 'love', 
-      label: '愛情調頻'
-    },
-    { 
-      id: 'career', 
-      label: '事業財運調頻'
-    },
-    { 
-      id: 'personal', 
-      label: '自身調頻'
-    },
-    { 
-      id: 'consultation', 
-      label: '單項 & 加急'
-    }
-  ];
+  const [loading, setLoading] = useState(false);  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -60,28 +39,8 @@ const FrequencyPage = ({ onNavigate }) => {
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
   };
-
   const hideToast = () => {
     setToast({ show: false, message: '', type: 'success' });
-  };  const handleAddToCart = (product) => {
-    // Convert frequency product to cart item format
-    const cartItem = {
-      id: `frequency_${product.id}_${product.selectedOption?.name || 'default'}`,
-      name: product.selectedOption ? `${product.name} - ${product.selectedOption.name}` : product.name,
-      price: product.totalPrice || product.selectedOption?.price || product.basePrice || product.price,
-      type: 'frequency_adjustment',
-      description: product.description,
-      details: {
-        category: product.category,
-        duration: product.selectedOption?.duration,
-        includes: product.selectedOption?.includes,
-        bonus: product.selectedOption?.name === '包月' ? '送天使卡指引' : null
-      }
-    };
-    
-    addToCart(cartItem);
-    showToast(`已將「${cartItem.name}」加入購物車！`, 'success');
-    console.log('Added to cart:', cartItem);
   };
 
   return (
@@ -133,7 +92,7 @@ const FrequencyPage = ({ onNavigate }) => {
       <div className="bg-white rounded-xl p-6 shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">調頻分類</h2>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {subCategories.map((category) => (
+          {frequencySubCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedSubCategory(category.id)}
@@ -159,12 +118,9 @@ const FrequencyPage = ({ onNavigate }) => {
           ) : (
             <>
               {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {loveProducts.map((product) => (
-                  <ProductCard 
+                {loveProducts.map((product) => (                  <ProductCard 
                     key={product.id} 
                     service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
                     onNavigate={onNavigate}
                   />
                 ))}
@@ -183,14 +139,11 @@ const FrequencyPage = ({ onNavigate }) => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
             </div>
           ) : (
-            <>
-              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <>              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {careerProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
                     service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
                     onNavigate={onNavigate}
                   />
                 ))}
@@ -209,14 +162,11 @@ const FrequencyPage = ({ onNavigate }) => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
             </div>
           ) : (
-            <>
-              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <>              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {personalProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
                     service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
                     onNavigate={onNavigate}
                   />
                 ))}
@@ -232,14 +182,11 @@ const FrequencyPage = ({ onNavigate }) => {
           {loading ? (
             <div className="flex items-center justify-center min-h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
-            </div>          ) : (            <>
-              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            </div>          ) : (            <>              {/* Product Grid */}              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {consultationProducts.map((product) => (
                   <ProductCard 
                     key={product.id} 
                     service={product}
-                    cardType="service"
-                    onAddToCart={handleAddToCart}
                     onNavigate={onNavigate}
                   />
                 ))}

@@ -1,54 +1,7 @@
 import { CheckIcon } from '@heroicons/react/24/outline';
+import { membershipTiers } from '../services/api';
 
 const MembershipPage = () => {
-  const membershipTiers = [
-    {
-      id: 'gold',
-      name: '金卡會員',
-      requirement: '單次消費 $1,000 - $1,499',
-      discount: '95折優惠',
-      discountPercent: '5%',
-      color: 'from-yellow-300 to-yellow-500',
-      textColor: 'text-black',
-      benefits: [
-        '所有商品享有 95 折優惠',
-        '生日月享額外優惠',
-        '專屬會員活動'
-      ]
-    },
-    {
-      id: 'platinum',
-      name: '白金會員',
-      requirement: '單次消費 $1,500 - $1,999',
-      discount: '9折優惠',
-      discountPercent: '10%',
-      color: 'from-gray-300 to-gray-500',
-      textColor: 'text-black',
-      benefits: [
-        '所有商品享有 9 折優惠',
-        '生日月享額外優惠',
-        '專屬會員活動',
-        '優先預約服務'
-      ]
-    },
-    {
-      id: 'diamond',
-      name: '鑽石會員',
-      requirement: '單次消費 $1,999 或以上',
-      discount: '85折優惠',
-      discountPercent: '15%',
-      color: 'from-blue-300 to-purple-500',
-      textColor: 'text-white',
-      benefits: [
-        '所有商品享有 85 折優惠',
-        '生日月享額外優惠',
-        '專屬會員活動',
-        '優先預約服務',
-        '專屬客服支援',
-        '免費生日禮物'
-      ]
-    }
-  ];
 
   return (
     <div className="space-y-12">

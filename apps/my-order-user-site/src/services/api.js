@@ -40,6 +40,147 @@ export const getMembershipName = (membership) => {
   }
 };
 
+// Navigation configuration - TODO: Move to backend configuration API
+export const navigationItems = [
+  { id: 'home', label: '首頁' },
+  { id: 'membership', label: '會員制度' },
+  { id: 'cart', label: '購物車' }
+];
+
+export const serviceNavigationCategories = [
+  { id: 'candles', label: '魔法蠟燭', page: 'candles' },
+  { id: 'frequency', label: '靈擺調頻', page: 'frequency' },
+  { id: 'tarot', label: '塔羅占卜', page: 'tarot' },
+  { id: 'astrology', label: '八字 & 紫微斗數', page: 'astrology' },
+  { id: 'love', label: '月老紅線', page: 'love' },
+  { id: 'psychic', label: '潛意識讀心', page: 'psychic' }
+];
+
+export const homePageServiceCategories = [
+  {
+    id: 'candles',
+    name: '魔法蠟燭',
+    description: '注入能量的神聖蠟燭，為您帶來好運與保護',
+    icon: '🕯️',
+    color: 'from-orange-400 to-red-400',
+    page: 'candles'
+  },
+  {
+    id: 'tarot',
+    name: '塔羅占卜',
+    description: '透過古老智慧解讀人生的過去、現在與未來',
+    icon: '🔮',
+    color: 'from-purple-400 to-indigo-400',
+    page: 'tarot'
+  },
+  {
+    id: 'love',
+    name: '月老紅線',
+    description: '月老牽線，為您尋找命中注定的良緣',
+    icon: '💕',
+    color: 'from-pink-400 to-red-400',
+    page: 'love'
+  },
+  {
+    id: 'astrology',
+    name: '八字 & 紫微斗數',
+    description: '根據出生時間解讀命盤奧秘，了解人生軌跡',
+    icon: '⭐',
+    color: 'from-amber-400 to-orange-400',
+    page: 'astrology'
+  },
+  {
+    id: 'frequency',
+    name: '靈擺調頻',
+    description: '運用靈擺的能量共振，調整您的能量頻率',
+    icon: '🔄',
+    color: 'from-teal-400 to-blue-400',
+    page: 'frequency'
+  },
+  {
+    id: 'psychic',
+    name: '潛意識讀心',
+    description: '透過心靈圖卡探索內心深處的真實想法',
+    icon: '🧠',
+    color: 'from-blue-400 to-purple-400',
+    page: 'psychic'
+  }
+];
+
+export const membershipTiers = [
+  {
+    id: 'gold',
+    name: '金卡會員',
+    requirement: '單次消費 $1,000 - $1,499',
+    discount: '95折優惠',
+    discountPercent: '5%',
+    color: 'from-yellow-300 to-yellow-500',
+    textColor: 'text-black',
+    benefits: [
+      '所有商品享有 95 折優惠',
+      '生日月享額外優惠',
+      '專屬會員活動'
+    ]
+  },
+  {
+    id: 'platinum',
+    name: '白金會員',
+    requirement: '單次消費 $1,500 - $1,999',
+    discount: '9折優惠',
+    discountPercent: '10%',
+    color: 'from-gray-300 to-gray-500',
+    textColor: 'text-black',
+    benefits: [
+      '所有商品享有 9 折優惠',
+      '生日月享額外優惠',
+      '專屬會員活動',
+      '優先預約服務'
+    ]
+  },
+  {
+    id: 'diamond',
+    name: '鑽石會員',
+    requirement: '單次消費 $2,000 以上',
+    discount: '85折優惠',
+    discountPercent: '15%',
+    color: 'from-blue-300 to-purple-500',
+    textColor: 'text-white',
+    benefits: [
+      '所有商品享有 85 折優惠',
+      '生日月享額外優惠',
+      '專屬會員活動',
+      '優先預約服務',
+      '專屬客服',
+      '免費快遞服務'
+    ]
+  }
+];
+
+export const paymentMethods = [
+  { id: 'FPS', name: 'FPS', icon: '💳' },
+  { id: 'PayMe', name: 'PayMe', icon: '📱' },
+  { id: 'Alipay', name: 'Alipay', icon: '💰' }
+];
+
+export const candleSubCategories = [
+  { id: '七日星體蠟燭', label: '七日星體蠟燭' },
+  { id: '戀人蠟燭儀式', label: '戀人蠟燭儀式' },
+  { id: '自家款魔法蠟燭', label: '自家款魔法蠟燭' }
+];
+
+export const frequencySubCategories = [
+  { id: 'love', label: '愛情調頻' },
+  { id: 'career', label: '事業財運調頻' },
+  { id: 'personal', label: '自身調頻' },
+  { id: 'consultation', label: '單項 & 加急' }
+];
+
+export const tarotSubCategories = [
+  { key: '線上占卜', label: '線上占卜', icon: '🔮', color: 'indigo' },
+  { key: '其他服務', label: '其他服務', icon: '⚡', color: 'teal' },
+  { key: '門市占卜', label: '門市占卜', icon: '🏪', color: 'purple' }
+];
+
 // Helper function to determine membership level based on spending
 function determineMembership(amount) {
   if (amount >= 1999) return 'diamond';

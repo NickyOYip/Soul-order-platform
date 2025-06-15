@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 import { api } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Toast from '../components/Toast';
-import { useCart } from '../contexts/CartContext';
 
 const PsychicPage = ({ onNavigate }) => {
-  const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
@@ -28,29 +26,10 @@ const PsychicPage = ({ onNavigate }) => {
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
   };
-
   const hideToast = () => {
     setToast({ show: false, message: '', type: 'success' });
   };
-
-  const handleAddToCart = (product) => {
-    // Convert psychic product to cart item format
-    const cartItem = {
-      id: `psychic_${product.id}`,
-      name: product.name,
-      price: product.basePrice,
-      type: 'psychic_reading',
-      description: product.detail,
-      details: {
-        category: product.subCategory,
-        tag: product.tag
-      }
-    };
-    
-    addToCart(cartItem);
-    showToast(`已將「${product.name}」加入購物車！`, 'success');
-    console.log('Added to cart:', cartItem);
-  };
+  
   return (
     <div className="space-y-8">
       {/* Hero Section */}
@@ -85,14 +64,11 @@ const PsychicPage = ({ onNavigate }) => {
           </div>
         ) : (
           <>
-            {/* Product Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Product Grid */}            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
                   service={product}
-                  cardType="service"
-                  onAddToCart={handleAddToCart}
                   onNavigate={onNavigate}
                 />
               ))}

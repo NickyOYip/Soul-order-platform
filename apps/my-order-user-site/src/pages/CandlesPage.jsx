@@ -1,20 +1,12 @@
 import { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, candleSubCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Toast from '../components/Toast';
-import { useCart } from '../contexts/CartContext';
 
 const CandlesPage = ({ onNavigate }) => {
-  const { addToCart } = useCart();
   const [selectedSubCategory, setSelectedSubCategory] = useState('七日星體蠟燭');
   const [allProducts, setAllProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-  const subCategories = [
-    { id: '七日星體蠟燭', label: '七日星體蠟燭' },
-    { id: '戀人蠟燭儀式', label: '戀人蠟燭儀式' },
-    { id: '自家款魔法蠟燭', label: '自家款魔法蠟燭' }
-  ];
+  const [loading, setLoading] = useState(false);  const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -35,27 +27,8 @@ const CandlesPage = ({ onNavigate }) => {
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
   };
-
   const hideToast = () => {
     setToast({ show: false, message: '', type: 'success' });
-  };
-  const handleAddToCart = (product) => {
-    // Convert product to cart item format
-    const cartItem = {
-      id: `candle_${product.id}`,
-      name: product.name,
-      price: product.basePrice,
-      type: 'candle',
-      category: product.category,
-      subCategory: product.subCategory,
-      description: product.detail,
-      image: product.image,
-      selectedOptions: product.selectedOptions || []
-    };
-    
-    addToCart(cartItem);
-    showToast(`已將「${product.name}」加入購物車！`, 'success');
-    console.log('Added to cart:', cartItem);
   };
 
   // Filter products by selected subcategory
@@ -89,7 +62,7 @@ const CandlesPage = ({ onNavigate }) => {
         {/* Subcategory Filter */}
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">蠟燭分類</h2>
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {subCategories.map((category) => (
+          {candleSubCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedSubCategory(category.id)}
@@ -113,12 +86,9 @@ const CandlesPage = ({ onNavigate }) => {
         ) : (
           <>            {/* Product Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-              {filteredProducts.map((product) => (
-                <ProductCard
+              {filteredProducts.map((product) => (                <ProductCard
                   key={product.id}
                   service={product}
-                  cardType="service"
-                  onAddToCart={handleAddToCart}
                   onNavigate={onNavigate}
                 />
               ))}

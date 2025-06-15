@@ -1,54 +1,7 @@
+import { homePageServiceCategories } from '../services/api';
+
 const HomePage = ({ onNavigate }) => {
-  const serviceCategories = [
-    {
-      id: 'candles',
-      name: '魔法蠟燭',
-      description: '注入能量的神聖蠟燭，為您帶來好運與保護',
-      icon: '🕯️',
-      color: 'from-orange-400 to-red-400',
-      page: 'candles'
-    },
-    {
-      id: 'tarot',
-      name: '塔羅占卜',
-      description: '透過古老智慧解讀人生的過去、現在與未來',
-      icon: '🔮',
-      color: 'from-purple-400 to-indigo-400',
-      page: 'tarot'
-    },
-    {
-      id: 'love',
-      name: '月老紅線',
-      description: '月老牽線，為您尋找命中注定的良緣',
-      icon: '💕',
-      color: 'from-pink-400 to-red-400',
-      page: 'love'
-    },
-    {
-      id: 'astrology',
-      name: '八字 & 紫微斗數',
-      description: '根據出生時間解讀命盤奧秘，了解人生軌跡',
-      icon: '⭐',
-      color: 'from-amber-400 to-orange-400',
-      page: 'astrology'
-    },
-    {
-      id: 'frequency',
-      name: '靈擺調頻',
-      description: '運用靈擺的能量共振，調整您的能量頻率',
-      icon: '🔄',
-      color: 'from-teal-400 to-blue-400',
-      page: 'frequency'
-    },
-    {
-      id: 'psychic',
-      name: '潛意識讀心',
-      description: '深入探索潛意識世界，發掘內心智慧',
-      icon: '🧠',
-      color: 'from-blue-400 to-indigo-400',
-      page: 'psychic'
-    }
-  ];
+  const serviceCategories = homePageServiceCategories;
   return (
     <div className="space-y-12">
       {/* Hero Section */}
