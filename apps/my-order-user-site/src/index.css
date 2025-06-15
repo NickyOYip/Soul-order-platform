@@ -16,6 +16,29 @@ body {
   color: var(--black);
 }
 
+/* Custom scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thumb-pink-300::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thumb-pink-300::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-pink-300::-webkit-scrollbar-thumb {
+  background: #fda4af;
+  border-radius: 3px;
+}
+
+.scrollbar-thumb-pink-300::-webkit-scrollbar-thumb:hover {
+  background: #fb7185;
+}
+
 .btn-primary {
   background-color: var(--pink-primary);
   color: white;

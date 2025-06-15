@@ -16,22 +16,24 @@ export const psychicProducts = [
       {
         optionNo: 1,
         optionType: 'dropdown',
-        optionTitle: '問題數量',
-        optionDetails: [
+        optionTitle: '問題數量',        optionDetails: [
           {
             name: '一題',
             description: '單題潛意識讀心服務',
-            additionalPrice: 0
+            additionalPrice: 0,
+            tag: 'Basic'
           },
           {
             name: '三題',
             description: '三題潛意識讀心套餐',
-            additionalPrice: 180
+            additionalPrice: 180,
+            tag: 'Popular'
           },
           {
             name: '五題',
             description: '五題潛意識讀心套餐',
-            additionalPrice: 350
+            additionalPrice: 350,
+            tag: 'Best Value'
           }
         ]
       }

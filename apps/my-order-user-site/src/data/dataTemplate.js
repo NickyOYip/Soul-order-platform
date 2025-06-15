@@ -12,43 +12,45 @@ Products ={
         {
             optionNo: 1,
             optionType: 'dropdown', // [dropdown, multiple selection (to-do), detail card]
-            optionTitle: 'Material',
-            optionDetails: [
+            optionTitle: 'Material',            optionDetails: [
                 {
                     name: 'Stainless Steel',
                     description: 'Durable and corrosion-resistant',
-                    additionalPrice: 0
+                    additionalPrice: 0,
+                    tag: 'Popular'
                 },
                 {
                     name: 'Brass',
                     description: 'Warm golden tone with premium finish',
-                    additionalPrice: 100
+                    additionalPrice: 100,
+                    tag: 'Premium'
                 },
                 {
                     name: 'Titanium',
                     description: 'Lightweight and ultra-durable',
-                    additionalPrice: 200
+                    additionalPrice: 200,
+                    tag: 'Luxury'
                 }
             ]
         },
         {
             optionNo: 2,
             optionType: 'detail card',
-            optionTitle: 'Packaging',
-            optionDetails: [
+            optionTitle: 'Packaging',            optionDetails: [
                 {
                     name: 'Standard Box',
                     description: 'Basic eco-friendly packaging',
-                    additionalPrice: 0
+                    additionalPrice: 0,
+                    tag: 'Eco-Friendly'
                 },
                 {
                     name: 'Gift Box',
                     description: 'Includes ribbon and message card',
-                    additionalPrice: 50
+                    additionalPrice: 50,
+                    tag: 'Gift'
                 }
             ]
-        }
-        // If you want to implement "multiple selection" type in future:
+        }        // If you want to implement "multiple selection" type in future:
         // {
         //     optionNo: 3,
         //     optionType: 'multiple selection',
@@ -57,12 +59,14 @@ Products ={
         //         {
         //             name: 'Extra Chain',
         //             description: 'Additional 20cm chain',
-        //             additionalPrice: 30
+        //             additionalPrice: 30,
+        //             tag: 'Add-on'
         //         },
         //         {
         //             name: 'Engraving',
         //             description: 'Custom name or message',
-        //             additionalPrice: 80
+        //             additionalPrice: 80,
+        //             tag: 'Personalized'
         //         }
         //     ]
         // }

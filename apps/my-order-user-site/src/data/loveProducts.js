@@ -27,17 +27,18 @@ export const loveProducts = [
       {
         optionNo: 1,
         optionType: 'dropdown',
-        optionTitle: '調頻次數',
-        optionDetails: [
+        optionTitle: '調頻次數',        optionDetails: [
           {
             name: '一次',
             description: '單次紅線調頻服務',
-            additionalPrice: 0
+            additionalPrice: 0,
+            tag: 'Basic'
           },
           {
             name: '三次',
             description: '三次完整調頻療程',
-            additionalPrice: 250
+            additionalPrice: 250,
+            tag: 'Recommended'
           }
         ]
       }

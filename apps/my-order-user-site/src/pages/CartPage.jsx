@@ -130,11 +130,83 @@ const CartPage = ({ onNavigate }) => {
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-800">購物清單</h2>
               
-              <div className="space-y-4">
-                {cart.map((item, index) => (
+              <div className="space-y-4">                {cart.map((item, index) => {                  // Calculate item price including options
+                  let itemPrice = item.basePrice || item.price || 0;
+                  if (item.selectedOptions && item.hasOptions && item.options) {
+                    item.options.forEach(option => {
+                      if ((option.optionType === 'dropdown' || option.optionType === 'detail card') && item.selectedOptions[option.optionNo]) {
+                        const selectedDetail = option.optionDetails.find(
+                          detail => detail.name === item.selectedOptions[option.optionNo]
+                        );
+                        if (selectedDetail) {
+                          itemPrice += selectedDetail.additionalPrice || 0;
+                        }
+                      }
+                    });
+                  }
+                  
+                  // Add multiple selection option prices
+                  if (item.selectedMultiple && item.hasOptions && item.options) {
+                    item.options.forEach(option => {
+                      if (option.optionType === 'multiple selection' && item.selectedMultiple[option.optionNo]) {
+                        item.selectedMultiple[option.optionNo].forEach(selectedName => {
+                          const selectedDetail = option.optionDetails.find(
+                            detail => detail.name === selectedName
+                          );
+                          if (selectedDetail) {
+                            itemPrice += selectedDetail.additionalPrice || 0;
+                          }
+                        });
+                      }
+                    });
+                  }
+                  
+                  return (
                   <div key={`${item.id}-${index}`} className="flex items-center justify-between border-b border-gray-200 pb-4">                    <div className="flex-1">
                       <h3 className="font-medium text-gray-800">{item.name}</h3>
-                      <p className="text-gray-600">${item.basePrice || item.price || 0} x {item.quantity}</p>
+                      <p className="text-gray-600">${itemPrice} x {item.quantity}</p>
+                        {/* Display selected options */}
+                      {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          {item.options?.map(option => {
+                            const selectedValue = item.selectedOptions[option.optionNo];
+                            if (selectedValue && (option.optionType === 'dropdown' || option.optionType === 'detail card')) {
+                              const selectedDetail = option.optionDetails.find(
+                                detail => detail.name === selectedValue
+                              );
+                              return (
+                                <div key={option.optionNo}>
+                                  {option.optionTitle}: {selectedValue}
+                                  {selectedDetail?.additionalPrice > 0 && ` (+$${selectedDetail.additionalPrice})`}
+                                </div>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+                      )}
+                      
+                      {/* Display selected multiple options */}
+                      {item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0 && (
+                        <div className="text-xs text-gray-500 mt-1">
+                          {item.options?.map(option => {
+                            const selectedValues = item.selectedMultiple[option.optionNo];
+                            if (selectedValues && selectedValues.length > 0 && option.optionType === 'multiple selection') {
+                              return (
+                                <div key={option.optionNo}>
+                                  {option.optionTitle}: {selectedValues.map(value => {
+                                    const selectedDetail = option.optionDetails.find(
+                                      detail => detail.name === value
+                                    );
+                                    return `${value}${selectedDetail?.additionalPrice > 0 ? ` (+$${selectedDetail.additionalPrice})` : ''}`;
+                                  }).join(', ')}
+                                </div>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+                      )}
                     </div>
                     
                     <div className="flex items-center space-x-4">
@@ -151,10 +223,9 @@ const CartPage = ({ onNavigate }) => {
                           className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
                         >
                           +
-                        </button>
-                      </div>
+                        </button>                      </div>
                         <span className="font-medium text-gray-800 w-20 text-right">
-                        ${(item.basePrice || item.price || 0) * item.quantity}
+                        ${itemPrice * item.quantity}
                       </span>
                       
                       <button
@@ -163,9 +234,9 @@ const CartPage = ({ onNavigate }) => {
                       >
                         <TrashIcon className="h-5 w-5" />
                       </button>
-                    </div>
-                  </div>
-                ))}
+                    </div>                  </div>
+                  );
+                })}
               </div>
               
               {/* Order Summary */}

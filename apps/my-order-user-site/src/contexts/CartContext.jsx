@@ -57,9 +57,42 @@ export const CartProvider = ({ children }) => {
 
   const clearCart = () => {
     setCart([]);
-  };
-  const getCartTotal = () => {
-    return cart.reduce((total, item) => total + ((item.basePrice || item.price || 0) * item.quantity), 0);
+  };  const getCartTotal = () => {
+    return cart.reduce((total, item) => {
+      let itemPrice = item.basePrice || item.price || 0;
+      
+      // Add option prices for dropdown and detail card types
+      if (item.selectedOptions && item.hasOptions && item.options) {
+        item.options.forEach(option => {
+          if ((option.optionType === 'dropdown' || option.optionType === 'detail card') && item.selectedOptions[option.optionNo]) {
+            const selectedDetail = option.optionDetails.find(
+              detail => detail.name === item.selectedOptions[option.optionNo]
+            );
+            if (selectedDetail) {
+              itemPrice += selectedDetail.additionalPrice || 0;
+            }
+          }
+        });
+      }
+      
+      // Add prices for multiple selection options
+      if (item.selectedMultiple && item.hasOptions && item.options) {
+        item.options.forEach(option => {
+          if (option.optionType === 'multiple selection' && item.selectedMultiple[option.optionNo]) {
+            item.selectedMultiple[option.optionNo].forEach(selectedName => {
+              const selectedDetail = option.optionDetails.find(
+                detail => detail.name === selectedName
+              );
+              if (selectedDetail) {
+                itemPrice += selectedDetail.additionalPrice || 0;
+              }
+            });
+          }
+        });
+      }
+      
+      return total + (itemPrice * item.quantity);
+    }, 0);
   };
 
   const getCartCount = () => {
