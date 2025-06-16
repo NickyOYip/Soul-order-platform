@@ -1,4 +1,4 @@
-const DetailCardOption = ({ option, selectedValue, onChange }) => {
+const DetailCardOption = ({ option, selectedValue, onChange, isBaseOption }) => {
   const getTagStyle = (tag) => {
     const tagStyles = {
       'Basic': 'bg-gray-100 text-gray-600 border-gray-200',
@@ -18,22 +18,39 @@ const DetailCardOption = ({ option, selectedValue, onChange }) => {
       'Add-on': 'bg-teal-100 text-teal-600 border-teal-200'
     };
     return tagStyles[tag] || 'bg-gray-100 text-gray-600 border-gray-200';
+  };  const numChoices = option.optionDetails.length;
+  const useHorizontalLayout = numChoices <= 3;
+  
+  const getGridCols = () => {
+    if (!useHorizontalLayout) return 'grid-cols-1';
+    switch (numChoices) {
+      case 1: return 'grid-cols-1';
+      case 2: return 'grid-cols-2';
+      case 3: return 'grid-cols-3';
+      default: return 'grid-cols-1';
+    }
   };
 
   return (
     <div className="mb-4">
       <label className="block text-sm font-medium text-gray-700 mb-2">
         {option.optionTitle}
+        <span className="text-red-500 ml-1">*</span>
       </label>
-      <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-300 scrollbar-track-gray-100">
-        {option.optionDetails.map((detail, index) => (
+      <div className={`grid gap-2 ${getGridCols()} ${
+        !useHorizontalLayout 
+          ? 'max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-300 scrollbar-track-gray-100'
+          : ''
+      }`}>{option.optionDetails.map((detail, index) => (
           <label 
             key={index} 
-            className={`flex items-start p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
+            className={`flex ${
+              useHorizontalLayout ? 'flex-col' : 'items-start'
+            } p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
               selectedValue === detail.name
                 ? 'border-pink-500 bg-pink-50 shadow-sm'
                 : 'border-gray-300 hover:border-pink-300 hover:shadow-sm'
-            }`}
+            } ${useHorizontalLayout ? 'min-h-[120px]' : ''}`}
           >
             <input
               type="radio"
@@ -41,11 +58,19 @@ const DetailCardOption = ({ option, selectedValue, onChange }) => {
               value={detail.name}
               checked={selectedValue === detail.name}
               onChange={(e) => onChange(e.target.value)}
-              className="mt-0.5 mr-3 text-pink-500 focus:ring-pink-500"
+              className={`text-pink-500 focus:ring-pink-500 ${
+                useHorizontalLayout ? 'mb-2' : 'mt-0.5 mr-3'
+              }`}
             />
-            <div className="flex-1">
-              <div className="flex items-center justify-between mb-1">
-                <div className="flex items-center gap-2">
+            <div className={useHorizontalLayout ? 'flex-1 text-center' : 'flex-1'}>
+              <div className={`flex ${
+                useHorizontalLayout 
+                  ? 'flex-col items-center gap-1 mb-2' 
+                  : 'items-center justify-between mb-1'
+              }`}>
+                <div className={`flex items-center gap-2 ${
+                  useHorizontalLayout ? 'flex-col' : ''
+                }`}>
                   <span className="font-medium text-gray-800">{detail.name}</span>
                   {detail.tag && (
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getTagStyle(detail.tag)}`}>
@@ -53,11 +78,16 @@ const DetailCardOption = ({ option, selectedValue, onChange }) => {
                     </span>
                   )}
                 </div>
-                {detail.additionalPrice > 0 && (
+                {detail.additionalPrice > 0 && !isBaseOption && (
                   <span className="text-pink-600 font-medium">+${detail.additionalPrice}</span>
                 )}
+                {detail.additionalPrice > 0 && isBaseOption && (
+                  <span className="text-gray-600 font-medium">${detail.additionalPrice}</span>
+                )}
               </div>              {detail.description && (
-                <div className="text-sm text-gray-600">
+                <div className={`text-sm text-gray-600 ${
+                  useHorizontalLayout ? 'text-center' : ''
+                }`}>
                   {detail.description.split('\n').map((line, i) => (
                     <div key={i}>{line.trim()}</div>
                   ))}

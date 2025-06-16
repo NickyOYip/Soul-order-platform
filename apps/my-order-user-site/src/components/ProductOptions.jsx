@@ -7,7 +7,8 @@ const ProductOptions = ({
   selectedOptions, 
   selectedMultiple, 
   onOptionChange, 
-  onMultipleSelectionChange 
+  onMultipleSelectionChange,
+  baseOptionNo
 }) => {
   if (!item.hasOptions || !item.options) {
     return null;
@@ -16,6 +17,8 @@ const ProductOptions = ({
   return (
     <>
       {item.options.map((option) => {
+        const isBaseOption = baseOptionNo === option.optionNo;
+        
         if (option.optionType === 'dropdown') {
           return (
             <div key={option.optionNo} className="mb-4">
@@ -23,6 +26,7 @@ const ProductOptions = ({
                 option={option}
                 selectedValue={selectedOptions[option.optionNo] || ''}
                 onChange={(value) => onOptionChange(option.optionNo, value)}
+                isBaseOption={isBaseOption}
               />
             </div>
           );
@@ -33,6 +37,7 @@ const ProductOptions = ({
                 option={option}
                 selectedValue={selectedOptions[option.optionNo] || ''}
                 onChange={(value) => onOptionChange(option.optionNo, value)}
+                isBaseOption={isBaseOption}
               />
             </div>
           );
@@ -45,6 +50,7 @@ const ProductOptions = ({
                 onChange={(optionName, isChecked) => 
                   onMultipleSelectionChange(option.optionNo, optionName, isChecked)
                 }
+                isBaseOption={isBaseOption}
               />
             </div>
           );

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PlusIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
 import ProductOptions from './ProductOptions';
@@ -15,6 +15,51 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
   // Support both product and service props for backwards compatibility
   const item = product || service;
   if (!item) return null;
+  // Helper function to find first option where ALL details have additionalPrice > 0
+  const findDefaultOption = () => {
+    if (!item.hasOptions || !item.options) return null;
+    
+    for (const option of item.options) {
+      const allPricesAboveZero = option.optionDetails.every(detail => detail.additionalPrice > 0);
+      if (allPricesAboveZero) {
+        const firstDetail = option.optionDetails[0]; // First choice in this option
+        return {
+          optionNo: option.optionNo,
+          optionType: option.optionType,
+          defaultDetail: firstDetail
+        };
+      }
+    }
+    return null;
+  };
+
+  // Calculate effective base price
+  const getEffectiveBasePrice = () => {
+    if (item.basePrice > 0) return item.basePrice;
+    
+    // If basePrice is 0, use the first detail's additionalPrice from the qualifying option
+    const defaultOption = findDefaultOption();
+    if (defaultOption) {
+      return defaultOption.defaultDetail.additionalPrice;
+    }
+    return 0;
+  };
+
+  // Initialize default selections for basePrice: 0 products
+  useEffect(() => {
+    if (item.basePrice === 0) {
+      const defaultOption = findDefaultOption();
+      if (defaultOption) {
+        if (defaultOption.optionType === 'dropdown' || defaultOption.optionType === 'detail card') {
+          setSelectedOptions(prev => ({
+            ...prev,
+            [defaultOption.optionNo]: defaultOption.defaultDetail.name
+          }));
+        }
+        // Note: multiple selection doesn't need default selection
+      }
+    }
+  }, [item]);
 
   const handleToggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -65,12 +110,39 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
     }  };  const getTotalPrice = () => {
-    const basePrice = item.basePrice || 0;
-    
-    // Calculate option prices
+    let basePrice = item.basePrice || 0;
     let optionTotal = 0;
+    
+    // Special handling for basePrice: 0
+    if (item.basePrice === 0) {
+      const defaultOption = findDefaultOption();
+      if (defaultOption) {
+        // Use the selected option's price as base, or default option's first choice price
+        const selectedValue = selectedOptions[defaultOption.optionNo];
+        if (selectedValue) {
+          // Find the selected detail's price in the default option
+          const option = item.options.find(opt => opt.optionNo === defaultOption.optionNo);
+          const selectedDetail = option?.optionDetails.find(detail => detail.name === selectedValue);
+          if (selectedDetail) {
+            basePrice = selectedDetail.additionalPrice;
+          }
+        } else {
+          // No selection yet, use default option's first choice
+          basePrice = defaultOption.defaultDetail.additionalPrice;
+        }
+      }
+    }
+    
+    // Calculate additional option prices (excluding the base option for basePrice: 0 products)
     if (item.hasOptions && item.options) {
+      const defaultOption = item.basePrice === 0 ? findDefaultOption() : null;
+      
       item.options.forEach(option => {
+        // Skip the default option for basePrice: 0 products (already counted in basePrice)
+        if (defaultOption && option.optionNo === defaultOption.optionNo) {
+          return;
+        }
+        
         if (option.optionType === 'dropdown' && selectedOptions[option.optionNo]) {
           const selectedDetail = option.optionDetails.find(
             detail => detail.name === selectedOptions[option.optionNo]
@@ -115,7 +187,43 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
     return totalPrice;
   };
 
-const handleAddToCart = () => {
+  // Check if all required options are selected
+  const areAllRequiredOptionsSelected = () => {
+    if (!item.hasOptions || !item.options) return true;
+    
+    for (const option of item.options) {
+      // Multiple selection is optional, dropdown and detail card are required
+      if (option.optionType === 'dropdown' || option.optionType === 'detail card') {
+        if (!selectedOptions[option.optionNo]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  // Get missing required options for validation message
+  const getMissingRequiredOptions = () => {
+    if (!item.hasOptions || !item.options) return [];
+    
+    const missing = [];
+    for (const option of item.options) {
+      if (option.optionType === 'dropdown' || option.optionType === 'detail card') {
+        if (!selectedOptions[option.optionNo]) {
+          missing.push(option.optionTitle);
+        }
+      }
+    }
+    return missing;
+  };
+
+const handleAddToCart = () => {    // Check if all required options are selected
+    if (!areAllRequiredOptionsSelected()) {
+      const missingOptions = getMissingRequiredOptions();
+      alert(`⚠️ 請先選擇以下必填選項，然後再加入購物車:\n\n• ${missingOptions.join('\n• ')}`);
+      return;
+    }
+    
     setIsAdding(true);
     
     const cartItem = {
@@ -215,6 +323,7 @@ const handleAddToCart = () => {
         selectedMultiple={selectedMultiple}
         onOptionChange={handleOptionChange}
         onMultipleSelectionChange={handleMultipleSelectionChange}
+        baseOptionNo={item.basePrice === 0 ? findDefaultOption()?.optionNo : null}
       />
 
       {/* 6. View Details Button */}
@@ -291,29 +400,39 @@ const handleAddToCart = () => {
             </svg>
           </button>
         </div>
-      </div>
-
-      {/* 8. Add to Cart Button */}
-      <button 
-        onClick={handleAddToCart}
-        disabled={isAdding || showSuccess}
-        className={`btn-primary py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2 w-full ${
-          isAdding || showSuccess
-            ? 'opacity-75 cursor-not-allowed' 
-            : 'hover:bg-pink-600'
-        }`}
-      >
-        {showSuccess ? (
-          '已加入購物車 ✓'
-        ) : isAdding ? (
-          '加入中...'
-        ) : (
-          <>
-            <PlusIcon className="h-4 w-4" />
-            <span>加入購物車</span>
-          </>
+      </div>      {/* 8. Add to Cart Button */}
+      <div className="space-y-2">        {/* Validation Message */}
+        {!areAllRequiredOptionsSelected() && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-2 text-xs text-red-600 text-center">
+            <span className="font-medium">⚠️ 請選擇必填選項:</span> {getMissingRequiredOptions().join(', ')}
+          </div>
         )}
-      </button>
+        
+        <button 
+          onClick={handleAddToCart}
+          disabled={isAdding || showSuccess || !areAllRequiredOptionsSelected()}
+          className={`btn-primary py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2 w-full ${
+            isAdding || showSuccess || !areAllRequiredOptionsSelected()
+              ? 'opacity-75 cursor-not-allowed' 
+              : 'hover:bg-pink-600'
+          }`}
+        >
+          {showSuccess ? (
+            '已加入購物車 ✓'
+          ) : isAdding ? (
+            '加入中...'
+          ) : !areAllRequiredOptionsSelected() ? (
+            <>
+              <span>請先選擇選項</span>
+            </>
+          ) : (
+            <>
+              <PlusIcon className="h-4 w-4" />
+              <span>加入購物車</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

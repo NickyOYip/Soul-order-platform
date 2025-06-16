@@ -1,4 +1,4 @@
-const MultipleSelectionOption = ({ option, selectedValues, onChange }) => {
+const MultipleSelectionOption = ({ option, selectedValues, onChange, isBaseOption }) => {
   const getTagStyle = (tag) => {
     const tagStyles = {
       'Basic': 'bg-gray-100 text-gray-600 border-gray-200',
@@ -49,12 +49,14 @@ const MultipleSelectionOption = ({ option, selectedValues, onChange }) => {
                     <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${getTagStyle(detail.tag)}`}>
                       {detail.tag}
                     </span>
-                  )}
-                </div>
-                {detail.additionalPrice > 0 && (
+                  )}                </div>
+                {detail.additionalPrice > 0 && !isBaseOption && (
                   <span className="text-pink-600 font-medium">+${detail.additionalPrice}</span>
                 )}
-              </div>              {detail.description && (
+                {detail.additionalPrice > 0 && isBaseOption && (
+                  <span className="text-gray-600 font-medium">${detail.additionalPrice}</span>
+                )}
+              </div>{detail.description && (
                 <div className="text-sm text-gray-600">
                   {detail.description.split('\n').map((line, i) => (
                     <div key={i}>{line.trim()}</div>

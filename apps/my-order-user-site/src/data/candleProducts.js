@@ -116,7 +116,7 @@ export const candleProducts = [
     detail: '專業手工製作的魔法蠟燭，根據不同需求調配特殊能量，為愛情、事業、療癒等各種目的提供強力支持。',
     image: '/images/custom-magic-candle.jpg',
     hasOptions: true,
-    basePrice: 95,
+    basePrice: 0,
     options: [
       {
         optionNo: 1,
@@ -238,19 +238,19 @@ export const candleProducts = [
           {
             name: '小',
             description: '可以燒4小時左右',
-            additionalPrice: 0,
+            additionalPrice: 95,
             tag: 'Basic'
           },
           {
             name: '中',
             description: '可以燒15小時左右',
-            additionalPrice: 185,
+            additionalPrice: 280,
             tag: 'Popular'
           },
           {
             name: '大',
             description: '可以燒30小時左右',
-            additionalPrice: 303,
+            additionalPrice: 398,
             tag: 'Premium'
           }
         ]
