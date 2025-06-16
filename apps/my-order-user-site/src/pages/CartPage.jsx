@@ -130,11 +130,45 @@ const CartPage = ({ onNavigate }) => {
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-800">購物清單</h2>
               
-              <div className="space-y-4">                {cart.map((item, index) => {                  // Calculate item price including options
-                  let itemPrice = item.basePrice || item.price || 0;
+              <div className="space-y-4">                {cart.map((item, index) => {
+                  // Helper function to find base option when basePrice is 0
+                  const findBaseOption = () => {
+                    if (item.basePrice > 0 || !item.hasOptions || !item.options) return null;
+                    
+                    for (const option of item.options) {
+                      const allPricesAboveZero = option.optionDetails.every(detail => detail.additionalPrice > 0);
+                      if (allPricesAboveZero) {
+                        return option;
+                      }
+                    }
+                    return null;
+                  };
+
+                  // Get effective base price and base option details
+                  const baseOption = findBaseOption();
+                  let effectiveBasePrice = item.basePrice || item.price || 0;
+                  let baseOptionDetail = null;
+                  
+                  if (item.basePrice === 0 && baseOption && item.selectedOptions) {
+                    const selectedValue = item.selectedOptions[baseOption.optionNo];
+                    if (selectedValue) {
+                      baseOptionDetail = baseOption.optionDetails.find(detail => detail.name === selectedValue);
+                      if (baseOptionDetail) {
+                        effectiveBasePrice = baseOptionDetail.additionalPrice;
+                      }
+                    }
+                  }
+
+                  // Calculate item price including options
+                  let itemPrice = effectiveBasePrice;
                   if (item.selectedOptions && item.hasOptions && item.options) {
                     item.options.forEach(option => {
                       if ((option.optionType === 'dropdown' || option.optionType === 'detail card') && item.selectedOptions[option.optionNo]) {
+                        // Skip the base option to avoid double counting
+                        if (baseOption && option.optionNo === baseOption.optionNo) {
+                          return;
+                        }
+                        
                         const selectedDetail = option.optionDetails.find(
                           detail => detail.name === item.selectedOptions[option.optionNo]
                         );
@@ -164,27 +198,45 @@ const CartPage = ({ onNavigate }) => {
                     {/* Product Info Section */}
                     <div className="mb-3">
                       {/* Product Name */}
-                      <h3 className="font-medium text-gray-800 mb-2">{item.name}</h3>
-                      
-                      {/* Base Price */}
+                      <h3 className="font-medium text-gray-800 mb-2">{item.name}</h3>                      {/* Base Price */}
                       <div className="text-sm text-gray-600 mb-2">
-                        基本價格: ${item.basePrice || item.price || 0}
+                        {baseOptionDetail ? (
+                          <span>基本價格: ${effectiveBasePrice} ({baseOption.optionTitle}: {baseOptionDetail.name})</span>
+                        ) : (
+                          <span>基本價格: ${effectiveBasePrice}</span>
+                        )}
                       </div>
-                      
-                      {/* Selected Options */}
-                      {((item.selectedOptions && Object.keys(item.selectedOptions).length > 0) || 
-                        (item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0)) && (
+                        {/* Selected Options */}
+                      {(() => {
+                        // Check if there are any non-base options selected
+                        const hasNonBaseOptions = item.selectedOptions && item.options?.some(option => {
+                          const selectedValue = item.selectedOptions[option.optionNo];
+                          if (!selectedValue || !(option.optionType === 'dropdown' || option.optionType === 'detail card')) {
+                            return false;
+                          }
+                          // Exclude base option
+                          return !(baseOption && option.optionNo === baseOption.optionNo);
+                        });
+                        
+                        const hasMultipleOptions = item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0;
+                        
+                        return (hasNonBaseOptions || hasMultipleOptions);
+                      })() && (
                         <div className="text-sm mb-3 bg-gray-50 p-2 rounded">
                           <div className="font-medium text-gray-700 mb-1">已選擇的選項:</div>
-                          
-                          {/* Dropdown and Detail Card Options */}
+                            {/* Dropdown and Detail Card Options */}
                           {item.selectedOptions && item.options?.map(option => {
                             const selectedValue = item.selectedOptions[option.optionNo];
                             if (selectedValue && (option.optionType === 'dropdown' || option.optionType === 'detail card')) {
+                              // Skip displaying base option in selected options if basePrice is 0
+                              if (baseOption && option.optionNo === baseOption.optionNo) {
+                                return null;
+                              }
+                              
                               const selectedDetail = option.optionDetails.find(
                                 detail => detail.name === selectedValue
                               );
-                              return (                                <div key={option.optionNo} className="mb-1">                                  <div className="text-gray-600">
+                              return (<div key={option.optionNo} className="mb-1">                                  <div className="text-gray-600">
                                     {option.optionTitle}: {selectedValue}
                                   </div>
                                   {selectedDetail?.description && (
