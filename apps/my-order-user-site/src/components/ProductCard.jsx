@@ -237,19 +237,24 @@ const handleAddToCart = () => {
 
       {/* Expandable Details */}
       {isExpanded && (
-        <div className="border-t pt-4 mb-4 space-y-3">
-          {/* Description */}
+        <div className="border-t pt-4 mb-4 space-y-3">          {/* Description */}
           {item.description && (
             <div className="mb-3">
               <span className="font-medium text-gray-700">詳細說明:</span>
-              <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+              <div className="text-sm text-gray-600 mt-1">
+                {item.description.split('\n').map((line, i) => (
+                  <div key={i}>{line.trim()}</div>
+                ))}
+              </div>
             </div>
-          )}
-
-          {/* Detail Information */}
+          )}          {/* Detail Information */}
           {item.detail && (
             <div className="mb-3">
-              <p className="text-sm text-gray-600 leading-relaxed">{item.detail}</p>
+              <div className="text-sm text-gray-600 leading-relaxed">
+                {item.detail.split('\n').map((line, i) => (
+                  <div key={i}>{line.trim()}</div>
+                ))}
+              </div>
             </div>
           )}
         </div>

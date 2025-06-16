@@ -184,11 +184,16 @@ const CartPage = ({ onNavigate }) => {
                               const selectedDetail = option.optionDetails.find(
                                 detail => detail.name === selectedValue
                               );
-                              return (
-                                <div key={option.optionNo} className="mb-1">
-                                  <div className="text-gray-600">
+                              return (                                <div key={option.optionNo} className="mb-1">                                  <div className="text-gray-600">
                                     {option.optionTitle}: {selectedValue}
                                   </div>
+                                  {selectedDetail?.description && (
+                                    <div className="text-xs text-gray-500 mt-1">
+                                      {selectedDetail.description.split('\n').map((line, i) => (
+                                        <div key={i}>{line.trim()}</div>
+                                      ))}
+                                    </div>
+                                  )}
                                   {selectedDetail?.additionalPrice > 0 && (
                                     <div className="text-pink-600 text-sm">
                                       +${selectedDetail.additionalPrice}
@@ -210,11 +215,16 @@ const CartPage = ({ onNavigate }) => {
                                     const selectedDetail = option.optionDetails.find(
                                       detail => detail.name === value
                                     );
-                                    return (
-                                      <div key={value}>
-                                        <div className="text-gray-600">
+                                    return (                                      <div key={value}>                                        <div className="text-gray-600">
                                           {option.optionTitle}: {value}
                                         </div>
+                                        {selectedDetail?.description && (
+                                          <div className="text-xs text-gray-500 mt-1">
+                                            {selectedDetail.description.split('\n').map((line, i) => (
+                                              <div key={i}>{line.trim()}</div>
+                                            ))}
+                                          </div>
+                                        )}
                                         {selectedDetail?.additionalPrice > 0 && (
                                           <div className="text-pink-600 text-sm">
                                             +${selectedDetail.additionalPrice}

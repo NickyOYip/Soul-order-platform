@@ -54,9 +54,12 @@ const MultipleSelectionOption = ({ option, selectedValues, onChange }) => {
                 {detail.additionalPrice > 0 && (
                   <span className="text-pink-600 font-medium">+${detail.additionalPrice}</span>
                 )}
-              </div>
-              {detail.description && (
-                <p className="text-sm text-gray-600">{detail.description}</p>
+              </div>              {detail.description && (
+                <div className="text-sm text-gray-600">
+                  {detail.description.split('\n').map((line, i) => (
+                    <div key={i}>{line.trim()}</div>
+                  ))}
+                </div>
               )}
             </div>
           </label>

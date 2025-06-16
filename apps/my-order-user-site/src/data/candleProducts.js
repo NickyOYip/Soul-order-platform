@@ -9,7 +9,7 @@ export const candleProducts = [
     category: 'candles',
     subCategory: '七日星體蠟燭',
     tag: '愛情蠟燭',
-    detail: '強力愛情吸引蠟燭，專為增強個人魅力、吸引真愛、深化感情連結而設計的七日星體蠟燭。',
+    detail: '強力愛情吸引蠟燭，專為增強個人魅力、吸引真愛、\n深化感情連結而設計的七日星體蠟燭。',
     image: '/images/love-me-lots-candle.jpg',
     hasOptions: false,
     basePrice: 988
