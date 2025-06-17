@@ -276,18 +276,19 @@ const handleAddToCart = () => {    // Check if all required options are selected
       {showSuccess && (
         <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-10 animate-pulse">
           已加入購物車！
+        </div>      )}
+      
+      {/* 1. Product/Service Image - Only show if image exists */}
+      {item.image && item.image.trim() !== '' && (
+        <div className={`w-full h-48 ${styling.image} rounded-lg mb-4 flex items-center justify-center`}>
+          <div className="text-center">
+            <div className={`w-16 h-16 rounded-full mx-auto mb-2 flex items-center justify-center ${styling.icon} text-white font-bold shadow-lg`}>
+              <span className="text-sm">{styling.iconText}</span>
+            </div>
+            <span className="text-xs text-gray-600">產品圖片即將上線</span>
+          </div>
         </div>
       )}
-      
-      {/* 1. Product/Service Image Placeholder */}
-      <div className={`w-full h-48 ${styling.image} rounded-lg mb-4 flex items-center justify-center`}>
-        <div className="text-center">
-          <div className={`w-16 h-16 rounded-full mx-auto mb-2 flex items-center justify-center ${styling.icon} text-white font-bold shadow-lg`}>
-            <span className="text-sm">{styling.iconText}</span>
-          </div>
-          <span className="text-xs text-gray-600">產品圖片即將上線</span>
-        </div>
-      </div>
 
       {/* 2. Product Name */}
       <div className="text-center mb-3">
