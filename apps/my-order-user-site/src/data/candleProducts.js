@@ -230,10 +230,9 @@ export const candleProducts = [
             tag: 'Premium'
           }
         ]
-      },
-      {
+      },      {
         optionNo: 2,
-        optionType: 'detail card',
+        optionType: 'horizontal detail card',
         optionTitle: '蠟燭尺寸',        optionDetails: [
           {
             name: '小',

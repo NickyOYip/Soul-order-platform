@@ -50,7 +50,7 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
     if (item.basePrice === 0) {
       const defaultOption = findDefaultOption();
       if (defaultOption) {
-        if (defaultOption.optionType === 'dropdown' || defaultOption.optionType === 'detail card') {
+        if (defaultOption.optionType === 'dropdown' || defaultOption.optionType === 'detail card' || defaultOption.optionType === 'horizontal detail card') {
           setSelectedOptions(prev => ({
             ...prev,
             [defaultOption.optionNo]: defaultOption.defaultDetail.name
@@ -150,7 +150,7 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
           if (selectedDetail) {
             optionTotal += selectedDetail.additionalPrice || 0;
           }
-        } else if (option.optionType === 'detail card' && selectedOptions[option.optionNo]) {
+        } else if ((option.optionType === 'detail card' || option.optionType === 'horizontal detail card') && selectedOptions[option.optionNo]) {
           const selectedDetail = option.optionDetails.find(
             detail => detail.name === selectedOptions[option.optionNo]
           );
@@ -191,9 +191,8 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
   const areAllRequiredOptionsSelected = () => {
     if (!item.hasOptions || !item.options) return true;
     
-    for (const option of item.options) {
-      // Multiple selection is optional, dropdown and detail card are required
-      if (option.optionType === 'dropdown' || option.optionType === 'detail card') {
+    for (const option of item.options) {      // Multiple selection is optional, dropdown and detail card are required
+      if (option.optionType === 'dropdown' || option.optionType === 'detail card' || option.optionType === 'horizontal detail card') {
         if (!selectedOptions[option.optionNo]) {
           return false;
         }
@@ -208,7 +207,7 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
     
     const missing = [];
     for (const option of item.options) {
-      if (option.optionType === 'dropdown' || option.optionType === 'detail card') {
+      if (option.optionType === 'dropdown' || option.optionType === 'detail card' || option.optionType === 'horizontal detail card') {
         if (!selectedOptions[option.optionNo]) {
           missing.push(option.optionTitle);
         }

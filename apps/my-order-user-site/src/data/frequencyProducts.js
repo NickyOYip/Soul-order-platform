@@ -1,6 +1,19 @@
 // 靈擺調頻 - Frequency Products Data
 // This file contains all frequency adjustment products including love, career, and personal
 
+/*
+  Detail Card Layout Options:
+  
+  You can control the layout of detail card options using the optionType:
+  
+  1. optionType: 'horizontal detail card' - Cards display horizontally in a row (mainly for 蠟燭尺寸)
+  2. optionType: 'detail card' - Cards display vertically for >3 options, horizontally for ≤3 options (default for most options)
+  
+  General Usage:
+  - Use 'horizontal detail card' only for 蠟燭尺寸 (Candle Size) options
+  - Use 'detail card' for all other options (automatic layout based on number of choices)
+*/
+
 export const frequencyProducts = [  {
     id: 1,
     name: '暗戀Plan',
@@ -87,8 +100,7 @@ export const frequencyProducts = [  {
     detail: '專為戀愛關係升溫設計的能量調頻服務，提供三種不同方案針對愛意度、甜蜜感、新鮮感、安全感、溝通能力和性事契合度等各方面進行調頻。',    image: '/images/frequency-love-heating.jpg',
     hasOptions: true,
     basePrice: 0,
-    options: [
-      {
+    options: [      {
         optionNo: 1,
         optionType: 'detail card',
         optionTitle: '升溫方案',
@@ -108,8 +120,7 @@ export const frequencyProducts = [  {
             additionalPrice: 0
           }
         ]
-      },
-      {
+      },      {
         optionNo: 2,
         optionType: 'detail card',
         optionTitle: '調頻方案',

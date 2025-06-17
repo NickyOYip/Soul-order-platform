@@ -29,8 +29,7 @@ const ProductOptions = ({
                 isBaseOption={isBaseOption}
               />
             </div>
-          );
-        } else if (option.optionType === 'detail card') {
+          );        } else if (option.optionType === 'detail card' || option.optionType === 'horizontal detail card') {
           return (
             <div key={option.optionNo} className="mb-4">
               <DetailCardOption

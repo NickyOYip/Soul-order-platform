@@ -163,7 +163,7 @@ const CartPage = ({ onNavigate }) => {
                   let itemPrice = effectiveBasePrice;
                   if (item.selectedOptions && item.hasOptions && item.options) {
                     item.options.forEach(option => {
-                      if ((option.optionType === 'dropdown' || option.optionType === 'detail card') && item.selectedOptions[option.optionNo]) {
+                      if ((option.optionType === 'dropdown' || option.optionType === 'detail card' || option.optionType === 'horizontal detail card') && item.selectedOptions[option.optionNo]) {
                         // Skip the base option to avoid double counting
                         if (baseOption && option.optionNo === baseOption.optionNo) {
                           return;
@@ -211,7 +211,7 @@ const CartPage = ({ onNavigate }) => {
                         // Check if there are any non-base options selected
                         const hasNonBaseOptions = item.selectedOptions && item.options?.some(option => {
                           const selectedValue = item.selectedOptions[option.optionNo];
-                          if (!selectedValue || !(option.optionType === 'dropdown' || option.optionType === 'detail card')) {
+                          if (!selectedValue || !(option.optionType === 'dropdown' || option.optionType === 'detail card' || option.optionType === 'horizontal detail card')) {
                             return false;
                           }
                           // Exclude base option
@@ -227,7 +227,7 @@ const CartPage = ({ onNavigate }) => {
                             {/* Dropdown and Detail Card Options */}
                           {item.selectedOptions && item.options?.map(option => {
                             const selectedValue = item.selectedOptions[option.optionNo];
-                            if (selectedValue && (option.optionType === 'dropdown' || option.optionType === 'detail card')) {
+                            if (selectedValue && (option.optionType === 'dropdown' || option.optionType === 'detail card' || option.optionType === 'horizontal detail card')) {
                               // Skip displaying base option in selected options if basePrice is 0
                               if (baseOption && option.optionNo === baseOption.optionNo) {
                                 return null;
