@@ -90,13 +90,12 @@ const FrequencyPage = ({ onNavigate }) => {
 
       {/* Subcategory Filter */}
       <div className="bg-white rounded-xl p-6 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">調頻分類</h2>
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">調頻分類</h2>        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 max-w-4xl mx-auto">
           {frequencySubCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedSubCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
+              className={`px-3 py-2 text-sm rounded-full font-medium transition-all text-center ${
                 selectedSubCategory === category.id
                   ? 'bg-purple-500 text-white shadow-lg'
                   : 'bg-purple-50 text-purple-600 border border-purple-200 hover:bg-purple-100'

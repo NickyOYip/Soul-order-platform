@@ -253,7 +253,110 @@ export const candleProducts = [
             tag: ''
           }
         ]
-      }
-    ]
+      }    ]
+  },
+  // 意念草藥蠟燭 (Intention Herbal Candles) - Small Size
+  {
+    id: 9,
+    name: '愛情 Love',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '愛情蠟燭',
+    detail: '香味：茉莉\n\n情侣及新對象均適用\n燃點強烈吸引力和慾望\n創造激情體驗 令彼此沉醉於關係中\n透過喚醒內在感官體驗\n令大家充滿相互欣賞和渴望的感覺',
+    image: '',
+    hasOptions: false,
+    basePrice: 288
+  },  {
+    id: 10,
+    name: '清理 Cleansing',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '淨化蠟燭',
+    detail: '香味：檸檬草、鼠尾草、絲柏\n\n清理心靈中的困惑\n為你打開不同的可能性\n清理限制性及自己破壞的思維\n釋放舊有創傷及過時信念\n清理情緒不穩及靈性貧乏的人對你造成的影響',
+    image: '',
+    hasOptions: false,
+    basePrice: 288
+  },  {
+    id: 11,
+    name: '解決問題 Problem Solving',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '關係蠟燭',
+    detail: '香味：金銀花\n\n可用於解決兩性/人際關係的問題\n令你更容易解決問題\n軟化各人態度 令大家好過開心一點\n減低障礙 令你更容易走到想要的結果',
+    image: '',
+    hasOptions: false,
+    basePrice: 288
+  },  {
+    id: 12,
+    name: '金錢 Money',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '財運蠟燭',
+    detail: '香味：金銀花、廣藿香、西柚\n\n接通宇宙中無限的豐盛\n明白豐盛是可以由內在顯化而來的\n清理豐盛路上的靈性及情緒障礙\n吸引金錢豐盛',
+    image: '',
+    hasOptions: false,
+    basePrice: 288
+  },  {
+    id: 13,
+    name: '顯化奇蹟 Miracle Manifestation',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '顯化蠟燭',
+    detail: '香味：玫瑰、金銀花\n\n幫助您尋求精神領域的幫助\n以顯化奇蹟並帶來生活中所需的改變\n可配合冥想使用',
+    image: '',
+    hasOptions: false,
+    basePrice: 288
+  },
+  // 意念草藥蠟燭 (Intention Herbal Candles) - Large Size
+  {
+    id: 14,
+    name: 'SOULMATE',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '靈魂伴侶',
+    detail: '香味：柔和花香味\n\n加強你和你的靈魂伴侶的感情\n深化你和你的靈魂伴侶的連結\n助你感受更深層次的愛\n將你最好的一面帶出來',
+    image: '',
+    hasOptions: false,
+    basePrice: 488
+  },  {
+    id: 15,
+    name: 'Attraction Love',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '吸引愛情',
+    detail: '香味：薰衣草、肉桂、廣霍香\n\n增加機會認識對象\n提升戀愛能量\n令你變得更吸引\n令你吸引到你想要的對象\n減低障礙\n\n適合人士：很想拍拖但苦無機會有對象但不知對方心意',
+    image: '',
+    hasOptions: false,
+    basePrice: 488
+  },  {
+    id: 16,
+    name: 'Love\'s Enchantment',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '愛情魅惑',
+    detail: '香味：檸檬草、茉莉花、橙花\n\n令對象對你越來越熱情\n增加甜蜜感覺\n令他更加主動\n令二人關係更好\n令對方越來越愛你\n\n適合人士：本身自己有對象有拍拖的人士感情比較冷淡',
+    image: '',
+    hasOptions: false,
+    basePrice: 488
+  },  {
+    id: 17,
+    name: 'SUCCESS',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '成功蠟燭',
+    detail: '香味：法國香草、廣藿香、杜松和乳香\n\n增加戀愛機會\n令你沒有害怕\n提升智慧 選對對象\n令心儀的人喜歡你\n減低障礙\n\n適合人士：想成功拍拖/有對象但不知對方心意',
+    image: '',
+    hasOptions: false,
+    basePrice: 488
+  },  {
+    id: 18,
+    name: 'Energy and Will',
+    category: 'candles',
+    subCategory: '意念草藥蠟燭',
+    tag: '能量意志',
+    detail: '香味：檀香，生薑，乳香\n\n增加能量\n如失戀人士會令你重整能量\n令你感覺較好\n變得開心一點\n\n適合人士：失戀人士/覺得很傷心 自卑',
+    image: '',
+    hasOptions: false,
+    basePrice: 488
   }
 ];

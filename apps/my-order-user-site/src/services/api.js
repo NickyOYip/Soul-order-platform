@@ -165,7 +165,8 @@ export const paymentMethods = [
 export const candleSubCategories = [
   { id: '七日星體蠟燭', label: '七日星體蠟燭' },
   { id: '戀人蠟燭儀式', label: '戀人蠟燭儀式' },
-  { id: '自家款魔法蠟燭', label: '自家款魔法蠟燭' }
+  { id: '自家款魔法蠟燭', label: '自家款魔法蠟燭' },
+  { id: '意念草藥蠟燭', label: '意念草藥蠟燭' }
 ];
 
 export const frequencySubCategories = [

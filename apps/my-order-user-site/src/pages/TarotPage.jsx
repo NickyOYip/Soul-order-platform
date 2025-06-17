@@ -64,19 +64,18 @@ const TarotPage = ({ onNavigate }) => {
         </div>      </div>      {/* Main Content */}
       <div className="bg-white rounded-xl p-8 shadow-lg">
         {/* Subcategory Filter */}
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-2xl mx-auto">
           {tarotSubCategories.map((subCat) => (
             <button
               key={subCat.key}
               onClick={() => setSelectedSubCategory(subCat.key)}
-              className={`px-6 py-3 rounded-full font-medium transition-all flex items-center gap-2 ${
+              className={`px-3 py-2 text-sm rounded-full font-medium transition-all flex items-center justify-center gap-2 ${
                 selectedSubCategory === subCat.key
                   ? 'bg-indigo-500 text-white shadow-lg'
                   : 'bg-indigo-50 text-indigo-600 border border-indigo-200 hover:bg-indigo-100'
               }`}
             >
-              <span className="text-lg">{subCat.icon}</span>
+              <span className="text-base">{subCat.icon}</span>
               <span>{subCat.label}</span>
             </button>
           ))}

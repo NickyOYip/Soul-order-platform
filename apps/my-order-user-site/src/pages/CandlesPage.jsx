@@ -58,15 +58,14 @@ const CandlesPage = ({ onNavigate }) => {
             <span>能量注入</span>
           </div>
         </div>      </div>      {/* Main Content */}
-      <div className="bg-white rounded-xl p-8 shadow-lg">
-        {/* Subcategory Filter */}
+      <div className="bg-white rounded-xl p-8 shadow-lg">        {/* Subcategory Filter */}
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">蠟燭分類</h2>
-        <div className="flex flex-wrap justify-center gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 max-w-4xl mx-auto">
           {candleSubCategories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedSubCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-medium transition-all ${
+              className={`px-3 py-2 text-sm rounded-full font-medium transition-all text-center ${
                 selectedSubCategory === category.id
                   ? 'bg-pink-500 text-white shadow-lg'
                   : 'bg-pink-50 text-pink-600 border border-pink-200 hover:bg-pink-100'
