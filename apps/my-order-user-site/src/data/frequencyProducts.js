@@ -13,7 +13,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -39,8 +39,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 2,
     name: '曖昧Plan',
     category: 'frequency',
@@ -52,7 +51,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -103,8 +102,7 @@ export const frequencyProducts = [  {
             name: 'Plan B',
             description: '+安全感+態度＋溝通＋耐性 -逃避 -負能量 -爭吵',
             additionalPrice: 0
-          },
-          {
+          },          {
             name: 'Plan C',
             description: '+性事契合度+激情＋性慾＋持久度+魅力＋情趣＋愛意',
             additionalPrice: 0
@@ -113,7 +111,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -139,8 +137,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 4,
     name: '桃花脫單Plan',
     category: 'frequency',
@@ -152,7 +149,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -198,8 +195,7 @@ export const frequencyProducts = [  {
             name: 'Plan A',
             description: '+思念＋新鮮感＋主動聯繫＋溝通度 -不滿-雙方障礙度-負面情緒',
             additionalPrice: 0
-          },
-          {
+          },          {
             name: 'Plan B',
             description: '+關注＋新鮮感＋主動聯繫＋分享慾＋在意 -逃避-第三方阻礙',
             additionalPrice: 0
@@ -208,7 +204,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -234,8 +230,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 6,
     name: '冷戰爭吵Plan',
     category: 'frequency',
@@ -264,7 +259,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -310,8 +305,7 @@ export const frequencyProducts = [  {
             name: 'Plan A',
             description: '+愛意度＋專一＋新鮮感＋在乎+穩定度/長久度＋信任＋吸引力',
             additionalPrice: 0
-          },
-          {
+          },          {
             name: 'Plan B',
             description: '+愛意度＋專一+新鮮感 -花心 -外遇指數 -逃避 -厭倦',
             additionalPrice: 0
@@ -320,7 +314,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -346,8 +340,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 8,
     name: '分手復合Plan',
     category: 'frequency',
@@ -376,7 +369,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -402,8 +395,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 9,
     name: '婚姻關係Plan',
     category: 'frequency',
@@ -437,7 +429,7 @@ export const frequencyProducts = [  {
       },
       {
         optionNo: 2,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -463,8 +455,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 10,
     name: '放下過去Move on Plan',
     category: 'frequency',
@@ -476,7 +467,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -500,8 +491,7 @@ export const frequencyProducts = [  {
             additionalPrice: 1247
           }        ]
       }
-    ]
-  },
+    ]  },
   // 事業財運調頻 subcategory
   {
     id: 11,
@@ -516,7 +506,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -542,8 +532,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 12,
     name: '尋找工作Plan',
     category: 'frequency',
@@ -556,7 +545,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -582,8 +571,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 13,
     name: '跑數Plan',
     category: 'frequency',
@@ -596,7 +584,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -622,8 +610,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 14,
     name: '做生意Plan',
     category: 'frequency',
@@ -636,7 +623,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -662,8 +649,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 15,
     name: '上司關係Plan',
     category: 'frequency',
@@ -676,7 +662,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -702,8 +688,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 16,
     name: '上班族Plan',
     category: 'frequency',
@@ -716,7 +701,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -740,8 +725,7 @@ export const frequencyProducts = [  {
             additionalPrice: 1250
           }
         ]      }
-    ]
-  },
+    ]  },
   // 自身調頻 subcategory
   {
     id: 17,
@@ -756,7 +740,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -782,8 +766,7 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 18,
     name: '人際關係Plan',
     category: 'frequency',
@@ -796,7 +779,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
@@ -836,7 +819,7 @@ export const frequencyProducts = [  {
     options: [
       {
         optionNo: 1,
-        optionType: 'dropdown',
+        optionType: 'detail card',
         optionTitle: '調頻方案',
         optionDetails: [
           {
