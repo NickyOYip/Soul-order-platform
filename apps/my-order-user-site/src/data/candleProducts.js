@@ -236,21 +236,21 @@ export const candleProducts = [
         optionTitle: '蠟燭尺寸',        optionDetails: [
           {
             name: '小',
-            description: '可以燒4小時左右',
+            description: '4小時',
             additionalPrice: 95,
-            tag: 'Basic'
+            tag: ''
           },
           {
             name: '中',
-            description: '可以燒15小時左右',
+            description: '15小時',
             additionalPrice: 280,
-            tag: 'Popular'
+            tag: ''
           },
           {
             name: '大',
-            description: '可以燒30小時左右',
+            description: '30小時',
             additionalPrice: 398,
-            tag: 'Premium'
+            tag: ''
           }
         ]
       }

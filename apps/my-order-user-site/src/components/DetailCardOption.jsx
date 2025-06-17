@@ -20,16 +20,15 @@ const DetailCardOption = ({ option, selectedValue, onChange, isBaseOption }) => 
     return tagStyles[tag] || 'bg-gray-100 text-gray-600 border-gray-200';
   };  const numChoices = option.optionDetails.length;
   // Use horizontal layout only if optionType is explicitly 'horizontal detail card'
-  const useHorizontalLayout = option.optionType === 'horizontal detail card';
-  const getGridCols = () => {
+  const useHorizontalLayout = option.optionType === 'horizontal detail card';  const getGridCols = () => {
     if (!useHorizontalLayout) return 'grid-cols-1';
     
-    // For horizontal layout, determine columns with responsive design
+    // For horizontal layout, ensure horizontal display even on mobile
     if (numChoices <= 1) return 'grid-cols-1';
-    if (numChoices === 2) return 'grid-cols-1 sm:grid-cols-2';
-    if (numChoices === 3) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3';
-    if (numChoices === 4) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-4';
-    if (numChoices >= 5) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5';
+    if (numChoices === 2) return 'grid-cols-2';
+    if (numChoices === 3) return 'grid-cols-3';
+    if (numChoices === 4) return 'grid-cols-2 md:grid-cols-4';
+    if (numChoices >= 5) return 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5';
     
     return 'grid-cols-1';
   };

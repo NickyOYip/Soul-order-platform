@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { PlusIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/outline';
 import { useCart } from '../contexts/CartContext';
 import ProductOptions from './ProductOptions';
 
 const ProductCard = ({ product, service, onClick, onNavigate }) => {
   const { addToCart } = useCart();
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [selectedAddOns, setSelectedAddOns] = useState([]);  const [selectedOptions, setSelectedOptions] = useState({});
+  const [selectedAddOns, setSelectedAddOns] = useState([]);const [selectedOptions, setSelectedOptions] = useState({});
   const [selectedMultiple, setSelectedMultiple] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
@@ -58,12 +57,9 @@ const ProductCard = ({ product, service, onClick, onNavigate }) => {
         }
         // Note: multiple selection doesn't need default selection
       }
-    }
-  }, [item]);
+    }  }, [item]);
 
-  const handleToggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };  const handleAddOnChange = (addOn, isChecked) => {
+  const handleAddOnChange = (addOn, isChecked) => {
     if (isChecked) {
       setSelectedAddOns([...selectedAddOns, addOn]);
     } else {
@@ -315,58 +311,38 @@ const handleAddToCart = () => {    // Check if all required options are selected
         <span className={`text-2xl font-bold ${styling.price}`}>
           ${getTotalPrice()}
         </span>
-      </div>      {/* 5. Options - Always visible */}
+      </div>      {/* 5. Details Information */}
+      {/* Description */}
+      {item.description && (
+        <div className="mb-4">
+          <span className="font-medium text-gray-700">詳細說明:</span>
+          <div className="text-sm text-gray-600 mt-1">
+            {item.description.split('\n').map((line, i) => (
+              <div key={i}>{line.trim()}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Detail Information */}
+      {item.detail && (
+        <div className="mb-4">
+          <div className="text-sm text-gray-600 leading-relaxed">
+            {item.detail.split('\n').map((line, i) => (
+              <div key={i}>{line.trim()}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 6. Options - Always visible */}
       <ProductOptions
         item={item}
         selectedOptions={selectedOptions}
         selectedMultiple={selectedMultiple}
         onOptionChange={handleOptionChange}
         onMultipleSelectionChange={handleMultipleSelectionChange}
-        baseOptionNo={item.basePrice === 0 ? findDefaultOption()?.optionNo : null}
-      />
-
-      {/* 6. View Details Button */}
-      <div className="mb-4">
-        <button
-          onClick={handleToggleExpand}
-          className={`w-full py-2 px-4 border ${styling.button} rounded-lg text-sm transition-colors flex items-center justify-center gap-2`}
-        >
-          <span>查看詳情</span>
-          <svg 
-            className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Expandable Details */}
-      {isExpanded && (
-        <div className="border-t pt-4 mb-4 space-y-3">          {/* Description */}
-          {item.description && (
-            <div className="mb-3">
-              <span className="font-medium text-gray-700">詳細說明:</span>
-              <div className="text-sm text-gray-600 mt-1">
-                {item.description.split('\n').map((line, i) => (
-                  <div key={i}>{line.trim()}</div>
-                ))}
-              </div>
-            </div>
-          )}          {/* Detail Information */}
-          {item.detail && (
-            <div className="mb-3">
-              <div className="text-sm text-gray-600 leading-relaxed">
-                {item.detail.split('\n').map((line, i) => (
-                  <div key={i}>{line.trim()}</div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
+        baseOptionNo={item.basePrice === 0 ? findDefaultOption()?.optionNo : null}      />
 
       {/* 7. Quantity Selector */}
       <div className="mb-4">
