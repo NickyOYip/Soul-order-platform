@@ -27,15 +27,15 @@ export const serviceCategories = [
 // Membership configuration
 export const membershipDiscounts = {
   gold: 0.05,      // 5% discount (95% price)
-  platinum: 0.10,  // 10% discount (90% price)
+  platinum: 0.10,  // 10% discount (90% price)  
   diamond: 0.15    // 15% discount (85% price)
 };
 
 export const getMembershipName = (membership) => {
   switch (membership) {
-    case 'gold': return '金卡會員';
-    case 'platinum': return '白金會員';
-    case 'diamond': return '鑽石會員';
+    case 'gold': return '金級會員';
+    case 'platinum': return '白金級會員';
+    case 'diamond': return '鑽石級會員';
     default: return '';
   }
 };
@@ -110,48 +110,53 @@ export const homePageServiceCategories = [
 export const membershipTiers = [
   {
     id: 'gold',
-    name: '金卡會員',
-    requirement: '單次消費 $1,000 - $1,499',
-    discount: '95折優惠',
+    name: '金級會員',
+    requirement: '單次消費滿HK$1000',
+    discount: '所有產品服務一律95折',
     discountPercent: '5%',
     color: 'from-yellow-300 to-yellow-500',
     textColor: 'text-black',
+    birthdayBenefit: '生日消費券HK$50（該月內使用）',
+    validPeriod: '一年',
+    upgradeCondition: '會員身份完結前的一個月內累積消費滿HK$2000',
     benefits: [
-      '所有商品享有 95 折優惠',
-      '生日月享額外優惠',
-      '專屬會員活動'
+      '所有產品服務一律95折',
+      '生日消費券HK$50（該月內使用）',
+      '有效期限：一年'
     ]
   },
   {
     id: 'platinum',
-    name: '白金會員',
-    requirement: '單次消費 $1,500 - $1,999',
-    discount: '9折優惠',
+    name: '白金級會員',
+    requirement: '單次消費滿HK$1500',
+    discount: '所有產品服務一律9折',
     discountPercent: '10%',
     color: 'from-gray-300 to-gray-500',
     textColor: 'text-black',
+    birthdayBenefit: '生日消費券HK$100（該月內使用）',
+    validPeriod: '一年',
+    upgradeCondition: '會員身份完結前的一個月內累積消費滿HK$2500',
     benefits: [
-      '所有商品享有 9 折優惠',
-      '生日月享額外優惠',
-      '專屬會員活動',
-      '優先預約服務'
+      '所有產品服務一律9折',
+      '生日消費券HK$100（該月內使用）',
+      '有效期限：一年'
     ]
   },
   {
     id: 'diamond',
-    name: '鑽石會員',
-    requirement: '單次消費 $2,000 以上',
-    discount: '85折優惠',
+    name: '鑽石級會員',
+    requirement: '單次消費滿HK$2000',
+    discount: '所有產品服務一律85折',
     discountPercent: '15%',
     color: 'from-blue-300 to-purple-500',
     textColor: 'text-white',
+    birthdayBenefit: '生日消費券HK$150（該月內使用）',
+    validPeriod: '一年',
+    upgradeCondition: '會員身份完結前的一個月內累積消費滿HK$3000',
     benefits: [
-      '所有商品享有 85 折優惠',
-      '生日月享額外優惠',
-      '專屬會員活動',
-      '優先預約服務',
-      '專屬客服',
-      '免費快遞服務'
+      '所有產品服務一律85折',
+      '生日消費券HK$150（該月內使用）',
+      '有效期限：一年'
     ]
   }
 ];
@@ -178,6 +183,7 @@ export const frequencySubCategories = [
 
 export const tarotSubCategories = [
   { key: '線上占卜', label: '線上占卜', icon: '🔮', color: 'indigo' },
+  { key: '電話占卜', label: '電話占卜', icon: '📞', color: 'green' },
   { key: '其他服務', label: '其他服務', icon: '⚡', color: 'teal' },
   { key: '門市占卜', label: '門市占卜', icon: '🏪', color: 'purple' }
 ];

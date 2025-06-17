@@ -200,13 +200,52 @@ export const tarotProducts = [
     tag: '問題占卜',
     detail: '針對您最關心的一個問題進行深度塔羅占卜分析，提供詳細解讀和具體建議，幫助您找到問題的答案和解決方向。包含深度問題分析、詳細塔羅解讀、具體行動建議、文字報告。',
     image: '/images/tarot-single-question.jpg',
-    hasOptions: false,
-    basePrice: 60
+    hasOptions: false,    basePrice: 60
+  },
+
+  // 電話占卜 Products
+  {
+    id: 19,
+    name: '電話占卜',
+    category: 'tarot',
+    subCategory: '電話占卜',
+    tag: '電話諮詢',
+    detail: '透過電話進行專業塔羅占卜服務，讓您在舒適的環境中獲得即時的占卜解讀和建議。適合無法親自到場或需要隱私諮詢的客戶。提供不同時長選擇以滿足您的需求。',
+    image: '',
+    hasOptions: true,
+    basePrice: 0,
+    options: [
+      {
+        optionNo: 1,
+        optionType: 'dropdown',
+        optionTitle: '通話時長',
+        optionDetails: [
+          {
+            name: '30分鐘',
+            description: '30分鐘電話占卜服務',
+            additionalPrice: 200,
+            tag: ''
+          },
+          {
+            name: '45分鐘',
+            description: '45分鐘電話占卜服務',
+            additionalPrice: 280,
+            tag: 'Popular'
+          },
+          {
+            name: '60分鐘',
+            description: '60分鐘電話占卜服務',
+            additionalPrice: 350,
+            tag: 'Best Value'
+          }
+        ]
+      }
+    ]
   },
   
   // 門市占卜 Products
   {
-    id: 19,
+    id: 20,
     name: '門市占卜',
     category: 'tarot',
     subCategory: '門市占卜',

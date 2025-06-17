@@ -64,7 +64,7 @@ const TarotPage = ({ onNavigate }) => {
         </div>      </div>      {/* Main Content */}
       <div className="bg-white rounded-xl p-8 shadow-lg">
         {/* Subcategory Filter */}
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6 max-w-2xl mx-auto">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜分類</h2>        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 max-w-4xl mx-auto">
           {tarotSubCategories.map((subCat) => (
             <button
               key={subCat.key}
