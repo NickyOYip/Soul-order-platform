@@ -20,9 +20,11 @@ export const frequencyProducts = [  {
     category: 'frequency',
     subCategory: '愛情調頻',
     tag: '暗戀調頻',
-    detail: '專為暗戀階段設計的能量調頻服務，提升好感度、吸引力、關注度、主動性和熱情，增加表白成功率，改善交流。效果包括：+好感＋吸引力＋關注度＋主動+熱情 ＋表白成功率＋交流。',    image: '/images/frequency-love-secret.jpg',
+    detail: '專為暗戀階段設計的能量調頻服務，提升好感度、吸引力、關注度、主動性和熱情，增加表白成功率，改善交流。效果包括：+好感＋吸引力＋關注度＋主動+熱情 ＋表白成功率＋交流。',
+    image: '/images/frequency-love-secret.jpg',
     hasOptions: true,
     basePrice: 0,
+    soldOut: false,
     options: [
       {
         optionNo: 1,
@@ -58,9 +60,11 @@ export const frequencyProducts = [  {
     category: 'frequency',
     subCategory: '愛情調頻',
     tag: '曖昧調頻',
-    detail: '專為曖昧關係設計的能量調頻服務，增加喜愛度、優先度、主動性、了解度和成為情侶的機會，提升真誠度並減少發展阻礙。效果包括：+喜愛+優先度+主動＋了解度+成為情侶的機會＋真誠-發展阻礙。',    image: '/images/frequency-love-ambiguous.jpg',
+    detail: '專為曖昧關係設計的能量調頻服務，增加喜愛度、優先度、主動性、了解度和成為情侶的機會，提升真誠度並減少發展阻礙。效果包括：+喜愛+優先度+主動＋了解度+成為情侶的機會＋真誠-發展阻礙。',
+    image: '/images/frequency-love-ambiguous.jpg',
     hasOptions: true,
     basePrice: 0,
+    soldOut: false,
     options: [
       {
         optionNo: 1,
@@ -90,16 +94,17 @@ export const frequencyProducts = [  {
         ]
       }
     ]
-  },
-  {
+  },  {
     id: 3,
     name: '戀愛升溫Plan',
     category: 'frequency',
     subCategory: '愛情調頻',
     tag: '戀愛升溫',
-    detail: '專為戀愛關係升溫設計的能量調頻服務，提供三種不同方案針對愛意度、甜蜜感、新鮮感、安全感、溝通能力和性事契合度等各方面進行調頻。',    image: '/images/frequency-love-heating.jpg',
+    detail: '專為戀愛關係升溫設計的能量調頻服務，提供三種不同方案針對愛意度、甜蜜感、新鮮感、安全感、溝通能力和性事契合度等各方面進行調頻。',
+    image: '/images/frequency-love-heating.jpg',
     hasOptions: true,
     basePrice: 0,
+    soldOut: false,
     options: [      {
         optionNo: 1,
         optionType: 'detail card',

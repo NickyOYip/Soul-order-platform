@@ -269,14 +269,20 @@ const handleAddToCart = () => {    // Check if all required options are selected
     };
   };
 
-  const styling = getCardStyling();
-    return (
-    <div className={`${styling.container} rounded-lg p-6 border hover:shadow-lg transition-shadow relative`}>
+  const styling = getCardStyling();    return (
+    <div className={`${styling.container} rounded-lg p-6 border hover:shadow-lg transition-shadow relative ${item.soldOut ? 'opacity-75' : ''}`}>
       {/* Success Notification */}
       {showSuccess && (
         <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-10 animate-pulse">
           已加入購物車！
         </div>      )}
+
+      {/* Sold Out Badge */}
+      {item.soldOut && (
+        <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg z-10">
+          缺貨
+        </div>
+      )}
       
       {/* 1. Product/Service Image - Only show if image exists */}
       {item.image && item.image.trim() !== '' && (
@@ -377,8 +383,15 @@ const handleAddToCart = () => {    // Check if all required options are selected
           </button>
         </div>
       </div>      {/* 8. Add to Cart Button */}
-      <div className="space-y-2">        {/* Validation Message */}
-        {!areAllRequiredOptionsSelected() && (
+      <div className="space-y-2">        {/* Sold Out Message */}
+        {item.soldOut && (
+          <div className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-center">
+            <span className="text-gray-600 font-medium">😔 暫時缺貨</span>
+          </div>
+        )}
+
+        {/* Validation Message */}
+        {!item.soldOut && !areAllRequiredOptionsSelected() && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-2 text-xs text-red-600 text-center">
             <span className="font-medium">⚠️ 請選擇必填選項:</span> {getMissingRequiredOptions().join(', ')}
           </div>
@@ -386,14 +399,18 @@ const handleAddToCart = () => {    // Check if all required options are selected
         
         <button 
           onClick={handleAddToCart}
-          disabled={isAdding || showSuccess || !areAllRequiredOptionsSelected()}
+          disabled={item.soldOut || isAdding || showSuccess || !areAllRequiredOptionsSelected()}
           className={`btn-primary py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2 w-full ${
-            isAdding || showSuccess || !areAllRequiredOptionsSelected()
-              ? 'opacity-75 cursor-not-allowed' 
-              : 'hover:bg-pink-600'
+            item.soldOut 
+              ? 'bg-gray-400 cursor-not-allowed opacity-75' 
+              : isAdding || showSuccess || !areAllRequiredOptionsSelected()
+                ? 'opacity-75 cursor-not-allowed' 
+                : 'hover:bg-pink-600'
           }`}
         >
-          {showSuccess ? (
+          {item.soldOut ? (
+            '暫時缺貨'
+          ) : showSuccess ? (
             '已加入購物車 ✓'
           ) : isAdding ? (
             '加入中...'

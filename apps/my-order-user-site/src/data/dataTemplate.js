@@ -8,6 +8,7 @@ Products ={
     image: '/images/pendulum.jpg', // if no image don't show the element
     hasOptions: true,
     basePrice: 600,
+    soldOut: false,
     options: [//if hasOptions=false, don't show this element
         {
             optionNo: 1,

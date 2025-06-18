@@ -2,8 +2,7 @@
 // This file contains 七日星體蠟燭 and 戀人蠟燭儀式 products
 
 // 七日星體蠟燭 (7-Day Planetary Candles)
-export const candleProducts = [
-  {
+export const candleProducts = [  {
     id: 1,
     name: 'Love Me Lots',
     category: 'candles',
@@ -12,7 +11,8 @@ export const candleProducts = [
     detail: '強力愛情吸引蠟燭，專為增強個人魅力、吸引真愛、\n深化感情連結而設計的七日星體蠟燭。',
     image: '/images/love-me-lots-candle.jpg',
     hasOptions: false,
-    basePrice: 988
+    basePrice: 988,
+    soldOut: false
   },
   {
     id: 2,
@@ -23,7 +23,8 @@ export const candleProducts = [
     detail: '專為重燃舊情、修復關係、召回失去的愛人而設計的強力復合七日星體蠟燭。',
     image: '/images/intranquil-candle.jpg',
     hasOptions: false,
-    basePrice: 988
+    basePrice: 988,
+    soldOut: true
   },
   {
     id: 3,
@@ -33,8 +34,8 @@ export const candleProducts = [
     tag: '淨化蠟燭',
     detail: '椰子淨化蠟燭，能夠清除負能量、淨化環境、帶來平靜安寧，適合空間及心靈淨化。',
     image: '/images/coconut-candle.jpg',
-    hasOptions: false,
-    basePrice: 988
+    hasOptions: false,    basePrice: 988,
+    soldOut: false
   },
   {
     id: 4,
@@ -45,7 +46,8 @@ export const candleProducts = [
     detail: '強力財運蠟燭，專為吸引財富、增加收入、帶來商業成功和投資運勢而設計。',
     image: '/images/money-machine-candle.jpg',
     hasOptions: false,
-    basePrice: 988
+    basePrice: 988,
+    soldOut: false
   },
   {
     id: 5,
@@ -56,7 +58,8 @@ export const candleProducts = [
     detail: '終極召回蠟燭，專為召喚失去的愛人、修復破裂關係、重新點燃愛火而設計的強力蠟燭。',
     image: '/images/come-back-to-me-candle.jpg',
     hasOptions: false,
-    basePrice: 988
+    basePrice: 988,
+    soldOut: false
   },
   {
     id: 6,    name: '紅戀人蠟燭儀式',
@@ -91,6 +94,7 @@ export const candleProducts = [
     image: '/images/white-lovers-candle.jpg',
     hasOptions: true,
     basePrice: 688,
+    soldOut: false,
     options: [
       {
         optionNo: 1,
@@ -117,6 +121,7 @@ export const candleProducts = [
     image: '/images/custom-magic-candle.jpg',
     hasOptions: true,
     basePrice: 0,
+    soldOut: false,
     options: [
       {
         optionNo: 1,
@@ -264,8 +269,8 @@ export const candleProducts = [
     tag: '愛情蠟燭',
     detail: '香味：茉莉\n\n情侣及新對象均適用\n燃點強烈吸引力和慾望\n創造激情體驗 令彼此沉醉於關係中\n透過喚醒內在感官體驗\n令大家充滿相互欣賞和渴望的感覺',
     image: '',
-    hasOptions: false,
-    basePrice: 288
+    hasOptions: false,    basePrice: 288,
+    soldOut: false
   },  {
     id: 10,
     name: '清理 Cleansing',
@@ -275,7 +280,8 @@ export const candleProducts = [
     detail: '香味：檸檬草、鼠尾草、絲柏\n\n清理心靈中的困惑\n為你打開不同的可能性\n清理限制性及自己破壞的思維\n釋放舊有創傷及過時信念\n清理情緒不穩及靈性貧乏的人對你造成的影響',
     image: '',
     hasOptions: false,
-    basePrice: 288
+    basePrice: 288,
+    soldOut: true
   },  {
     id: 11,
     name: '解決問題 Problem Solving',
