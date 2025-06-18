@@ -95,110 +95,205 @@ const TarotPage = ({ onNavigate }) => {
                 />
               ))}
             </div>
-          </>
-        )}        {/* Information Section */}
-        <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 mb-6">
-          <h3 className="text-lg font-bold text-gray-800 mb-4 text-center">
-            {selectedSubCategory === '線上占卜' ? '線上塔羅占卜說明' : 
-             selectedSubCategory === '門市占卜' ? '門市塔羅占卜說明' : '快速占卜服務說明'}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-bold text-gray-700 mb-3">服務特色</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                {selectedSubCategory === '線上占卜' ? (
-                  <>
-                    <li>• 深度專業分析</li>
-                    <li>• 針對性主題解讀</li>
-                    <li>• 詳細文字報告</li>
-                    <li>• 具體行動建議</li>
-                  </>
-                ) : selectedSubCategory === '門市占卜' ? (
-                  <>
-                    <li>• 面對面專業占卜</li>
-                    <li>• 即時互動解讀</li>
-                    <li>• 舒適門市環境</li>
-                    <li>• 30分鐘深度占卜</li>
-                  </>
-                ) : (
-                  <>
-                    <li>• 快速回覆服務</li>
-                    <li>• 經濟實惠價格</li>
-                    <li>• 簡潔精準解讀</li>
-                    <li>• 即時指引建議</li>
-                  </>
-                )}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-gray-700 mb-3">適合對象</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                {selectedSubCategory === '線上占卜' ? (
-                  <>
-                    <li>• 需要深度分析的問題</li>
-                    <li>• 重要人生決策時刻</li>
-                    <li>• 感情事業規劃需求</li>
-                    <li>• 希望詳細了解趨勢</li>
-                  </>
-                ) : selectedSubCategory === '門市占卜' ? (
-                  <>
-                    <li>• 喜歡面對面交流</li>
-                    <li>• 需要即時回饋互動</li>
-                    <li>• 一個範疇深度探討</li>
-                    <li>• 追求完整占卜體驗</li>
-                  </>
-                ) : (
-                  <>
-                    <li>• 需要快速答案的時候</li>
-                    <li>• 簡單是非題決策</li>
-                    <li>• 尋求即時指引</li>
-                    <li>• 初次體驗塔羅占卜</li>
-                  </>
-                )}
-              </ul>
-            </div>
-          </div>
-
-          <div className="text-center mt-6">
-            <button className="bg-indigo-500 text-white px-8 py-3 rounded-full font-medium text-lg hover:bg-indigo-600 transition-colors">
-              了解更多塔羅占卜
-            </button>
-          </div>
-        </div>
+          </>        )}
       </div>      {/* How It Works Section */}
       <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">占卜流程</h2>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-indigo-600">1</span>
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          {selectedSubCategory === '門市占卜' ? '門市占卜流程' : 
+           selectedSubCategory === '線上占卜' ? '線上占卜流程' : 
+           selectedSubCategory === '電話占卜' ? '電話占卜流程' : '占卜流程'}
+        </h2>
+          {selectedSubCategory === '門市占卜' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">1</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">選擇時長</h3>
+                <p className="text-gray-600 text-sm">選擇需要占卜的時長</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">2</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">預約確認</h3>
+                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單後會幫忙預約時間</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">3</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">光臨門市</h3>
+                <p className="text-gray-600 text-sm">光臨門市享受私人專屬占卜服務</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">4</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">專屬服務</h3>
+                <p className="text-gray-600 text-sm">享受完整的占卜體驗與指引</p>
+              </div>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">選擇服務</h3>
-            <p className="text-gray-600 text-sm">選擇適合的占卜方式</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-indigo-600">2</span>
+            
+            <div className="bg-white rounded-lg p-6 mt-6">
+              <h4 className="font-bold text-gray-800 mb-4">門市占卜詳細說明</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold text-indigo-600 mb-3">預約與到店</h5>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li>• 建議提前1-3天預約，確保有您喜愛的占卜師</li>
+                    <li>• 請準時到達，遲到可能影響占卜時間</li>
+                    <li>• 門市地址：台北市大安區○○路○○號</li>
+                    <li>• 營業時間：週一至週日 10:00-22:00</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-semibold text-indigo-600 mb-3">占卜過程</h5>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li>• 占卜時間約30分鐘，深度解讀您的問題</li>
+                    <li>• 可選擇不同牌陣：愛情、事業、健康等</li>
+                    <li>• 占卜師會詳細解釋每張牌的意義</li>
+                    <li>• 您可以隨時提問，進行互動討論</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-4 p-4 bg-indigo-50 rounded-lg">
+                <p className="text-sm text-indigo-700">
+                  <strong>溫馨提醒：</strong>請帶著開放的心態，明確的問題來占卜。避免重複占卜同一問題，給予宇宙足夠的時間為您安排。
+                </p>
+              </div>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">提出問題</h3>
-            <p className="text-gray-600 text-sm">明確描述您的疑問</p>
           </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-indigo-600">3</span>
+        )}        {selectedSubCategory === '線上占卜' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">1</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">下單選擇</h3>
+                <p className="text-gray-600 text-sm">下單適合自身情況的占卜plan</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">2</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">填寫資料</h3>
+                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單後填寫表格（1.中/英文名 2.生日 3.大致情況）</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">3</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">專業占卜</h3>
+                <p className="text-gray-600 text-sm">占卜師會在二十四小時內為你占卜</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">4</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">收到結果</h3>
+                <p className="text-gray-600 text-sm">發送占卜結果給你（包括文字解釋和牌面照片）🫸🏻若對結果不明白可提出疑問🫷🏻</p>
+              </div>            </div>
+          </div>
+        )}{selectedSubCategory === '電話占卜' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">1</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">選擇時長</h3>
+                <p className="text-gray-600 text-sm">選擇需要占卜的時長</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">2</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">預約時間</h3>
+                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單後為你預約時間</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">3</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">連線占卜</h3>
+                <p className="text-gray-600 text-sm">可選電話連線或錄音方式進行📲</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">4</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">即時問答</h3>
+                <p className="text-gray-600 text-sm">占卜師和客人須同時在線，客人可在所選時間內任問</p>
+              </div>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">專業解讀</h3>
-            <p className="text-gray-600 text-sm">資深占卜師解讀</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-indigo-600">4</span>
+            
+            <div className="bg-white rounded-lg p-6 mt-6">
+              <h4 className="font-bold text-gray-800 mb-4">電話占卜詳細說明</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h5 className="font-semibold text-indigo-600 mb-3">預約與通話</h5>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li>• 可預約當日或未來7天內的時段</li>
+                    <li>• 占卜師會在約定時間主動致電給您</li>
+                    <li>• 請確保手機暢通，並準備好筆記</li>
+                    <li>• 通話時間約20-30分鐘</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-semibold text-indigo-600 mb-3">占卜內容</h5>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li>• 即時抽牌與牌義解釋</li>
+                    <li>• 可針對牌面進行深度討論</li>
+                    <li>• 提供具體的行動建議</li>
+                    <li>• 解答您當下的疑問與困惑</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="mt-4 p-4 bg-indigo-50 rounded-lg">
+                <p className="text-sm text-indigo-700">
+                  <strong>通話小提醒：</strong>建議在安靜的環境中進行占卜，準備好您想詢問的問題清單，這樣能讓占卜更加順暢有效。
+                </p>
+              </div>
             </div>
-            <h3 className="font-bold text-gray-800 mb-2">獲得指引</h3>
-            <p className="text-gray-600 text-sm">收到詳細建議</p>
           </div>
-        </div>
-      </div>      {/* CTA Section */}
+        )}
+
+        {(selectedSubCategory === '快速占卜' || selectedSubCategory === '進階占卜') && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-indigo-600">1</span>
+              </div>
+              <h3 className="font-bold text-gray-800 mb-2">選擇服務</h3>
+              <p className="text-gray-600 text-sm">選擇適合的占卜方式</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-indigo-600">2</span>
+              </div>
+              <h3 className="font-bold text-gray-800 mb-2">提出問題</h3>
+              <p className="text-gray-600 text-sm">明確描述您的疑問</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-indigo-600">3</span>
+              </div>
+              <h3 className="font-bold text-gray-800 mb-2">專業解讀</h3>
+              <p className="text-gray-600 text-sm">資深占卜師解讀</p>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-indigo-600">4</span>
+              </div>
+              <h3 className="font-bold text-gray-800 mb-2">獲得指引</h3>
+              <p className="text-gray-600 text-sm">收到詳細建議</p>
+            </div>
+          </div>
+        )}
+      </div>{/* CTA Section */}
       <div className="bg-gradient-to-r from-indigo-200 to-purple-200 rounded-xl p-8 text-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索您的未來了嗎？</h2>
         <p className="text-gray-600 mb-6">

@@ -42,7 +42,7 @@ const CandlesPage = ({ onNavigate }) => {
       <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-xl p-8 text-center">
         <h1 className="text-4xl font-bold mb-4">魔法蠟燭</h1>
         <p className="text-xl mb-6">
-          特製的魔法蠟燭，注入各種能量與意圖，為你帶來所需的改變
+          以火焰作為媒介將您的願望透過蠟燭、魔法精油、草藥和你的意念發送給宇宙，跟宇宙許下訂單
         </p>
         <div className="flex justify-center space-x-6 text-sm">
           <div className="flex items-center">
