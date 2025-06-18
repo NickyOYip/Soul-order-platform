@@ -8,6 +8,7 @@ import './index.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -24,15 +25,40 @@ function App() {
     }
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setIsMobileMenuOpen(false); // Close mobile menu when navigating
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <div className="admin-layout">
+      {/* Mobile Overlay */}
+      <div 
+        className={`mobile-overlay ${isMobileMenuOpen ? 'active' : ''}`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      ></div>
+
       {/* Sidebar */}
-      <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Sidebar 
+        currentPage={currentPage} 
+        setCurrentPage={handlePageChange}
+        isMobileMenuOpen={isMobileMenuOpen}
+      />
       
       {/* Main Content */}
       <div className="main-content">
         <header className="header">
           <div className="header-content">
+            <button 
+              className="mobile-menu-button"
+              onClick={toggleMobileMenu}
+            >
+              ☰
+            </button>
             <h1 className="header-title">解憂雜貨店 - 管理後台</h1>
           </div>
         </header>

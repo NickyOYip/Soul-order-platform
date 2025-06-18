@@ -1,4 +1,4 @@
-const Sidebar = ({ currentPage, setCurrentPage }) => {
+const Sidebar = ({ currentPage, setCurrentPage, isMobileMenuOpen }) => {
   const menuItems = [
     {
       id: 'dashboard',
@@ -21,9 +21,8 @@ const Sidebar = ({ currentPage, setCurrentPage }) => {
       icon: '📋'
     }
   ];
-
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
       {/* Logo */}
       <div className="sidebar-header">
         <h2 className="sidebar-title">解憂雜貨店</h2>

@@ -105,43 +105,42 @@ const ProductsPage = () => {
       p.id === productId ? { ...p, soldOut: !p.soldOut } : p
     ));
   };
-
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex justify-between items-center">
+      <div className="page-header flex justify-between items-center">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">產品管理</h2>
-          <p className="text-gray-600">管理所有產品信息</p>
+          <h2 className="page-title">產品管理</h2>
+          <p className="page-description">管理所有產品信息</p>
         </div>
         <button
           onClick={handleAddProduct}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          className="btn btn-primary"
         >
           + 新增產品
         </button>
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <div className="flex flex-col md:flex-row gap-4">
+      <div className="filters">
+        <div className="filters-row">
           {/* Search */}
-          <div className="flex-1">
+          <div className="filter-item">
             <input
               type="text"
               placeholder="搜尋產品名稱或類別..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="form-input"
             />
           </div>
           
           {/* Category Filter */}
-          <div>
+          <div className="filter-item">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="form-select"
             >
               {categories.map(category => (
                 <option key={category.value} value={category.value}>
