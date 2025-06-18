@@ -47,7 +47,7 @@ const LovePage = ({ onNavigate }) => {
       <div className="bg-gradient-to-r from-pink-500 to-red-500 text-white rounded-xl p-8 text-center">
         <h1 className="text-4xl font-bold mb-4">月老紅線 🧧</h1>
         <p className="text-xl mb-6">
-          月老牽線，為你尋找命中注定的良緣，讓愛情之花綻放 💕
+          緣份斷斷續續？可能因為紅線出了問題，立即查看並修補你們的連結！
         </p>
         <div className="flex justify-center space-x-6 text-sm">
           <div className="flex items-center">

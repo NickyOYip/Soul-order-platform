@@ -50,35 +50,45 @@ const HomePage = ({ onNavigate }) => {
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           為什麼選擇我們？
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold mb-2">專業可靠</h3>
-            <p className="text-gray-600">經驗豐富的專業團隊，提供準確可靠的服務</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold mb-2">隱私保護</h3>
-            <p className="text-gray-600">嚴格保護客戶隱私，讓您安心諮詢</p>
-          </div>
-          <div className="text-center">
-            <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold mb-2">用心服務</h3>
-            <p className="text-gray-600">用愛心與專業，為每位客戶提供貼心服務</p>
-          </div>
-        </div>
+<div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+  <div className="text-center">
+    <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 1.343-3 3v5h6v-5c0-1.657-1.343-3-3-3zM4 20h16a1 1 0 001-1v-1H3v1a1 1 0 001 1z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-semibold mb-2">價格透明</h3>
+    <p className="text-gray-600">價格公開透明，無隱藏費用，讓您輕鬆放心選擇</p>
+  </div>
+  <div className="text-center">
+    <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-semibold mb-2">隱私保護</h3>
+    <p className="text-gray-600">嚴格保護客戶隱私，讓您安心諮詢</p>
+  </div>
+  <div className="text-center">
+    <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4h16v2H4V4zm0 6h16v2H4v-2zm0 6h10v2H4v-2z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-semibold mb-2">客製化服務</h3>
+    <p className="text-gray-600">依照您的需求，量身打造專屬解決方案</p>
+  </div>
+  <div className="text-center">
+    <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <svg className="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l-6-5.5a4 4 0 115.656-5.656L12 10.172l.344-.328a4 4 0 115.656 5.656L12 20z" />
+      </svg>
+    </div>
+    <h3 className="text-lg font-semibold mb-2">情緒支持</h3>
+    <p className="text-gray-600">我們傾聽您的每個情緒，給您真誠的陪伴與支持</p>
+  </div>
+</div>
+
       </section>
     </div>
   );
