@@ -85,9 +85,10 @@ function App() {
                 <div>
                   <h4 className="text-lg font-semibold mb-4">聯絡我們</h4>
                   <div className="space-y-2 text-gray-300">
-                    <p>📧 Email: hello@yourzahuodian.com</p>
-                    <p>📱 Instagram: @yourzahuodian</p>
-                    <p>⏰ 服務時間: 10:00 - 22:00</p>
+                    <p>Email:soulcwu.hk@gmail.com</p>
+                    <p>Instagram: @soul_cwu.hk</p>
+                    <p>Whatsapp:90350140</p>
+                    <p>門市地址:觀塘中美中心A座9樓19室（門市行預約制）</p>
                   </div>
                 </div>
               </div>

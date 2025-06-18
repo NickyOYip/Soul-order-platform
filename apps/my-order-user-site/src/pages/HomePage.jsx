@@ -6,25 +6,15 @@ const HomePage = ({ onNavigate }) => {
     <div className="space-y-12">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-xl p-8 mb-10 shadow-lg">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          歡迎來到你之解憂雜貨店
-        </h1>
-        <p className="text-xl mb-6 leading-relaxed">
-          「宇宙裡一定充滿著我們相遇的機率」💫<br />
-          這裡提供各種心靈療癒服務，幫助你解決心中煩憂
-        </p>
-        <button
-          className="bg-black text-white px-6 py-3 rounded-full hover:bg-gray-800 transition duration-300 font-medium"
-          onClick={() => onNavigate('services')}
-        >
-          立即探索
-        </button>
+        <h3 className="text-2xl text-center md:text-4xl font-bold mb-4">
+          歡迎光臨你の解憂雜貨店
+        </h3>
       </div>
 
       {/* Service Categories Section */}
       <section>
         <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
-          服務項目
+          產品與服務
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {serviceCategories.map((category) => (
@@ -52,14 +42,7 @@ const HomePage = ({ onNavigate }) => {
           ))}
         </div>
         
-        <div className="text-center">
-          <button
-            className="btn-secondary px-8 py-3 rounded-full font-medium"
-            onClick={() => onNavigate('services')}
-          >
-            查看所有服務
-          </button>
-        </div>
+
       </section>
 
       {/* Features Section */}
