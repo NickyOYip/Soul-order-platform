@@ -283,10 +283,9 @@ const handleAddToCart = () => {    // Check if all required options are selected
           缺貨
         </div>
       )}
-      
-      {/* 1. Product/Service Image - Only show if image exists */}
+        {/* 1. Product/Service Image - Only show if image exists */}
       {item.image && item.image.trim() !== '' && (
-        <div className={`w-full h-48 ${styling.image} rounded-lg mb-4 flex items-center justify-center`}>
+        <div className={`w-full aspect-square ${styling.image} rounded-lg mb-4 flex items-center justify-center`}>
           <div className="text-center">
             <div className={`w-16 h-16 rounded-full mx-auto mb-2 flex items-center justify-center ${styling.icon} text-white font-bold shadow-lg`}>
               <span className="text-sm">{styling.iconText}</span>
