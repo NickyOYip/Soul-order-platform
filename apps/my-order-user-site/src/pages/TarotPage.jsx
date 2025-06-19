@@ -144,7 +144,7 @@ const TarotPage = ({ onNavigate }) => {
                     <li>• 建議提前3-7天預約，不接受當天預約</li>
                     <li>• 請準時到達，遲到可能影響占卜時間</li>
                     <li>• 門市地址：觀塘中美中心A座9樓19室</li>
-                    <li>• 門市已預約制形式開放，不接受Walk in</li>
+                    <li>• 門市以預約制形式開放，不接受Walk in</li>
                   </ul>
                 </div>
                 <div>
