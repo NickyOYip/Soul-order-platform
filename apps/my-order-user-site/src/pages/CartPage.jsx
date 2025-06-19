@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { membershipDiscounts, getMembershipName, api, paymentMethods } from '../services/api';
 import OrderSuccessModal from '../components/OrderSuccessModal';
 import Toast from '../components/Toast';
+import PhoneInput from '../components/PhoneInput';
 
 const CartPage = ({ onNavigate }) => {
   const { cart, removeFromCart, updateQuantity, clearCart, getCartTotal } = useCart();
@@ -364,22 +365,15 @@ const CartPage = ({ onNavigate }) => {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-xl font-bold mb-4 text-gray-800">結帳資訊</h2>
-              
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="block text-gray-700 mb-2" htmlFor="phone">
-                    電話號碼 *
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={checkoutData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                    required
-                  />
-                </div>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                <PhoneInput
+                  value={checkoutData.phone}
+                  onChange={handleInputChange}
+                  name="phone"
+                  id="phone"
+                  required
+                  label="電話號碼"
+                />
 
                 <div>
                   <label className="block text-gray-700 mb-2" htmlFor="instagram">

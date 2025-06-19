@@ -36,12 +36,11 @@ const OrdersPage = () => {
     if (selectedDate) {
       filtered = filtered.filter(order => order.orderDate === selectedDate);
     }
-    
-    if (searchTerm) {
+      if (searchTerm) {
       filtered = filtered.filter(order => 
         order.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.customerEmail.toLowerCase().includes(searchTerm.toLowerCase())
+        order.customerIgName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.customerPhone.includes(searchTerm)
       );
     }
     
@@ -234,13 +233,12 @@ const OrdersPage = () => {
                 <tr key={order.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {order.id}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  </td>                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      {order.customerName}
+                      @{order.customerIgName}
                     </div>
                     <div className="text-sm text-gray-500">
-                      {order.customerEmail}
+                      {order.customerPhone}
                     </div>
                   </td>
                   <td className="px-6 py-4">

@@ -31,11 +31,9 @@ const UsersPage = () => {
     if (selectedMembership !== 'all') {
       filtered = filtered.filter(user => user.membership === selectedMembership);
     }
-    
-    if (searchTerm) {
+      if (searchTerm) {
       filtered = filtered.filter(user => 
-        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.igName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.phone.includes(searchTerm)
       );
     }
@@ -198,27 +196,24 @@ const UsersPage = () => {
               {filteredUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">
-                      <div className="flex-shrink-0 h-10 w-10">
+                    <div className="flex items-center">                      <div className="flex-shrink-0 h-10 w-10">
                         <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
                           <span className="text-purple-600 font-medium">
-                            {user.name.charAt(0)}
+                            {user.igName && user.igName.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       </div>
-                      <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
-                          {user.name}
+                      <div className="ml-4">                        <div className="text-sm font-medium text-gray-900">
+                          @{user.igName}
                         </div>
                         <div className="text-sm text-gray-500">
                           加入日期: {user.joinDate}
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{user.email}</div>
-                    <div className="text-sm text-gray-500">{user.phone}</div>
+                  </td>                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-900">{user.phone}</div>
+                    <div className="text-sm text-gray-500">聯絡電話</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getMembershipColor(user.membership)}`}>

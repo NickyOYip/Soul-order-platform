@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
+import PhoneInput from './PhoneInput';
 
 const LoginModal = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState('login');
-  const [formData, setFormData] = useState({
+  const [activeTab, setActiveTab] = useState('login');  const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    instagram: '',
-    password: ''
+    instagram: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,10 +31,9 @@ const LoginModal = ({ isOpen, onClose }) => {
       if (activeTab === 'login') {
         await login(formData);
       } else {
-        await register(formData);
-      }
+        await register(formData);      }
       onClose();
-      setFormData({ name: '', phone: '', instagram: '', password: '' });
+      setFormData({ name: '', phone: '', instagram: '' });
     } catch (err) {
       setError(err.message || '操作失敗，請重試');
     } finally {
@@ -109,22 +107,14 @@ const LoginModal = ({ isOpen, onClose }) => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               required
             />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-2" htmlFor="phone">
-              電話號碼
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              required
-            />
-          </div>
+          </div>          <PhoneInput
+            value={formData.phone}
+            onChange={handleInputChange}
+            name="phone"
+            id="phone"
+            required
+            label="電話號碼"
+          />
 
           <div>
             <label className="block text-gray-700 mb-2" htmlFor="instagram">
@@ -138,25 +128,7 @@ const LoginModal = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               required
-            />
-          </div>
-
-          {activeTab === 'register' && (
-            <div>
-              <label className="block text-gray-700 mb-2" htmlFor="password">
-                密碼
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                required
-              />
-            </div>
-          )}
+            />          </div>
 
           <button
             type="submit"
