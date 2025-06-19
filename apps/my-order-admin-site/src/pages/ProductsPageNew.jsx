@@ -1,31 +1,27 @@
 import { useState, useEffect } from 'react';
-import { PencilIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, TrashIcon, PlusIcon } from '@heroicons/react/24/outline';
 import ProductModal from '../components/ProductModal';
 import apiService from '../services/apiService';
 import { serviceCategories, getSubCategoriesByCategory } from '../services/mockApi';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);  const [selectedCategory, setSelectedCategory] = useState('candles'); // Start with candles like user site
-  const [selectedSubCategory, setSelectedSubCategory] = useState('七日星體蠟燭'); // Start with first candle subcategory
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('candles'); // Start with candles like user site
+  const [selectedSubCategory, setSelectedSubCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+
   // Load products from API service
   useEffect(() => {
     const loadProducts = async () => {
       try {
         setLoading(true);
         const data = await apiService.getAllProducts();
-        
-        // Deduplicate products by id to avoid React key conflicts
-        const uniqueProducts = data.filter((product, index, self) => 
-          index === self.findIndex(p => p.id === product.id && p.category === product.category)
-        );
-        
-        setProducts(uniqueProducts);
-        setFilteredProducts(uniqueProducts);
+        setProducts(data);
+        setFilteredProducts(data);
       } catch (error) {
         console.error('Failed to load products:', error);
       } finally {
@@ -37,15 +33,18 @@ const ProductsPage = () => {
   }, []);
 
   // Get subcategories for selected category
-  const availableSubCategories = getSubCategoriesByCategory(selectedCategory);  // Reset subcategory when category changes and set default
+  const availableSubCategories = getSubCategoriesByCategory(selectedCategory);
+
+  // Reset subcategory when category changes and set default
   useEffect(() => {
     if (availableSubCategories.length > 0) {
-      const defaultSubCategory = availableSubCategories[0].id || availableSubCategories[0].key;
-      setSelectedSubCategory(defaultSubCategory);
+      setSelectedSubCategory(availableSubCategories[0].id || availableSubCategories[0].key);
     } else {
       setSelectedSubCategory('');
     }
-  }, [selectedCategory, availableSubCategories]);// Filter products
+  }, [selectedCategory]);
+
+  // Filter products
   useEffect(() => {
     let filtered = products;
     
@@ -71,25 +70,21 @@ const ProductsPage = () => {
   const handleAddProduct = () => {
     setEditingProduct(null);
     setShowModal(true);
-  };  const handleEditProduct = (product) => {
+  };
+
+  const handleEditProduct = (product) => {
     setEditingProduct(product);
     setShowModal(true);
   };
-  const handleToggleProductStatus = async (product) => {
-    try {
-      const newDisabledStatus = !product.disabled;
-      await apiService.toggleProductStatus(product.id);
-      
-      // Update the product in the local state
-      setProducts(products.map(p => 
-        p.id === product.id 
-          ? { ...p, disabled: newDisabledStatus }
-          : p
-      ));
-      
-      console.log(`Product ${product.name} ${newDisabledStatus ? 'disabled' : 'enabled'} successfully`);
-    } catch (error) {
-      console.error('Failed to toggle product status:', error);
+
+  const handleDeleteProduct = async (productId) => {
+    if (window.confirm('確定要刪除此產品嗎？')) {
+      try {
+        await apiService.deleteProduct(productId);
+        setProducts(products.filter(p => p.id !== productId));
+      } catch (error) {
+        console.error('Failed to delete product:', error);
+      }
     }
   };
 
@@ -108,7 +103,8 @@ const ProductsPage = () => {
       }
       setShowModal(false);
     } catch (error) {
-      console.error('Failed to save product:', error);    }
+      console.error('Failed to save product:', error);
+    }
   };
 
   // Get category info for display
@@ -199,7 +195,8 @@ const ProductsPage = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
             />
-          </div>          <button
+          </div>
+          <button
             onClick={handleAddProduct}
             className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
           >
@@ -215,63 +212,68 @@ const ProductsPage = () => {
         {loading ? (
           <div className="flex items-center justify-center min-h-64">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
-          </div>        ) : (
+          </div>
+        ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProducts.map((product) => (              <div key={`${product.category}-${product.subCategory}-${product.id}-${product.name}`} className={`bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden ${product.disabled ? 'opacity-60 bg-gray-50' : ''}`}>                {/* Product Image */}
+            {filteredProducts.map((product) => (
+              <div key={product.id} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+                {/* Product Image */}
                 <div className="relative h-48 bg-gray-100 overflow-hidden">
                   {product.image ? (
                     <img
                       src={product.image}
                       alt={product.name}
-                      className={`w-full h-full object-cover ${product.disabled ? 'grayscale' : ''}`}
+                      className="w-full h-full object-cover"
                       onError={(e) => {
                         e.target.style.display = 'none';
                         e.target.nextSibling.style.display = 'flex';
                       }}
                     />
                   ) : null}
-                  <div className={`w-full h-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center text-gray-500 ${product.image ? 'hidden' : ''}`}>
+                  <div className="w-full h-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center text-gray-500">
                     <span className="text-4xl">🔮</span>
                   </div>
-
-                  {/* Disabled Overlay */}
-                  {product.disabled && (
-                    <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-                      <span className="bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        已停用
-                      </span>
-                    </div>
-                  )}
-
-{/* Admin Action Buttons - Only Edit Button */}
-                  <div className="absolute top-2 right-2">                    <button
+                  
+                  {/* Admin Action Buttons */}
+                  <div className="absolute top-2 right-2 flex gap-2">
+                    <button
                       onClick={() => handleEditProduct(product)}
                       className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-lg transition-colors"
                       title="編輯產品"
                     >
                       <PencilIcon className="w-4 h-4" />
                     </button>
-                  </div>                  {/* Sold Out Badge - Removed overlay to not block admin buttons */}
+                    <button
+                      onClick={() => handleDeleteProduct(product.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition-colors"
+                      title="刪除產品"
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Sold Out Badge */}
+                  {product.soldOut && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                      <span className="bg-red-500 text-white px-4 py-2 rounded-full font-bold">
+                        已售完
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Product Info */}
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-3">
-                    <div>                      <h3 className="text-lg font-bold text-gray-900 mb-1">
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-1">
                         {product.name}
                       </h3>
-                      <div className="flex gap-2 flex-wrap">
-                        {product.tag && (
-                          <span className="inline-block bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">
-                            {product.tag}
-                          </span>
-                        )}
-                        {product.soldOut && (
-                          <span className="inline-block bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
-                            已售完
-                          </span>
-                        )}
-                      </div>
+                      {product.tag && (
+                        <span className="inline-block bg-purple-100 text-purple-600 text-xs px-2 py-1 rounded-full">
+                          {product.tag}
+                        </span>
+                      )}
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-purple-600">
@@ -320,13 +322,13 @@ const ProductsPage = () => {
             </button>
           </div>
         )}
-      </div>      {/* Product Modal */}
+      </div>
+
+      {/* Product Modal */}
       {showModal && (
         <ProductModal
           product={editingProduct}
           categories={serviceCategories}
-          selectedCategory={selectedCategory}
-          selectedSubCategory={selectedSubCategory}
           onSave={handleSaveProduct}
           onClose={() => setShowModal(false)}
         />

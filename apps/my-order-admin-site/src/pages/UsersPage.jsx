@@ -1,61 +1,27 @@
 import { useState, useEffect } from 'react';
+import apiService from '../services/apiService';
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMembership, setSelectedMembership] = useState('all');
+  const [loading, setLoading] = useState(true);
 
-  // Mock users data
+  // Load users from API service
   useEffect(() => {
-    const mockUsers = [
-      {
-        id: 1,
-        name: '張小明',
-        email: 'zhang@example.com',
-        phone: '+886 912-345-678',
-        membership: '金級會員',
-        totalSpent: 1250,
-        orders: 5,
-        joinDate: '2024-12-15',
-        status: 'active'
-      },
-      {
-        id: 2,
-        name: '李小華',
-        email: 'li@example.com',
-        phone: '+886 987-654-321',
-        membership: '白金級會員',
-        totalSpent: 3200,
-        orders: 12,
-        joinDate: '2024-11-20',
-        status: 'active'
-      },
-      {
-        id: 3,
-        name: '王小美',
-        email: 'wang@example.com',
-        phone: '+886 955-123-456',
-        membership: '鑽石級會員',
-        totalSpent: 5800,
-        orders: 20,
-        joinDate: '2024-10-05',
-        status: 'active'
-      },
-      {
-        id: 4,
-        name: '陳小強',
-        email: 'chen@example.com',
-        phone: '+886 933-987-654',
-        membership: '普通會員',
-        totalSpent: 450,
-        orders: 2,
-        joinDate: '2025-01-10',
-        status: 'inactive'
+    const loadUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await apiService.getAllUsers();
+        setUsers(data);
+        setFilteredUsers(data);
+      } catch (error) {
+        console.error('Failed to load users:', error);
+      } finally {
+        setLoading(false);
       }
-    ];
-    setUsers(mockUsers);
-    setFilteredUsers(mockUsers);
+    };    loadUsers();
   }, []);
 
   // Filter users
@@ -97,18 +63,29 @@ const UsersPage = () => {
         return 'bg-blue-100 text-blue-800';
     }
   };
-
-  const toggleUserStatus = (userId) => {
-    setUsers(users.map(user => 
-      user.id === userId 
-        ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' }
-        : user
-    ));
+  const toggleUserStatus = async (userId) => {
+    try {
+      const user = users.find(u => u.id === userId);
+      const newStatus = user.status === 'active' ? 'inactive' : 'active';
+      await apiService.updateUser(userId, { ...user, status: newStatus });
+      setUsers(users.map(user => 
+        user.id === userId 
+          ? { ...user, status: newStatus }
+          : user
+      ));
+    } catch (error) {
+      console.error('Failed to update user status:', error);
+    }
   };
 
-  const deleteUser = (userId) => {
+  const deleteUser = async (userId) => {
     if (window.confirm('確定要刪除此用戶嗎？此操作無法撤銷。')) {
-      setUsers(users.filter(user => user.id !== userId));
+      try {
+        await apiService.deleteUser(userId);
+        setUsers(users.filter(user => user.id !== userId));
+      } catch (error) {
+        console.error('Failed to delete user:', error);
+      }
     }
   };
 

@@ -1,5 +1,19 @@
 /* Admin Dashboard CSS - Matching User Site Style */
 
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utilities */
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
 /* Reset and Base Styles */
 * {
   margin: 0;

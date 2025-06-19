@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import apiService from '../services/apiService';
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -6,66 +7,22 @@ const OrdersPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedDate, setSelectedDate] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // Mock orders data
+  // Load orders from API service
   useEffect(() => {
-    const mockOrders = [
-      {
-        id: '#001',
-        customerName: '張小明',
-        customerEmail: 'zhang@example.com',
-        products: [
-          { name: '愛情蠟燭', quantity: 1, price: 299 }
-        ],
-        totalAmount: 299,
-        status: '已完成',
-        paymentStatus: '已付款',
-        orderDate: '2025-06-18',
-        completedDate: '2025-06-18'
-      },
-      {
-        id: '#002',
-        customerName: '李小華',
-        customerEmail: 'li@example.com',
-        products: [
-          { name: '塔羅占卜', quantity: 1, price: 199 },
-          { name: '靈擺調頻', quantity: 1, price: 255 }
-        ],
-        totalAmount: 454,
-        status: '處理中',
-        paymentStatus: '已付款',
-        orderDate: '2025-06-18',
-        completedDate: null
-      },
-      {
-        id: '#003',
-        customerName: '王小美',
-        customerEmail: 'wang@example.com',
-        products: [
-          { name: '愛情蠟燭', quantity: 2, price: 598 }
-        ],
-        totalAmount: 598,
-        status: '待付款',
-        paymentStatus: '未付款',
-        orderDate: '2025-06-17',
-        completedDate: null
-      },
-      {
-        id: '#004',
-        customerName: '陳小強',
-        customerEmail: 'chen@example.com',
-        products: [
-          { name: '流年運程', quantity: 1, price: 688 }
-        ],
-        totalAmount: 688,
-        status: '已取消',
-        paymentStatus: '已退款',
-        orderDate: '2025-06-16',
-        completedDate: null
+    const loadOrders = async () => {
+      try {
+        setLoading(true);
+        const data = await apiService.getAllOrders();
+        setOrders(data);
+        setFilteredOrders(data);
+      } catch (error) {
+        console.error('Failed to load orders:', error);
+      } finally {
+        setLoading(false);
       }
-    ];
-    setOrders(mockOrders);
-    setFilteredOrders(mockOrders);
+    };    loadOrders();
   }, []);
 
   // Filter orders
@@ -126,17 +83,21 @@ const OrdersPage = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
-
-  const updateOrderStatus = (orderId, newStatus) => {
-    setOrders(orders.map(order => 
-      order.id === orderId 
-        ? { 
-            ...order, 
-            status: newStatus,
-            completedDate: newStatus === '已完成' ? new Date().toISOString().split('T')[0] : null
-          }
-        : order
-    ));
+  const updateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await apiService.updateOrderStatus(orderId, newStatus);
+      setOrders(orders.map(order => 
+        order.id === orderId 
+          ? { 
+              ...order, 
+              status: newStatus,
+              completedDate: newStatus === '已完成' ? new Date().toISOString().split('T')[0] : null
+            }
+          : order
+      ));
+    } catch (error) {
+      console.error('Failed to update order status:', error);
+    }
   };
 
   const calculateStats = () => {
