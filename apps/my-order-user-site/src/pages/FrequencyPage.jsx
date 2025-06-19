@@ -206,8 +206,23 @@ const FrequencyPage = ({ onNavigate }) => {
             <div className="text-gray-600">
               隔日做一次，持續效果更佳
             </div>
-          </div>
-        </div>
+          </div>        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="bg-gradient-to-r from-purple-200 to-pink-200 rounded-xl p-8 text-center">
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好調整能量頻率了嗎？</h2>
+        <p className="text-gray-600 mb-6">
+          讓靈擺幫您調整內在能量，提升生活品質
+        </p>
+        <a 
+          href="https://wa.me/message/5QMJWPEC4TICA1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-3 rounded-full font-medium hover:from-purple-600 hover:to-pink-600 transition-all duration-300 transform hover:scale-105"
+        >
+          開始靈擺調頻
+        </a>
       </div>
 
       {/* Toast */}

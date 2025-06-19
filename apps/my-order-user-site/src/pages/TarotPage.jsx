@@ -97,11 +97,11 @@ const TarotPage = ({ onNavigate }) => {
             </div>
           </>        )}
       </div>      {/* How It Works Section */}
-      <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+      <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-xl p-8">        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           {selectedSubCategory === '門市占卜' ? '門市占卜流程' : 
            selectedSubCategory === '線上占卜' ? '線上占卜流程' : 
-           selectedSubCategory === '電話占卜' ? '電話占卜流程' : '占卜流程'}
+           selectedSubCategory === '電話占卜' ? '電話占卜流程' : 
+           selectedSubCategory === '其他服務' ? '其他服務流程' : '占卜流程'}
         </h2>
           {selectedSubCategory === '門市占卜' && (
           <div className="space-y-6">
@@ -135,24 +135,23 @@ const TarotPage = ({ onNavigate }) => {
                 <p className="text-gray-600 text-sm">享受完整的占卜體驗與指引</p>
               </div>
             </div>
-            
-            <div className="bg-white rounded-lg p-6 mt-6">
+              <div className="bg-white rounded-lg p-6 mt-6">
               <h4 className="font-bold text-gray-800 mb-4">門市占卜詳細說明</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h5 className="font-semibold text-indigo-600 mb-3">預約與到店</h5>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li>• 建議提前1-3天預約，確保有您喜愛的占卜師</li>
+                    <li>• 建議提前3-7天預約，不接受當天預約</li>
                     <li>• 請準時到達，遲到可能影響占卜時間</li>
-                    <li>• 門市地址：台北市大安區○○路○○號</li>
-                    <li>• 營業時間：週一至週日 10:00-22:00</li>
+                    <li>• 門市地址：觀塘中美中心A座9樓19室</li>
+                    <li>• 門市已預約制形式開放，不接受Walk in</li>
                   </ul>
                 </div>
                 <div>
                   <h5 className="font-semibold text-indigo-600 mb-3">占卜過程</h5>
                   <ul className="space-y-2 text-sm text-gray-600">
-                    <li>• 占卜時間約30分鐘，深度解讀您的問題</li>
-                    <li>• 可選擇不同牌陣：愛情、事業、健康等</li>
+                    <li>• 占卜時間約30-60分鐘，深度解讀您的問題</li>
+                    <li>• 可選擇不同範疇：愛情、事業、金錢等</li>
                     <li>• 占卜師會詳細解釋每張牌的意義</li>
                     <li>• 您可以隨時提問，進行互動討論</li>
                   </ul>
@@ -224,8 +223,7 @@ const TarotPage = ({ onNavigate }) => {
               <div className="text-center">
                 <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl font-bold text-indigo-600">4</span>
-                </div>
-                <h3 className="font-bold text-gray-800 mb-2">即時問答</h3>
+                </div>                <h3 className="font-bold text-gray-800 mb-2">即時問答</h3>
                 <p className="text-gray-600 text-sm">占卜師和客人須同時在線，客人可在所選時間內任問</p>
               </div>
             </div>
@@ -256,6 +254,41 @@ const TarotPage = ({ onNavigate }) => {
                 <p className="text-sm text-indigo-700">
                   <strong>通話小提醒：</strong>建議在安靜的環境中進行占卜，準備好您想詢問的問題清單，這樣能讓占卜更加順暢有效。
                 </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {selectedSubCategory === '其他服務' && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">1</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">選擇服務</h3>
+                <p className="text-gray-600 text-sm">選擇適合自身情況的服務</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">2</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">確認訂單</h3>
+                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">3</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">提出問題</h3>
+                <p className="text-gray-600 text-sm">提出想查詢的問題</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl font-bold text-indigo-600">4</span>
+                </div>
+                <h3 className="font-bold text-gray-800 mb-2">收到結果</h3>
+                <p className="text-gray-600 text-sm">二十四小時內收到結果</p>
               </div>
             </div>
           </div>
@@ -298,12 +331,14 @@ const TarotPage = ({ onNavigate }) => {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索您的未來了嗎？</h2>
         <p className="text-gray-600 mb-6">
           讓塔羅牌為您揭示人生的奧秘與可能性
-        </p>
-        <button 
-          className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-3 rounded-full font-medium hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
+        </p>        <a 
+          href="https://wa.me/message/5QMJWPEC4TICA1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-3 rounded-full font-medium hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
         >
           開始塔羅占卜
-        </button>
+        </a>
       </div>
 
       {/* Toast Component */}

@@ -154,12 +154,14 @@ const PsychicPage = ({ onNavigate }) => {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好探索真相了嗎？</h2>
         <p className="text-gray-600 mb-6">
           直接從潛意識找到最真實的答案，但請確保您能承受真相
-        </p>
-        <button 
-          className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
+        </p>        <a 
+          href="https://wa.me/message/5QMJWPEC4TICA1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105"
         >
           開始潛意識讀心
-        </button>
+        </a>
       </div>
 
       {/* Toast Component */}

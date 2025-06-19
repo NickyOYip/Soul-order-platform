@@ -158,11 +158,14 @@ const AstrologyPage = ({ onNavigate }) => {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好了解您的命運軌跡了嗎？</h2>
         <p className="text-gray-600 mb-6">
           讓古老的命理智慧為您揭示人生的秘密與可能性
-        </p>        <button 
-          className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-full font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
+        </p>        <a 
+          href="https://wa.me/message/5QMJWPEC4TICA1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-3 rounded-full font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-300 transform hover:scale-105"
         >
-          預約命理分析
-        </button>
+          開始命理分析
+        </a>
       </div>
       
       {/* Toast */}

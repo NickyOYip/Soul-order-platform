@@ -156,12 +156,14 @@ const LovePage = ({ onNavigate }) => {
         <h2 className="text-2xl font-bold mb-4 text-gray-800">準備好尋找您的真愛了嗎？</h2>
         <p className="text-gray-600 mb-6">
           讓月老為您牽起紅線，找到命中注定的另一半
-        </p>
-        <button 
-          className="bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-3 rounded-full font-medium hover:from-pink-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105"
+        </p>        <a 
+          href="https://wa.me/message/5QMJWPEC4TICA1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-gradient-to-r from-pink-500 to-red-500 text-white px-8 py-3 rounded-full font-medium hover:from-pink-600 hover:to-red-600 transition-all duration-300 transform hover:scale-105"
         >
           開始紅線查詢
-        </button>
+        </a>
       </div>
 
       {/* Toast Component */}

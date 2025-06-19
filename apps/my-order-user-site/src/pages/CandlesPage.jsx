@@ -92,8 +92,7 @@ const CandlesPage = ({ onNavigate }) => {
                 />
               ))}
             </div>
-          </>
-        )}         
+          </>        )}         
           
         </div>
 
