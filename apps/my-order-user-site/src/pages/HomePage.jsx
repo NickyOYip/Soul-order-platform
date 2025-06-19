@@ -6,11 +6,11 @@ const HomePage = ({ onNavigate }) => {
     <div className="space-y-12">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-xl p-8 mb-10 shadow-lg">
-        <h3 className="text-2xl text-center md:text-4xl font-bold mb-4">
-          歡迎光臨你の解憂雜貨店
+        <h3 className="text-3xl text-center md:text-4xl font-bold mb-4">
+          歡迎光臨<br />你の解憂雜貨店
         </h3>
         <h3 className="text-1xl text-center md:text-2xl font-bold mb-4">
-          這裡提供各種心靈療癒服務,幫助你解決心中煩憂
+          這裡提供各種心靈療癒服務<br />幫助你解決心中煩憂
         </h3>
       </div>
 
@@ -61,7 +61,7 @@ const HomePage = ({ onNavigate }) => {
       </svg>
     </div>
     <h3 className="text-lg font-semibold mb-2">價格透明</h3>
-    <p className="text-gray-600">價格公開透明，無隱藏費用，讓您輕鬆放心選擇</p>
+    <p className="text-gray-600">價格公開透明，無隱藏費用</p>
   </div>
   <div className="text-center">
     <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -79,7 +79,7 @@ const HomePage = ({ onNavigate }) => {
       </svg>
     </div>
     <h3 className="text-lg font-semibold mb-2">客製化服務</h3>
-    <p className="text-gray-600">根據你的需求量身打造專屬解決方案並適時做調整</p>
+    <p className="text-gray-600">根據你的需求量身打造專屬解決方案</p>
   </div>
   <div className="text-center">
     <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -87,7 +87,7 @@ const HomePage = ({ onNavigate }) => {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 20l-6-5.5a4 4 0 115.656-5.656L12 10.172l.344-.328a4 4 0 115.656 5.656L12 20z" />
       </svg>
     </div>
-    <h3 className="text-lg font-semibold mb-2">隨時為你解答疑問，提供一對一指導支援</h3>
+    <h3 className="text-lg font-semibold mb-2">提供一對一指導支援</h3>
     <p className="text-gray-600">• 教你用什麼心態去面對問題</p>
     <p className="text-gray-600">•幫你建立健康嘅溝通模式</p>
   </div>
