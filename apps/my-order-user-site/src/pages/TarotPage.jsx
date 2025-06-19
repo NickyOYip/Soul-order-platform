@@ -179,7 +179,7 @@ const TarotPage = ({ onNavigate }) => {
                   <span className="text-2xl font-bold text-indigo-600">2</span>
                 </div>
                 <h3 className="font-bold text-gray-800 mb-2">填寫資料</h3>
-                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單後填寫表格（1.中/英文名 2.生日 3.大致情況）</p>
+                <p className="text-gray-600 text-sm">付款後店主聯絡確認訂單後填寫表格<br />（1.中/英文名 2.生日 3.大致情況）</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-indigo-200 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -193,7 +193,7 @@ const TarotPage = ({ onNavigate }) => {
                   <span className="text-2xl font-bold text-indigo-600">4</span>
                 </div>
                 <h3 className="font-bold text-gray-800 mb-2">收到結果</h3>
-                <p className="text-gray-600 text-sm">發送占卜結果給你（包括文字解釋和牌面照片）🫸🏻若對結果不明白可提出疑問🫷🏻</p>
+                <p className="text-gray-600 text-sm">發送占卜結果給你<br />（包括文字解釋和牌面照片）<br />🫸🏻若對結果不明白可提出疑問🫷🏻</p>
               </div>            </div>
           </div>
         )}{selectedSubCategory === '電話占卜' && (
