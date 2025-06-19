@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { PhotoIcon, XMarkIcon, ExclamationTriangleIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { serviceCategories } from '../services/mockApi';
+import ProductOptionsEditor from './ProductOptionsEditor';
 
-const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubCategory }) => {
-  const [formData, setFormData] = useState({
+const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubCategory }) => {  const [formData, setFormData] = useState({
     name: '',
     category: 'candles',
     subCategory: '',
@@ -12,7 +12,8 @@ const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubC
     image: '',
     hasOptions: false,
     soldOut: false,
-    disabled: false
+    disabled: false,
+    options: []
   });
 
   useEffect(() => {
@@ -62,9 +63,8 @@ const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubC
     }));
   };
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-xl max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
+  return (    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
           <h3 className="text-lg font-semibold text-gray-900">
@@ -215,9 +215,7 @@ const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubC
                   placeholder="0"
                 />
               </div>
-            </div>
-
-            {/* 4. Product Details - Like card detail */}
+            </div>            {/* 4. Product Details - Like card detail */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 產品詳情
@@ -230,6 +228,39 @@ const ProductModal = ({ product, onSave, onClose, selectedCategory, selectedSubC
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm"
                 placeholder="輸入產品詳細描述..."
               />            </div>
+
+            {/* Options Configuration Toggle */}
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    name="hasOptions"
+                    checked={formData.hasOptions}
+                    onChange={handleChange}
+                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                  />
+                  <label className="ml-2 block text-sm font-medium text-gray-700">
+                    有選項配置
+                  </label>
+                </div>
+                {formData.hasOptions && (
+                  <span className="bg-purple-100 text-purple-600 px-2 py-1 rounded-full text-xs font-medium">
+                    已啟用
+                  </span>
+                )}
+              </div>
+              
+              {/* Options Editor */}
+              {formData.hasOptions && (
+                <div className="mt-4 pt-4 border-t border-gray-200">
+                  <ProductOptionsEditor
+                    options={formData.options || []}
+                    onOptionsChange={(options) => setFormData(prev => ({ ...prev, options }))}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Actions */}
