@@ -19,10 +19,9 @@ const CartPage = ({ onNavigate }) => {
   
   // Step management
   const [currentStep, setCurrentStep] = useState(1);
-  
-  const [checkoutData, setCheckoutData] = useState({
+    const [checkoutData, setCheckoutData] = useState({
     phone: user?.phone || '',
-    instagram: user?.instagram || '',
+    igName: user?.igName || '',
     paymentMethod: '',
     paymentProof: null
   });
@@ -178,7 +177,7 @@ const CartPage = ({ onNavigate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!checkoutData.phone || !checkoutData.instagram || !checkoutData.paymentMethod || !checkoutData.paymentProof) {
+    if (!checkoutData.phone || !checkoutData.igName || !checkoutData.paymentMethod || !checkoutData.paymentProof) {
       setToast({ show: true, message: '請填寫所有必填欄位並上傳付款證明', type: 'error' });
       return;
     }
@@ -191,7 +190,7 @@ const CartPage = ({ onNavigate }) => {
         total: total,
         customerInfo: {
           phone: checkoutData.phone,
-          instagram: checkoutData.instagram,
+          igName: checkoutData.igName,
           userId: user?.id
         },
         paymentMethod: checkoutData.paymentMethod,
@@ -597,14 +596,13 @@ const CartPage = ({ onNavigate }) => {
                     {user && (
                       <span className="ml-auto text-xs text-purple-600 bg-purple-100 px-2 py-1 rounded-full">已登入用戶</span>
                     )}
-                  </div>
-                  <div className="relative">
+                  </div>                  <div className="relative">
                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">@</span>
                     <input
                       type="text"
-                      id="instagram"
-                      name="instagram"
-                      value={checkoutData.instagram}
+                      id="igName"
+                      name="igName"
+                      value={checkoutData.igName}
                       onChange={handleInputChange}
                       placeholder={user ? "" : "請輸入您的 Instagram 用戶名"}
                       className={`w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition-all duration-200 ${
@@ -852,11 +850,10 @@ const CartPage = ({ onNavigate }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">聯絡電話:</span>
                     <span>{checkoutData.phone}</span>
-                  </div>
-                  <div className="flex justify-between">
+                  </div>                  <div className="flex justify-between">
                     <span className="text-gray-600">Instagram:</span>
-                    <span>@{checkoutData.instagram}</span>
-                  </div>                  {/* Pricing breakdown */}                  <div className="border-t pt-2 mt-4 space-y-1">
+                    <span>@{checkoutData.igName}</span>
+                  </div>{/* Pricing breakdown */}                  <div className="border-t pt-2 mt-4 space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-600">小計:</span>
                       <span>HK$ {roundToMao(orderDetails.orderSubtotal || actualSubtotal || 0).toFixed(1)}</span>

@@ -399,9 +399,7 @@ export const api = {
       throw new Error('Psychic product not found');
     }
     return product;
-  },
-
-  // User Authentication API
+  },  // User Authentication API
   login: async (credentials) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/auth/login', {
@@ -410,15 +408,21 @@ export const api = {
     // });
     
     // Temporary mock implementation
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve({
-          id: 1,
-          name: credentials.name || 'Test User',
-          phone: credentials.phone,
-          instagram: credentials.instagram,
-          membership: determineMembership(1000) // Mock with 1000 spending
-        });
+        // Simulate checking if user exists
+        // For demo purposes, if phone starts with '+852', treat as existing user
+        if (credentials.phone.startsWith('+852')) {
+          resolve({
+            id: 1,
+            igName: credentials.igName || 'existing_user',
+            phone: credentials.phone,
+            membership: determineMembership(1000) // Mock with 1000 spending
+          });
+        } else {
+          // Simulate user not found
+          reject(new Error('用戶不存在'));
+        }
       }, 800);
     });
   },
@@ -436,7 +440,7 @@ export const api = {
         resolve({
           id: Date.now(),
           ...userData,
-          membership: null
+          membership: null // New users start with no membership
         });
       }, 800);
     });

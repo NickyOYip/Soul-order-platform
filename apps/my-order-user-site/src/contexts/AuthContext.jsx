@@ -55,11 +55,10 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
-
   const guestLogin = (guestData) => {
     const guestUser = {
       id: 'guest-' + Date.now(),
-      name: 'Guest User',
+      igName: 'Guest User',
       isGuest: true,
       ...guestData
     };
