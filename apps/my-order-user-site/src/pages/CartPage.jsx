@@ -26,13 +26,87 @@ const CartPage = ({ onNavigate }) => {
     paymentMethod: '',
     paymentProof: null
   });
-  
-  const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
-    const subtotal = getCartTotal();
-  const discount = user?.membership ? subtotal * membershipDiscounts[user.membership] : 0;
-  const total = subtotal - discount;
+
+  // Calculate item price function (moved up to avoid hoisting issues)
+  const calculateItemPrice = (item) => {
+    let itemPrice = item.basePrice || item.price || 0;
+    
+    console.log('Calculate Item Price Debug:', {
+      itemName: item.name,
+      basePrice: item.basePrice,
+      price: item.price,
+      initialPrice: itemPrice,
+      hasOptions: item.hasOptions,
+      selectedOptions: item.selectedOptions,
+      selectedAddOns: item.selectedAddOns,
+      selectedMultiple: item.selectedMultiple
+    });
+    
+    if (item.selectedOptions && item.hasOptions && item.options) {
+      item.options.forEach(option => {
+        if (item.selectedOptions[option.optionNo]) {
+          const selectedDetail = option.optionDetails?.find(detail => 
+            detail.name === item.selectedOptions[option.optionNo]
+          );
+          if (selectedDetail) {
+            itemPrice += selectedDetail.additionalPrice || 0;
+          }
+        }
+      });
+    }
+    
+    // Add prices from selectedAddOns
+    if (item.selectedAddOns && item.selectedAddOns.length > 0) {
+      item.selectedAddOns.forEach(addOn => {
+        itemPrice += addOn.price || 0;
+      });
+    }
+    
+    // Add prices from selectedMultiple
+    if (item.selectedMultiple && item.options) {
+      Object.entries(item.selectedMultiple).forEach(([optionNo, selectedItems]) => {
+        const option = item.options.find(opt => opt.optionNo.toString() === optionNo.toString());
+        if (option && selectedItems) {
+          selectedItems.forEach(itemName => {
+            const selectedDetail = option.optionDetails?.find(detail => detail.name === itemName);
+            if (selectedDetail) {
+              itemPrice += selectedDetail.additionalPrice || 0;
+            }
+          });
+        }
+      });
+    }
+    
+    console.log('Final calculated price:', itemPrice);
+    return itemPrice;
+  };  const subtotal = getCartTotal();
+  
+  // Calculate local cart total as backup
+  const localCartTotal = cart.reduce((total, item) => {
+    const itemPrice = calculateItemPrice(item);
+    return total + (itemPrice * item.quantity);
+  }, 0);
+  
+  // Use local calculation if getCartTotal returns 0 but we have items
+  const actualSubtotal = (subtotal === 0 && cart.length > 0) ? localCartTotal : subtotal;
+  
+  const discount = user?.membership ? actualSubtotal * membershipDiscounts[user.membership] : 0;
+  const total = actualSubtotal - discount;
+
+  // Debug logging
+  console.log('Cart Total Debug:', {
+    cart: cart,
+    getCartTotalResult: subtotal,
+    localCartTotal: localCartTotal,
+    actualSubtotal: actualSubtotal,
+    discount: discount,
+    total: total,
+    user: user,
+    membership: user?.membership
+  });
 
   // Calculate order statistics
   const totalItems = cart.length;
@@ -109,10 +183,9 @@ const CartPage = ({ onNavigate }) => {
 
     setLoading(true);
     
-    try {
-      const orderData = {
+    try {      const orderData = {
         items: cart,
-        subtotal,
+        subtotal: actualSubtotal,
         discount,
         total,
         customerInfo: {
@@ -122,12 +195,19 @@ const CartPage = ({ onNavigate }) => {
         },
         paymentMethod: checkoutData.paymentMethod,
         paymentProof: checkoutData.paymentProof.name
+      };      const order = await api.createOrder(orderData);
+      
+      // Store order with pricing details
+      const orderWithPricing = {
+        ...order,
+        orderSubtotal: actualSubtotal,
+        orderDiscount: discount,
+        orderTotal: total,
+        orderItems: cart
       };
-
-      const order = await api.createOrder(orderData);
-      setOrderDetails(order);
+      
+      setOrderDetails(orderWithPricing);
       setCurrentStep(3);
-      clearCart();
       
       setToast({ show: true, message: '訂單提交成功！', type: 'success' });
       
@@ -160,48 +240,8 @@ const CartPage = ({ onNavigate }) => {
         >
           繼續購物
         </button>
-      </div>
-    );
-  }  const calculateItemPrice = (item) => {
-    let itemPrice = item.basePrice || item.price || 0;
-    
-    if (item.selectedOptions && item.hasOptions && item.options) {
-      item.options.forEach(option => {
-        if (item.selectedOptions[option.optionNo]) {
-          const selectedDetail = option.optionDetails?.find(detail => 
-            detail.name === item.selectedOptions[option.optionNo]
-          );
-          if (selectedDetail) {
-            itemPrice += selectedDetail.additionalPrice || 0;
-          }
-        }
-      });
-    }
-    
-    // Add prices from selectedAddOns
-    if (item.selectedAddOns && item.selectedAddOns.length > 0) {
-      item.selectedAddOns.forEach(addOn => {
-        itemPrice += addOn.price || 0;
-      });
-    }
-    
-    // Add prices from selectedMultiple
-    if (item.selectedMultiple && item.options) {
-      Object.entries(item.selectedMultiple).forEach(([optionNo, selectedItems]) => {
-        const option = item.options.find(opt => opt.optionNo.toString() === optionNo.toString());
-        if (option && selectedItems) {
-          selectedItems.forEach(itemName => {
-            const selectedDetail = option.optionDetails?.find(detail => detail.name === itemName);
-            if (selectedDetail) {
-              itemPrice += selectedDetail.additionalPrice || 0;
-            }
-          });
-        }
-      });
-    }
-    
-    return itemPrice;
-  };
+      </div>    );
+  }
 
   // Function to get Chinese category name
   const getCategoryDisplayName = (categoryId) => {
@@ -685,64 +725,104 @@ const CartPage = ({ onNavigate }) => {
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">訂單提交成功！</h2>
               <p className="text-gray-600 mb-6">感謝您的訂購，我們會盡快處理您的訂單</p>
                 <div className="bg-gray-50 rounded-lg p-6 mb-6 text-left">
-                <h3 className="font-semibold text-gray-800 mb-4">訂單詳情</h3>
-                
-                {/* Ordered Items */}
+                <h3 className="font-semibold text-gray-800 mb-4">訂單詳情</h3>                {/* Ordered Items */}
                 <div className="mb-6">
                   <h4 className="font-medium text-gray-700 mb-3">訂購項目</h4>
-                  <div className="space-y-3">
-                    {cart.map((item, index) => {
+                  <div className="space-y-4">
+                    {(orderDetails.orderItems || cart).map((item, index) => {
                       const itemPrice = calculateItemPrice(item);
                       return (
                         <div key={index} className="bg-white rounded-lg p-4 border border-gray-200">
-                          <div className="flex justify-between items-start mb-2">
-                            <div className="flex-1">
-                              <h5 className="font-medium text-gray-800">{item.name}</h5>
-                              <p className="text-sm text-gray-600">{getCategoryDisplayName(item.category)}</p>
-                            </div>
-                            <div className="text-right">
-                              <p className="font-medium">HK$ {itemPrice}</p>
-                              <p className="text-sm text-gray-500">數量: {item.quantity}</p>
+                          <div className="flex items-start justify-between gap-4">
+                            {/* Product Info */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between">
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-800">{item.name}</h5>
+                                  <p className="text-sm text-gray-600">{getCategoryDisplayName(item.category)}</p>
+                                  
+                                  {/* Selected Options */}
+                                  {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
+                                    <div className="mt-1 space-y-0.5">
+                                      {Object.entries(item.selectedOptions).map(([optionNo, value]) => {
+                                        const option = item.options?.find(opt => opt.optionNo.toString() === optionNo.toString());
+                                        const selectedDetail = option?.optionDetails?.find(detail => detail.name === value);
+                                        if (!value) return null;
+                                        
+                                        return (
+                                          <div key={optionNo} className="text-xs">
+                                            <span className="text-gray-600">{option?.optionTitle || option?.optionName}:</span>
+                                            <span className="ml-1 text-gray-800 font-medium">{value}</span>
+                                            {selectedDetail?.additionalPrice > 0 && (
+                                              <span className="ml-1 text-green-600 font-medium">+HK$ {selectedDetail.additionalPrice}</span>
+                                            )}
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                  
+                                  {/* Selected Add-ons */}
+                                  {item.selectedAddOns && item.selectedAddOns.length > 0 && (
+                                    <div className="mt-1 space-y-0.5">
+                                      {item.selectedAddOns.map((addOn, idx) => (
+                                        <div key={idx} className="text-xs">
+                                          <span className="text-gray-600">加購:</span>
+                                          <span className="ml-1 text-gray-800 font-medium">{addOn.name}</span>
+                                          {addOn.price > 0 && (
+                                            <span className="ml-1 text-green-600 font-medium">+HK$ {addOn.price}</span>
+                                          )}
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                  
+                                  {/* Selected Multiple */}
+                                  {item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0 && (
+                                    <div className="mt-1 space-y-0.5">
+                                      {Object.entries(item.selectedMultiple).map(([optionNo, selectedItems]) => {
+                                        const option = item.options?.find(opt => opt.optionNo.toString() === optionNo.toString());
+                                        if (!selectedItems || selectedItems.length === 0) return null;
+                                        
+                                        return (
+                                          <div key={optionNo} className="text-xs">
+                                            <span className="text-gray-600">{option?.optionTitle || option?.optionName}:</span>
+                                            <div className="ml-1 flex flex-wrap gap-1 mt-1">
+                                              {selectedItems.map((itemName, idx) => {
+                                                const selectedDetail = option?.optionDetails?.find(detail => detail.name === itemName);
+                                                return (
+                                                  <span key={idx} className="inline-flex items-center">
+                                                    <span className="text-gray-800 font-medium">{itemName}</span>
+                                                    {selectedDetail?.additionalPrice > 0 && (
+                                                      <span className="ml-1 text-green-600 font-medium">+HK$ {selectedDetail.additionalPrice}</span>
+                                                    )}
+                                                    {idx < selectedItems.length - 1 && <span className="text-gray-400 mx-1">•</span>}
+                                                  </span>
+                                                );
+                                              })}
+                                            </div>
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              {/* Quantity and Price Row */}
+                              <div className="flex items-center justify-between mt-3">
+                                <div className="text-sm text-gray-600">
+                                  數量: {item.quantity}
+                                </div>
+                                <div className="text-right">
+                                  <div className="font-semibold text-gray-900">HK$ {itemPrice * item.quantity}</div>
+                                  {item.quantity > 1 && (
+                                    <div className="text-xs text-gray-500">單價: HK$ {itemPrice}</div>
+                                  )}
+                                </div>
+                              </div>
                             </div>
                           </div>
-                          
-                          {/* Show selected options */}
-                          {item.selectedOptions && Object.keys(item.selectedOptions).length > 0 && (
-                            <div className="mt-2 text-xs text-gray-600">
-                              <span className="font-medium">選項: </span>
-                              {Object.entries(item.selectedOptions).map(([optionNo, value], idx) => (
-                                <span key={idx} className="inline-block bg-gray-100 px-2 py-1 rounded mr-1 mb-1">
-                                  {value}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          
-                          {/* Show selected add-ons */}
-                          {item.selectedAddOns && item.selectedAddOns.length > 0 && (
-                            <div className="mt-2 text-xs text-gray-600">
-                              <span className="font-medium">加購: </span>
-                              {item.selectedAddOns.map((addOn, idx) => (
-                                <span key={idx} className="inline-block bg-blue-100 px-2 py-1 rounded mr-1 mb-1">
-                                  {addOn.name} (+HK$ {addOn.price})
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          
-                          {/* Show multiple selections */}
-                          {item.selectedMultiple && Object.keys(item.selectedMultiple).length > 0 && (
-                            <div className="mt-2 text-xs text-gray-600">
-                              <span className="font-medium">多選: </span>
-                              {Object.entries(item.selectedMultiple).map(([optionNo, selections]) => 
-                                selections && selections.map((selection, idx) => (
-                                  <span key={`${optionNo}-${idx}`} className="inline-block bg-green-100 px-2 py-1 rounded mr-1 mb-1">
-                                    {selection}
-                                  </span>
-                                ))
-                              )}
-                            </div>
-                          )}
                         </div>
                       );
                     })}
@@ -774,23 +854,21 @@ const CartPage = ({ onNavigate }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Instagram:</span>
                     <span>@{checkoutData.instagram}</span>
-                  </div>
-                  
-                  {/* Pricing breakdown */}
+                  </div>                  {/* Pricing breakdown */}
                   <div className="border-t pt-2 mt-4 space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-600">小計:</span>
-                      <span>HK$ {subtotal}</span>
+                      <span>HK$ {(orderDetails.orderSubtotal || actualSubtotal || 0).toFixed(2)}</span>
                     </div>
-                    {discount > 0 && (
+                    {(orderDetails.orderDiscount || discount) > 0 && (
                       <div className="flex justify-between text-green-600">
                         <span>會員折扣:</span>
-                        <span>-HK$ {discount}</span>
+                        <span>-HK$ {(orderDetails.orderDiscount || discount || 0).toFixed(2)}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-semibold text-lg border-t pt-2">
                       <span>訂單總額:</span>
-                      <span>HK$ {total}</span>
+                      <span>HK$ {(orderDetails.orderTotal || total || 0).toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -803,16 +881,21 @@ const CartPage = ({ onNavigate }) => {
                     📱 記得截圖此頁面並發送給我們確認訂單！
                   </p>
                 </div>
-                
-                <div className="flex space-x-4">
+                  <div className="flex space-x-4">
                   <button
-                    onClick={() => onNavigate('services')}
+                    onClick={() => {
+                      clearCart();
+                      onNavigate('services');
+                    }}
                     className="flex-1 bg-gray-100 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-200 transition-colors"
                   >
                     繼續購物
                   </button>
                   <button
-                    onClick={() => onNavigate('home')}
+                    onClick={() => {
+                      clearCart();
+                      onNavigate('home');
+                    }}
                     className="flex-1 btn-primary py-3 rounded-lg font-medium"
                   >
                     返回首頁
