@@ -29,6 +29,10 @@ const CartPage = ({ onNavigate }) => {
     const [loading, setLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
+  // Round up to nearest 毫子 (0.1 HKD)
+  const roundToMao = (amount) => {
+    return Math.ceil(amount * 10) / 10;
+  };
 
   // Calculate item price function (moved up to avoid hoisting issues)
   const calculateItemPrice = (item) => {
@@ -78,19 +82,17 @@ const CartPage = ({ onNavigate }) => {
           });
         }
       });
-    }
-    
-    console.log('Final calculated price:', itemPrice);
+    }    console.log('Final calculated price:', itemPrice);
     return itemPrice;
-  };  const subtotal = getCartTotal();
-  
-  // Calculate local cart total as backup
+  };
+
+  const subtotal = getCartTotal();
+    // Calculate local cart total as backup
   const localCartTotal = cart.reduce((total, item) => {
     const itemPrice = calculateItemPrice(item);
     return total + (itemPrice * item.quantity);
   }, 0);
-  
-  // Use local calculation if getCartTotal returns 0 but we have items
+    // Use local calculation if getCartTotal returns 0 but we have items
   const actualSubtotal = (subtotal === 0 && cart.length > 0) ? localCartTotal : subtotal;
   
   const discount = user?.membership ? actualSubtotal * membershipDiscounts[user.membership] : 0;
@@ -181,13 +183,12 @@ const CartPage = ({ onNavigate }) => {
       return;
     }
 
-    setLoading(true);
-    
-    try {      const orderData = {
+    setLoading(true);    try {
+      const orderData = {
         items: cart,
         subtotal: actualSubtotal,
-        discount,
-        total,
+        discount: discount,
+        total: total,
         customerInfo: {
           phone: checkoutData.phone,
           instagram: checkoutData.instagram,
@@ -195,7 +196,9 @@ const CartPage = ({ onNavigate }) => {
         },
         paymentMethod: checkoutData.paymentMethod,
         paymentProof: checkoutData.paymentProof.name
-      };      const order = await api.createOrder(orderData);
+      };
+
+      const order = await api.createOrder(orderData);
       
       // Store order with pricing details
       const orderWithPricing = {
@@ -436,11 +439,10 @@ const CartPage = ({ onNavigate }) => {
                               >
                                 +
                               </button>
-                            </div>
-                              {/* Price */}
+                            </div>                              {/* Price */}
                             <div className="text-right">
-                              <p className="font-semibold text-lg text-gray-900">HK$ {itemPrice * item.quantity}</p>
-                              <p className="text-xs text-gray-500">單價: HK$ {itemPrice}</p>
+                              <p className="font-semibold text-lg text-gray-900">HK$ {roundToMao(itemPrice * item.quantity).toFixed(1)}</p>
+                              <p className="text-xs text-gray-500">單價: HK$ {roundToMao(itemPrice).toFixed(1)}</p>
                             </div>
                           </div>
                         </div>
@@ -458,20 +460,20 @@ const CartPage = ({ onNavigate }) => {
               <div className="p-6">
                 <div className="space-y-3">                  <div className="flex justify-between text-gray-600">
                     <span>小計</span>
-                    <span className="font-medium">HK$ {subtotal}</span>
+                    <span className="font-medium">HK$ {actualSubtotal.toFixed(1)}</span>
                   </div>
                   
                   {discount > 0 && (
                     <div className="flex justify-between text-green-600">
                       <span>會員折扣 ({getMembershipName(user?.membership)})</span>
-                      <span className="font-medium">-HK$ {discount}</span>
+                      <span className="font-medium">-HK$ {discount.toFixed(1)}</span>
                     </div>
                   )}
                   
                   <div className="border-t border-gray-200 pt-3">
                     <div className="flex justify-between text-xl font-bold text-gray-900">
                       <span>總計</span>
-                      <span>HK$ {total}</span>
+                      <span>HK$ {total.toFixed(1)}</span>
                     </div>
                   </div>
                 </div>
@@ -499,24 +501,25 @@ const CartPage = ({ onNavigate }) => {
                   const itemPrice = calculateItemPrice(item);
                   return (                    <div key={index} className="flex justify-between text-sm">
                       <span className="text-gray-600">{item.name} x{item.quantity}</span>
-                      <span className="font-medium">HK$ {itemPrice * item.quantity}</span>
+                      <span className="font-medium">HK$ {roundToMao(itemPrice * item.quantity).toFixed(1)}</span>
                     </div>
                   );
                 })}
               </div>
-              
-              <div className="border-t pt-4 space-y-2">
+                <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between text-gray-600">
                   <span>小計</span>
-                  <span>HK$ {subtotal}</span>
+                  <span>HK$ {actualSubtotal.toFixed(1)}</span>
                 </div>
                 {discount > 0 && (
                   <div className="flex justify-between text-green-600">
                     <span>會員折扣</span>
-                    <span>-HK$ {discount}</span>
-                  </div>                )}                <div className="flex justify-between text-lg font-semibold text-gray-800">
+                    <span>-HK$ {discount.toFixed(1)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-lg font-semibold text-gray-800">
                   <span>總計</span>
-                  <span>HK$ {total}</span>
+                  <span>HK$ {total.toFixed(1)}</span>
                 </div>
               </div>
               
@@ -813,11 +816,10 @@ const CartPage = ({ onNavigate }) => {
                               <div className="flex items-center justify-between mt-3">
                                 <div className="text-sm text-gray-600">
                                   數量: {item.quantity}
-                                </div>
-                                <div className="text-right">
-                                  <div className="font-semibold text-gray-900">HK$ {itemPrice * item.quantity}</div>
+                                </div>                                <div className="text-right">
+                                  <div className="font-semibold text-gray-900">HK$ {roundToMao(itemPrice * item.quantity).toFixed(1)}</div>
                                   {item.quantity > 1 && (
-                                    <div className="text-xs text-gray-500">單價: HK$ {itemPrice}</div>
+                                    <div className="text-xs text-gray-500">單價: HK$ {roundToMao(itemPrice).toFixed(1)}</div>
                                   )}
                                 </div>
                               </div>
@@ -854,21 +856,20 @@ const CartPage = ({ onNavigate }) => {
                   <div className="flex justify-between">
                     <span className="text-gray-600">Instagram:</span>
                     <span>@{checkoutData.instagram}</span>
-                  </div>                  {/* Pricing breakdown */}
-                  <div className="border-t pt-2 mt-4 space-y-1">
+                  </div>                  {/* Pricing breakdown */}                  <div className="border-t pt-2 mt-4 space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-600">小計:</span>
-                      <span>HK$ {(orderDetails.orderSubtotal || actualSubtotal || 0).toFixed(2)}</span>
+                      <span>HK$ {roundToMao(orderDetails.orderSubtotal || actualSubtotal || 0).toFixed(1)}</span>
                     </div>
                     {(orderDetails.orderDiscount || discount) > 0 && (
                       <div className="flex justify-between text-green-600">
                         <span>會員折扣:</span>
-                        <span>-HK$ {(orderDetails.orderDiscount || discount || 0).toFixed(2)}</span>
+                        <span>-HK$ {roundToMao(orderDetails.orderDiscount || discount || 0).toFixed(1)}</span>
                       </div>
                     )}
                     <div className="flex justify-between font-semibold text-lg border-t pt-2">
                       <span>訂單總額:</span>
-                      <span>HK$ {(orderDetails.orderTotal || total || 0).toFixed(2)}</span>
+                      <span>HK$ {roundToMao(orderDetails.orderTotal || total || 0).toFixed(1)}</span>
                     </div>
                   </div>
                 </div>

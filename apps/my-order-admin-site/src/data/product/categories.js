@@ -6,7 +6,7 @@ export const serviceCategories = [
   { id: 'tarot', name: '塔羅占卜', description: '古老智慧的指引' },
   { id: 'astrology', name: '命理占星', description: '八字與紫微斗數' },
   { id: 'love', name: '月老紅線', description: '愛情與姻緣服務' },
-  { id: 'psychic', name: '心靈探索', description: '潛意識與心靈療癒' },
+  { id: 'psychic', name: '潛意識讀心', description: '潛意識與心靈療癒' },
 ];
 
 export const candleSubCategories = [
