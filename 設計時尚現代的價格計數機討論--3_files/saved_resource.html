@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<!-- saved from url=(0140)https://bdgvc1bszmhyjqcm.canva-hosted-embed.com/codelet/AAEAEGJkZ3ZjMWJzem1oeWpxY20AAAAAAZeSs24H1jO8zm9H_lhTJwuTOYRbswl7gt2WaTnxFIITfHMt9KE/ -->
+<html lang="zh-HK"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你之解憂雜貨店 - 線上訂購</title>
+    <script src="./saved_resource"></script>
+    <link href="./css2" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #fce7f3;
+            color: #000;
+        }
+        .bp-pink {
+            background-color: #ff5c8d;
+        }
+        .bp-pink-light {
+            background-color: #ffc0cb;
+        }
+        .bp-black {
+            background-color: #000;
+        }
+        .text-bp-pink {
+            color: #ff5c8d;
+        }
+        .border-bp-pink {
+            border-color: #ff5c8d;
+        }
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 92, 141, 0.3);
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .logo-text {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .step-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-option {
+            transition: all 0.2s ease;
+        }
+        .payment-option:hover {
+            transform: scale(1.05);
+        }
+        .payment-option.selected {
+            border: 2px solid #ff5c8d;
+            background-color: rgba(255, 92, 141, 0.1);
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.16 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width: 640px){.container{max-width:640px}}@media (min-width: 768px){.container{max-width:768px}}@media (min-width: 1024px){.container{max-width:1024px}}@media (min-width: 1280px){.container{max-width:1280px}}@media (min-width: 1536px){.container{max-width:1536px}}.absolute{position:absolute}.relative{position:relative}.-right-1{right:-0.25rem}.-top-1{top:-0.25rem}.left-0{left:0px}.top-0{top:0px}.mx-2{margin-left:0.5rem;margin-right:0.5rem}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mr-2{margin-right:0.5rem}.mt-1{margin-top:0.25rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}.block{display:block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-1{height:0.25rem}.h-10{height:2.5rem}.h-12{height:3rem}.h-24{height:6rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-12{width:3rem}.w-24{width:6rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.flex-grow{flex-grow:1}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.border{border-width:1px}.border-2{border-width:2px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.border-transparent{border-color:transparent}.bg-gray-300{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pt-6{padding-top:1.5rem}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-800:hover{--tw-bg-opacity:1;background-color:rgb(31 41 55 / var(--tw-bg-opacity, 1))}.hover\:bg-pink-600:hover{--tw-bg-opacity:1;background-color:rgb(219 39 119 / var(--tw-bg-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-pink-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(236 72 153 / var(--tw-ring-opacity, 1))}.disabled\:cursor-not-allowed:disabled{cursor:not-allowed}.disabled\:opacity-50:disabled{opacity:0.5}@media (min-width: 768px){.md\:mb-0{margin-bottom:0px}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:text-3xl{font-size:1.875rem;line-height:2.25rem}}@media (min-width: 1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body>
+    <div id="app" class="min-h-screen flex flex-col">
+        <!-- 頂部導航 -->
+        <header class="bp-black text-white py-4 px-6 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl md:text-3xl font-bold logo-text">
+                    <span class="text-bp-pink">你之解憂</span>雜貨店
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <button id="cartBtn" class="relative p-2 rounded-full hover:bg-gray-800 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                        <span id="cartCount" class="absolute -top-1 -right-1 bg-bp-pink text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- 主要內容 -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <!-- 步驟指示器 -->
+            <div id="stepIndicator" class="mb-8">
+                <div class="flex items-center justify-between max-w-3xl mx-auto">
+                    <div class="flex flex-col items-center">
+                        <div class="step-indicator bp-pink text-white font-bold">1</div>
+                        <span class="mt-2 text-sm">選擇服務</span>
+                    </div>
+                    <div class="h-1 bg-gray-300 flex-grow mx-2 relative">
+                        <div id="progressBar1" class="h-1 bp-pink absolute left-0 top-0" style="width: 100%;"></div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="step-indicator bg-gray-300 text-gray-600 font-bold">2</div>
+                        <span class="mt-2 text-sm">填寫資料</span>
+                    </div>
+                    <div class="h-1 bg-gray-300 flex-grow mx-2 relative">
+                        <div id="progressBar2" class="h-1 bp-pink absolute left-0 top-0" style="width: 100%;"></div>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <div class="step-indicator bg-gray-300 text-gray-600 font-bold">3</div>
+                        <span class="mt-2 text-sm">付款確認</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步驟 1: 服務選擇 -->
+            <div id="step1" class="fade-in hidden">
+                <h2 class="text-2xl font-bold mb-6 text-center">選擇您需要的服務</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 魔法蠟燭 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">魔法蠟燭</h3>
+                            <div class="text-lg font-semibold">$188 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">特製魔法蠟燭，為您帶來好運與能量</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="魔法蠟燭-愛情" data-price="188">
+                                        <span>愛情蠟燭</span>
+                                    </label>
+                                    <span>$188</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="魔法蠟燭-財運" data-price="188">
+                                        <span>財運蠟燭</span>
+                                    </label>
+                                    <span>$188</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="魔法蠟燭-事業" data-price="188">
+                                        <span>事業蠟燭</span>
+                                    </label>
+                                    <span>$188</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 靈擺調頻 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">靈擺調頻</h3>
+                            <div class="text-lg font-semibold">$288 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">透過靈擺為您調整能量頻率</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="靈擺調頻-基礎" data-price="288">
+                                        <span>基礎調頻</span>
+                                    </label>
+                                    <span>$288</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="靈擺調頻-進階" data-price="388">
+                                        <span>進階調頻</span>
+                                    </label>
+                                    <span>$388</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 塔羅占卜 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">塔羅占卜</h3>
+                            <div class="text-lg font-semibold">$350 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">專業塔羅牌解讀您的問題</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="塔羅占卜-單一問題" data-price="350">
+                                        <span>單一問題</span>
+                                    </label>
+                                    <span>$350</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="塔羅占卜-全面解讀" data-price="650">
+                                        <span>全面解讀</span>
+                                    </label>
+                                    <span>$650</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 八字&紫微斗數 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">八字&amp;紫微斗數</h3>
+                            <div class="text-lg font-semibold">$888 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">傳統命理學解析您的人生軌跡</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="八字分析" data-price="888">
+                                        <span>八字分析</span>
+                                    </label>
+                                    <span>$888</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="紫微斗數" data-price="988">
+                                        <span>紫微斗數</span>
+                                    </label>
+                                    <span>$988</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="八字+紫微組合" data-price="1688">
+                                        <span>八字+紫微組合</span>
+                                    </label>
+                                    <span>$1688</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 月老紅線 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">月老紅線</h3>
+                            <div class="text-lg font-semibold">$388 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">連結您與有緣人的紅線</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="月老紅線-基礎" data-price="388">
+                                        <span>基礎紅線</span>
+                                    </label>
+                                    <span>$388</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="月老紅線-加強" data-price="588">
+                                        <span>加強紅線</span>
+                                    </label>
+                                    <span>$588</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 潛意識讀心 -->
+                    <div class="service-card bg-white rounded-lg overflow-hidden shadow-md">
+                        <div class="bp-pink-light p-4 flex justify-between items-center">
+                            <h3 class="text-xl font-bold">潛意識讀心</h3>
+                            <div class="text-lg font-semibold">$488 起</div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-gray-600 mb-4">解讀您潛意識中的真實想法</p>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="潛意識讀心-單一問題" data-price="488">
+                                        <span>單一問題</span>
+                                    </label>
+                                    <span>$488</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="service-option mr-2" data-service="潛意識讀心-全面解析" data-price="888">
+                                        <span>全面解析</span>
+                                    </label>
+                                    <span>$888</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between items-center bg-white p-4 rounded-lg shadow">
+                    <div>
+                        <div class="text-lg">已選擇: <span id="selectedCount" class="font-bold">1</span> 項服務</div>
+                        <div class="text-xl">總計: <span id="totalPrice" class="font-bold text-bp-pink">$888</span></div>
+                    </div>
+                    <button id="nextToStep2" class="bp-black text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                        下一步
+                    </button>
+                </div>
+            </div>
+
+            <!-- 步驟 2: 填寫資料 -->
+            <div id="step2" class="fade-in hidden">
+                <h2 class="text-2xl font-bold mb-6 text-center">填寫您的資料</h2>
+                
+                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-4">已選擇的服務</h3>
+                        <div id="selectedServices" class="space-y-2 mb-4"><div class="flex justify-between items-center">
+                        <span>潛意識讀心-全面解析</span>
+                        <span>$888</span>
+                    </div></div>
+                        <div class="text-xl font-bold text-right">總計: <span id="totalPriceStep2" class="text-bp-pink">$888</span></div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-xl font-bold mb-4">聯絡資料</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">電話號碼</label>
+                                <input type="tel" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="請輸入您的電話號碼" required="">
+                            </div>
+                            <div>
+                                <label for="igName" class="block text-sm font-medium text-gray-700 mb-1">Instagram 用戶名</label>
+                                <input type="text" id="igName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="請輸入您的 IG 用戶名" required="">
+                            </div>
+                            <div>
+                                <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">備註 (選填)</label>
+                                <textarea id="notes" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500" placeholder="有任何特別要求請在此說明"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex justify-between">
+                        <button id="backToStep1" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition">
+                            返回
+                        </button>
+                        <button id="nextToStep3" class="bp-black text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            下一步
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 步驟 3: 付款確認 -->
+            <div id="step3" class="fade-in">
+                <h2 class="text-2xl font-bold mb-6 text-center">付款確認</h2>
+                
+                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold mb-4">訂單摘要</h3>
+                        <div id="orderSummary" class="space-y-2 mb-4"><div class="flex justify-between items-center">
+                        <span>潛意識讀心-全面解析</span>
+                        <span>$888</span>
+                    </div></div>
+                        <div class="text-xl font-bold text-right">總計: <span id="totalPriceStep3" class="text-bp-pink">$888</span></div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-6">
+                        <h3 class="text-xl font-bold mb-4">選擇付款方式</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div class="payment-option p-4 border border-gray-200 rounded-lg cursor-pointer" data-payment="FPS">
+                                <div class="flex flex-col items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="12" y1="4" x2="12" y2="20"></line>
+                                    </svg>
+                                    <span class="font-medium">FPS</span>
+                                </div>
+                            </div>
+                            <div class="payment-option p-4 border border-gray-200 rounded-lg cursor-pointer" data-payment="PayMe">
+                                <div class="flex flex-col items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 9V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                                        <rect x="9" y="9" width="10" height="10" rx="2"></rect>
+                                    </svg>
+                                    <span class="font-medium">PayMe</span>
+                                </div>
+                            </div>
+                            <div class="payment-option p-4 border border-gray-200 rounded-lg cursor-pointer selected" data-payment="Alipay">
+                                <div class="flex flex-col items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                        <path d="M3 9h18"></path>
+                                    </svg>
+                                    <span class="font-medium">Alipay</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="paymentInstructions" class="mb-6 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-bold mb-2">付款說明</h4>
+                            <p id="paymentDetails" class="mb-4">請掃描以下支付寶二維碼或轉賬至: yourhealingstore@example.com</p>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">上傳付款截圖</label>
+                                <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <p class="mt-1 text-sm text-gray-500">點擊上傳或拖放文件</p>
+                                    <p class="mt-1 text-xs text-gray-500">支持 JPG, PNG 格式</p>
+                                    <input type="file" id="paymentProof" accept="image/*" class="hidden">
+                                    <button id="uploadBtn" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bp-pink focus:outline-none">
+                                        選擇文件
+                                    </button>
+                                </div>
+                                <div id="uploadPreview" class="hidden mt-4">
+                                    <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span id="fileName" class="text-sm"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex justify-between">
+                        <button id="backToStep2" class="border border-gray-300 text-gray-700 px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition">
+                            返回
+                        </button>
+                        <button id="submitOrder" class="bp-black text-white px-6 py-3 rounded-full font-bold hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                            提交訂單
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 訂單成功 -->
+            <div id="orderSuccess" class="hidden fade-in">
+                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8 text-center">
+                    <div class="inline-flex items-center justify-center h-24 w-24 rounded-full bg-green-100 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4">訂單提交成功！</h2>
+                    <p class="text-gray-600 mb-6">感謝您的訂購。我們已收到您的訂單，將盡快處理。</p>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h3 class="font-bold mb-2">訂單編號</h3>
+                        <p id="orderNumber" class="text-xl font-mono"></p>
+                    </div>
+                    
+                    <p class="text-gray-600 mb-8">我們將通過您提供的聯絡方式與您聯繫。</p>
+                    
+                    <button id="backToHome" class="bp-pink text-white px-6 py-3 rounded-full font-bold hover:bg-pink-600 transition">
+                        返回首頁
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- 頁腳 -->
+        <footer class="bp-black text-white py-6 px-6">
+            <div class="container mx-auto">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <h2 class="text-xl font-bold mb-2">
+                            <span class="text-bp-pink">你之解憂</span>雜貨店
+                        </h2>
+                        <p class="text-gray-400">為您解決生活中的煩惱</p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://bdgvc1bszmhyjqcm.canva-hosted-embed.com/codelet/AAEAEGJkZ3ZjMWJzem1oeWpxY20AAAAAAZeSs24H1jO8zm9H_lhTJwuTOYRbswl7gt2WaTnxFIITfHMt9KE/#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://bdgvc1bszmhyjqcm.canva-hosted-embed.com/codelet/AAEAEGJkZ3ZjMWJzem1oeWpxY20AAAAAAZeSs24H1jO8zm9H_lhTJwuTOYRbswl7gt2WaTnxFIITfHMt9KE/#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+                            </svg>
+                        </a>
+                        <a href="https://bdgvc1bszmhyjqcm.canva-hosted-embed.com/codelet/AAEAEGJkZ3ZjMWJzem1oeWpxY20AAAAAAZeSs24H1jO8zm9H_lhTJwuTOYRbswl7gt2WaTnxFIITfHMt9KE/#" class="text-gray-400 hover:text-white transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="mt-6 text-center text-gray-400 text-sm">
+                    © 2023 你之解憂雜貨店. 版權所有.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 全局變量
+            let selectedServices = [];
+            let totalPrice = 0;
+            let currentStep = 1;
+            let selectedPaymentMethod = null;
+            
+            // 元素引用
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+            const orderSuccess = document.getElementById('orderSuccess');
+            const nextToStep2Btn = document.getElementById('nextToStep2');
+            const backToStep1Btn = document.getElementById('backToStep1');
+            const nextToStep3Btn = document.getElementById('nextToStep3');
+            const backToStep2Btn = document.getElementById('backToStep2');
+            const submitOrderBtn = document.getElementById('submitOrder');
+            const backToHomeBtn = document.getElementById('backToHome');
+            const selectedCountEl = document.getElementById('selectedCount');
+            const totalPriceEl = document.getElementById('totalPrice');
+            const totalPriceStep2El = document.getElementById('totalPriceStep2');
+            const totalPriceStep3El = document.getElementById('totalPriceStep3');
+            const selectedServicesEl = document.getElementById('selectedServices');
+            const orderSummaryEl = document.getElementById('orderSummary');
+            const progressBar1 = document.getElementById('progressBar1');
+            const progressBar2 = document.getElementById('progressBar2');
+            const paymentInstructions = document.getElementById('paymentInstructions');
+            const paymentDetails = document.getElementById('paymentDetails');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const paymentProofInput = document.getElementById('paymentProof');
+            const uploadPreview = document.getElementById('uploadPreview');
+            const fileNameEl = document.getElementById('fileName');
+            const orderNumberEl = document.getElementById('orderNumber');
+            const phoneInput = document.getElementById('phone');
+            const igNameInput = document.getElementById('igName');
+            
+            // 服務選擇事件
+            document.querySelectorAll('.service-option').forEach(option => {
+                option.addEventListener('change', updateSelectedServices);
+            });
+            
+            // 步驟導航事件
+            nextToStep2Btn.addEventListener('click', () => goToStep(2));
+            backToStep1Btn.addEventListener('click', () => goToStep(1));
+            nextToStep3Btn.addEventListener('click', () => goToStep(3));
+            backToStep2Btn.addEventListener('click', () => goToStep(2));
+            submitOrderBtn.addEventListener('click', submitOrder);
+            backToHomeBtn.addEventListener('click', () => goToStep(1));
+            
+            // 付款方式選擇
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.addEventListener('click', selectPaymentMethod);
+            });
+            
+            // 上傳付款截圖
+            uploadBtn.addEventListener('click', () => {
+                paymentProofInput.click();
+            });
+            
+            paymentProofInput.addEventListener('change', handleFileUpload);
+            
+            // 更新選中的服務和總價
+            function updateSelectedServices() {
+                selectedServices = [];
+                totalPrice = 0;
+                
+                document.querySelectorAll('.service-option:checked').forEach(option => {
+                    const service = option.dataset.service;
+                    const price = parseInt(option.dataset.price);
+                    
+                    selectedServices.push({
+                        name: service,
+                        price: price
+                    });
+                    
+                    totalPrice += price;
+                });
+                
+                // 更新UI
+                selectedCountEl.textContent = selectedServices.length;
+                totalPriceEl.textContent = `$${totalPrice}`;
+                totalPriceStep2El.textContent = `$${totalPrice}`;
+                totalPriceStep3El.textContent = `$${totalPrice}`;
+                
+                // 啟用/禁用下一步按鈕
+                nextToStep2Btn.disabled = selectedServices.length === 0;
+                
+                // 更新步驟2中的已選服務列表
+                updateSelectedServicesList();
+                
+                // 更新步驟3中的訂單摘要
+                updateOrderSummary();
+            }
+            
+            // 更新步驟2中的已選服務列表
+            function updateSelectedServicesList() {
+                selectedServicesEl.innerHTML = '';
+                
+                selectedServices.forEach(service => {
+                    const serviceItem = document.createElement('div');
+                    serviceItem.className = 'flex justify-between items-center';
+                    serviceItem.innerHTML = `
+                        <span>${service.name}</span>
+                        <span>$${service.price}</span>
+                    `;
+                    selectedServicesEl.appendChild(serviceItem);
+                });
+            }
+            
+            // 更新步驟3中的訂單摘要
+            function updateOrderSummary() {
+                orderSummaryEl.innerHTML = '';
+                
+                selectedServices.forEach(service => {
+                    const serviceItem = document.createElement('div');
+                    serviceItem.className = 'flex justify-between items-center';
+                    serviceItem.innerHTML = `
+                        <span>${service.name}</span>
+                        <span>$${service.price}</span>
+                    `;
+                    orderSummaryEl.appendChild(serviceItem);
+                });
+                
+                // 添加聯絡資料
+                if (currentStep >= 3) {
+                    const contactInfo = document.createElement('div');
+                    contactInfo.className = 'mt-4 pt-4 border-t border-gray-200';
+                    contactInfo.innerHTML = `
+                        <h4 class="font-bold mb-2">聯絡資料</h4>
+                        <div class="flex justify-between items-center">
+                            <span>電話號碼</span>
+                            <span>${phoneInput.value || '-'}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span>Instagram 用戶名</span>
+                            <span>${igNameInput.value || '-'}</span>
+                        </div>
+                    `;
+                    orderSummaryEl.appendChild(contactInfo);
+                }
+            }
+            
+            // 切換步驟
+            function goToStep(step) {
+                // 驗證步驟2的輸入
+                if (currentStep === 2 && step === 3) {
+                    if (!phoneInput.value || !igNameInput.value) {
+                        alert('請填寫電話號碼和 Instagram 用戶名');
+                        return;
+                    }
+                }
+                
+                // 隱藏所有步驟
+                step1.classList.add('hidden');
+                step2.classList.add('hidden');
+                step3.classList.add('hidden');
+                orderSuccess.classList.add('hidden');
+                
+                // 顯示當前步驟
+                if (step === 1) {
+                    step1.classList.remove('hidden');
+                    progressBar1.style.width = '0%';
+                    progressBar2.style.width = '0%';
+                } else if (step === 2) {
+                    step2.classList.remove('hidden');
+                    updateSelectedServicesList();
+                    progressBar1.style.width = '100%';
+                    progressBar2.style.width = '0%';
+                } else if (step === 3) {
+                    step3.classList.remove('hidden');
+                    updateOrderSummary();
+                    progressBar1.style.width = '100%';
+                    progressBar2.style.width = '100%';
+                }
+                
+                currentStep = step;
+                
+                // 滾動到頂部
+                window.scrollTo(0, 0);
+            }
+            
+            // 選擇付款方式
+            function selectPaymentMethod() {
+                // 移除之前的選擇
+                document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // 添加新的選擇
+                this.classList.add('selected');
+                selectedPaymentMethod = this.dataset.payment;
+                
+                // 顯示付款說明
+                paymentInstructions.classList.remove('hidden');
+                
+                // 更新付款說明
+                if (selectedPaymentMethod === 'FPS') {
+                    paymentDetails.textContent = '請使用 FPS 轉賬至: 1234 5678，並在備註中填寫您的姓名和電話號碼。';
+                } else if (selectedPaymentMethod === 'PayMe') {
+                    paymentDetails.textContent = '請掃描以下 PayMe 二維碼或搜索 ID: yourhealingstore 進行付款。';
+                } else if (selectedPaymentMethod === 'Alipay') {
+                    paymentDetails.textContent = '請掃描以下支付寶二維碼或轉賬至: yourhealingstore@example.com';
+                }
+                
+                // 啟用提交按鈕
+                checkSubmitButtonStatus();
+            }
+            
+            // 處理文件上傳
+            function handleFileUpload() {
+                if (paymentProofInput.files.length > 0) {
+                    const file = paymentProofInput.files[0];
+                    fileNameEl.textContent = file.name;
+                    uploadPreview.classList.remove('hidden');
+                    
+                    // 啟用提交按鈕
+                    checkSubmitButtonStatus();
+                }
+            }
+            
+            // 檢查提交按鈕狀態
+            function checkSubmitButtonStatus() {
+                submitOrderBtn.disabled = !(selectedPaymentMethod && paymentProofInput.files.length > 0);
+            }
+            
+            // 提交訂單
+            function submitOrder() {
+                // 生成訂單編號
+                const orderNumber = generateOrderNumber();
+                orderNumberEl.textContent = orderNumber;
+                
+                // 顯示成功頁面
+                step1.classList.add('hidden');
+                step2.classList.add('hidden');
+                step3.classList.add('hidden');
+                orderSuccess.classList.remove('hidden');
+                
+                // 滾動到頂部
+                window.scrollTo(0, 0);
+                
+                // 重置表單
+                resetForm();
+            }
+            
+            // 生成訂單編號
+            function generateOrderNumber() {
+                const date = new Date();
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                
+                return `ORD-${year}${month}${day}-${random}`;
+            }
+            
+            // 重置表單
+            function resetForm() {
+                document.querySelectorAll('.service-option').forEach(option => {
+                    option.checked = false;
+                });
+                
+                phoneInput.value = '';
+                igNameInput.value = '';
+                document.getElementById('notes').value = '';
+                
+                document.querySelectorAll('.payment-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                paymentProofInput.value = '';
+                uploadPreview.classList.add('hidden');
+                paymentInstructions.classList.add('hidden');
+                
+                selectedServices = [];
+                totalPrice = 0;
+                selectedPaymentMethod = null;
+                
+                updateSelectedServices();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'952ba630f3f5fcc4',t:'MTc1MDQyNjUyNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;" src="./saved_resource(2).html"></iframe>
+
+</body></html>
