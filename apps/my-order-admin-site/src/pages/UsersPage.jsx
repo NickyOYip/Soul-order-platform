@@ -122,7 +122,7 @@ const UsersPage = () => {
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="text-center">
             <p className="text-2xl font-bold text-blue-600">
-              ${users.reduce((sum, user) => sum + user.totalSpent, 0).toLocaleString()}
+              HK$ {users.reduce((sum, user) => sum + user.totalSpent, 0).toLocaleString()}
             </p>
             <p className="text-sm text-gray-600">總消費金額</p>
           </div>
@@ -221,7 +221,7 @@ const UsersPage = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">${user.totalSpent.toLocaleString()}</div>
+                    <div className="text-sm text-gray-900">HK$ {user.totalSpent.toLocaleString()}</div>
                     <div className="text-sm text-gray-500">{user.orders} 筆訂單</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">

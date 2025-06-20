@@ -275,7 +275,7 @@ const ProductsPage = () => {
                     </div>
                     <div className="text-right">
                       <div className="text-2xl font-bold text-purple-600">
-                        ${product.basePrice?.toLocaleString() || '0'}
+                        HK$ {product.basePrice?.toLocaleString() || '0'}
                       </div>
                       {product.hasOptions && (
                         <div className="text-xs text-gray-500">起價</div>

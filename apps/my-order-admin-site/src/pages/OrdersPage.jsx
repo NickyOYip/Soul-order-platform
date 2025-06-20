@@ -45,43 +45,26 @@ const OrdersPage = () => {
     }
     
     setFilteredOrders(filtered);
-  }, [orders, selectedStatus, selectedDate, searchTerm]);
-
-  const statusOptions = [
+  }, [orders, selectedStatus, selectedDate, searchTerm]);  const statusOptions = [
     { value: 'all', label: '全部狀態' },
-    { value: '待付款', label: '待付款' },
+    { value: '待處理', label: '待處理' },
     { value: '處理中', label: '處理中' },
     { value: '已完成', label: '已完成' },
     { value: '已取消', label: '已取消' }
-  ];
-
-  const getStatusColor = (status) => {
+  ];  const getStatusColor = (status) => {
     switch (status) {
       case '已完成':
         return 'bg-green-100 text-green-800';
       case '處理中':
         return 'bg-blue-100 text-blue-800';
-      case '待付款':
+      case '待處理':
         return 'bg-yellow-100 text-yellow-800';
       case '已取消':
         return 'bg-red-100 text-red-800';
       default:
         return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getPaymentStatusColor = (status) => {
-    switch (status) {
-      case '已付款':
-        return 'bg-green-100 text-green-800';
-      case '未付款':
-        return 'bg-red-100 text-red-800';
-      case '已退款':
-        return 'bg-gray-100 text-gray-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
+    }};
+  
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       await apiService.updateOrderStatus(orderId, newStatus);
@@ -143,7 +126,7 @@ const OrdersPage = () => {
         </div>
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
           <div className="text-center">
-            <p className="text-2xl font-bold text-purple-600">${stats.totalRevenue.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-purple-600">HK$ {stats.totalRevenue.toLocaleString()}</p>
             <p className="text-sm text-gray-600">總收入</p>
           </div>
         </div>
@@ -213,12 +196,8 @@ const OrdersPage = () => {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   金額
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                </th>                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   訂單狀態
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  付款狀態
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   日期
@@ -249,26 +228,17 @@ const OrdersPage = () => {
                         </div>
                       ))}
                     </div>
+                  </td>                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    HK$ {order.totalAmount}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                    ${order.totalAmount}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <select
+                  <td className="px-6 py-4 whitespace-nowrap">                    <select
                       value={order.status}
                       onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                       className={`text-xs font-semibold rounded-full px-2 py-1 border-0 ${getStatusColor(order.status)}`}
-                    >
-                      <option value="待付款">待付款</option>
+                    >                      <option value="待處理">待處理</option>
                       <option value="處理中">處理中</option>
                       <option value="已完成">已完成</option>
-                      <option value="已取消">已取消</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getPaymentStatusColor(order.paymentStatus)}`}>
-                      {order.paymentStatus}
-                    </span>
+                      <option value="已取消">已取消</option></select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div>下單: {order.orderDate}</div>

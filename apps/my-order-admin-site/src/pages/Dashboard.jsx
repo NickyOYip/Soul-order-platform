@@ -21,7 +21,7 @@ const Dashboard = () => {
     },
     {
       title: '總收入',
-      value: '$12,345',
+      value: 'HK$ 12,345',
       icon: '💰',
       color: 'yellow'
     }
@@ -32,7 +32,7 @@ const Dashboard = () => {
       id: '#001',
       customer: '張小明',
       product: '愛情蠟燭',
-      amount: '$299',
+      amount: 'HK$ 299',
       status: '已完成',
       date: '2025-06-18'
     },
@@ -40,7 +40,7 @@ const Dashboard = () => {
       id: '#002',
       customer: '李小華',
       product: '塔羅占卜',
-      amount: '$199',
+      amount: 'HK$ 199',
       status: '處理中',
       date: '2025-06-18'
     },
@@ -48,16 +48,15 @@ const Dashboard = () => {
       id: '#003',
       customer: '王小美',
       product: '靈擺調頻',
-      amount: '$399',
+      amount: 'HK$ 399',
       status: '已完成',
       date: '2025-06-17'
     }
   ];
   return (
-    <div className="space-y-6">
-      {/* Page Title */}
+    <div className="space-y-6">      {/* Page Title */}
       <div className="page-header">
-        <h2 className="page-title">總覽</h2>
+        <h2 className="page-title">儀表板</h2>
         <p className="page-description">歡迎來到解憂雜貨店管理後台</p>
       </div>
 

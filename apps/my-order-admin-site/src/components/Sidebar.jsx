@@ -1,8 +1,7 @@
 const Sidebar = ({ currentPage, setCurrentPage, isMobileMenuOpen }) => {
-  const menuItems = [
-    {
+  const menuItems = [    {
       id: 'dashboard',
-      name: '總覽',
+      name: '儀表板',
       icon: '📊'
     },
     {
