@@ -6,10 +6,10 @@ import PhoneInput from './PhoneInput';
 
 const LoginModal = ({ isOpen, onClose }) => {
   const [showWelcome, setShowWelcome] = useState(false);
-  const [welcomeUser, setWelcomeUser] = useState(null);
-  const [formData, setFormData] = useState({
+  const [welcomeUser, setWelcomeUser] = useState(null);  const [formData, setFormData] = useState({
     phone: '',
-    igName: ''
+    igName: '',
+    name: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -45,7 +45,7 @@ const LoginModal = ({ isOpen, onClose }) => {
       setTimeout(() => {
         setShowWelcome(false);
         onClose();
-        setFormData({ phone: '', igName: '' });
+        setFormData({ phone: '', igName: '', name: '' });
       }, 3000);
     } catch (err) {
       setError(err.message || '操作失敗，請重試');
@@ -136,9 +136,7 @@ const LoginModal = ({ isOpen, onClose }) => {
             id="phone"
             required
             label="電話號碼"
-          />
-
-          <div>
+          />          <div>
             <label className="block text-gray-700 mb-2" htmlFor="igName">
               Instagram 用戶名
             </label>
@@ -150,6 +148,22 @@ const LoginModal = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="請輸入您的 Instagram 用戶名"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 mb-2" htmlFor="name">
+              姓名
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+              placeholder="請輸入您的姓名"
               required
             />
           </div>
