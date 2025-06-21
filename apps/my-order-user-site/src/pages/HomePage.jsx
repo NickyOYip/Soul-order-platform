@@ -89,7 +89,7 @@ const HomePage = ({ onNavigate }) => {
     </div>
     <h3 className="text-lg font-semibold mb-2">提供一對一指導支援</h3>
     <p className="text-gray-600">教你用什麼心態去面對問題</p>
-    <p className="text-gray-600">幫你建立健康嘅溝通模式</p>
+    <p className="text-gray-600">幫你建立健康的溝通模式</p>
   </div>
 </div>
 
