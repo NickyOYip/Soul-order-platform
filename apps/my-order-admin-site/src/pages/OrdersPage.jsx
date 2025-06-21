@@ -180,8 +180,7 @@ const OrdersPage = () => {
             訂單列表 ({filteredOrders.length})
           </h3>
         </div>
-        
-        <div className="overflow-x-auto">
+          <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -196,7 +195,8 @@ const OrdersPage = () => {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   金額
-                </th>                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   訂單狀態
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -206,13 +206,13 @@ const OrdersPage = () => {
                   操作
                 </th>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            </thead>            <tbody className="bg-white divide-y divide-gray-200">
               {filteredOrders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {order.id}
-                  </td>                  <td className="px-6 py-4 whitespace-nowrap">
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       @{order.customerIgName}
                     </div>
@@ -228,17 +228,21 @@ const OrdersPage = () => {
                         </div>
                       ))}
                     </div>
-                  </td>                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     HK$ {order.totalAmount}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">                    <select
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <select
                       value={order.status}
                       onChange={(e) => updateOrderStatus(order.id, e.target.value)}
                       className={`text-xs font-semibold rounded-full px-2 py-1 border-0 ${getStatusColor(order.status)}`}
-                    >                      <option value="待處理">待處理</option>
+                    >
+                      <option value="待處理">待處理</option>
                       <option value="處理中">處理中</option>
                       <option value="已完成">已完成</option>
-                      <option value="已取消">已取消</option></select>
+                      <option value="已取消">已取消</option>
+                    </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div>下單: {order.orderDate}</div>

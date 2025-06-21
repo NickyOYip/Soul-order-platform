@@ -166,9 +166,7 @@ const UsersPage = () => {
           <h3 className="text-lg font-semibold text-gray-900">
             用戶列表 ({filteredUsers.length})
           </h3>
-        </div>
-        
-        <div className="overflow-x-auto">
+        </div>        <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -191,19 +189,20 @@ const UsersPage = () => {
                   操作
                 </th>
               </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            </thead>            <tbody className="bg-white divide-y divide-gray-200">
               {filteredUsers.map((user) => (
                 <tr key={user.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center">                      <div className="flex-shrink-0 h-10 w-10">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 h-10 w-10">
                         <div className="h-10 w-10 rounded-full bg-purple-100 flex items-center justify-center">
                           <span className="text-purple-600 font-medium">
                             {user.igName && user.igName.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       </div>
-                      <div className="ml-4">                        <div className="text-sm font-medium text-gray-900">
+                      <div className="ml-4">
+                        <div className="text-sm font-medium text-gray-900">
                           @{user.igName}
                         </div>
                         <div className="text-sm text-gray-500">
@@ -211,7 +210,8 @@ const UsersPage = () => {
                         </div>
                       </div>
                     </div>
-                  </td>                  <td className="px-6 py-4 whitespace-nowrap">
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900">{user.phone}</div>
                     <div className="text-sm text-gray-500">聯絡電話</div>
                   </td>
