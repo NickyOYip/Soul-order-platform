@@ -9,6 +9,7 @@ const ProductsPage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);  const [selectedCategory, setSelectedCategory] = useState('candles'); // Start with candles like user site
   const [selectedSubCategory, setSelectedSubCategory] = useState('七日星體蠟燭'); // Start with first candle subcategory
   const [searchTerm, setSearchTerm] = useState('');
+  const [showDisabled, setShowDisabled] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -45,9 +46,14 @@ const ProductsPage = () => {
     } else {
       setSelectedSubCategory('');
     }
-  }, [selectedCategory, availableSubCategories]);// Filter products
+  }, [selectedCategory, availableSubCategories]);  // Filter products
   useEffect(() => {
     let filtered = products;
+    
+    // Filter out disabled products unless showDisabled is true
+    if (!showDisabled) {
+      filtered = filtered.filter(product => !product.disabled);
+    }
     
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(product => product.category === selectedCategory);
@@ -66,7 +72,7 @@ const ProductsPage = () => {
     }
     
     setFilteredProducts(filtered);
-  }, [products, selectedCategory, selectedSubCategory, searchTerm]);
+  }, [products, selectedCategory, selectedSubCategory, searchTerm, showDisabled]);
 
   const handleAddProduct = () => {
     setEditingProduct(null);
@@ -187,19 +193,33 @@ const ProductsPage = () => {
               ))}
             </div>
           </div>
-        )}
-
-        {/* Search and Add Button */}
+        )}        {/* Search and Add Button */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-          <div className="relative flex-1 max-w-md">
-            <input
-              type="text"
-              placeholder="搜尋產品名稱、標籤或描述..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
-          </div>          <button
+          <div className="flex flex-col sm:flex-row gap-4 flex-1">
+            <div className="relative flex-1 max-w-md">
+              <input
+                type="text"
+                placeholder="搜尋產品名稱、標籤或描述..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+            </div>
+            
+            {/* Show Disabled Products Checkbox */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="showDisabled"
+                checked={showDisabled}
+                onChange={(e) => setShowDisabled(e.target.checked)}
+                className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+              />
+              <label htmlFor="showDisabled" className="ml-2 block text-sm text-gray-700 whitespace-nowrap">
+                顯示已停用產品
+              </label>
+            </div>
+          </div><button
             onClick={handleAddProduct}
             className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-medium transition-colors flex items-center gap-2"
           >

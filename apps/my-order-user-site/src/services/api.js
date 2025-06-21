@@ -227,40 +227,35 @@ export const api = {
     // return await apiRequest('/categories');
     return serviceCategories;
   },
-
   // Candle Products API
   getCandleProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/candles');
-    return candleProducts;
+    return candleProducts.filter(product => !product.disabled);
   },
-
   getPlanetaryCandleProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/candles/planetary');
-    return candleProducts.filter(p => p.subCategory === '七日星體蠟燭');
+    return candleProducts.filter(p => p.subCategory === '七日星體蠟燭' && !p.disabled);
   },
-
   getPlanetaryCandleProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/candles/planetary/${id}`);
-    const product = candleProducts.find(p => p.id === parseInt(id) && p.subCategory === '七日星體蠟燭');
+    const product = candleProducts.find(p => p.id === parseInt(id) && p.subCategory === '七日星體蠟燭' && !p.disabled);
     if (!product) {
       throw new Error('Planetary candle product not found');
     }
     return product;
   },
-
   getLoversCandleProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/candles/lovers');
-    return candleProducts.filter(p => p.subCategory === '戀人蠟燭儀式');
+    return candleProducts.filter(p => p.subCategory === '戀人蠟燭儀式' && !p.disabled);
   },
-
   getLoversCandleProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/candles/lovers/${id}`);
-    const product = candleProducts.find(p => p.id === parseInt(id) && p.subCategory === '戀人蠟燭儀式');
+    const product = candleProducts.find(p => p.id === parseInt(id) && p.subCategory === '戀人蠟燭儀式' && !p.disabled);
     if (!product) {
       throw new Error('Lovers candle product not found');
     }
@@ -271,13 +266,13 @@ export const api = {
   getFrequencyLoveProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/frequency/love');
-    return frequencyProducts.filter(p => p.subCategory === '愛情調頻');
+    return frequencyProducts.filter(p => p.subCategory === '愛情調頻' && !p.disabled);
   },
 
   getFrequencyLoveProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/frequency/love/${id}`);
-    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '愛情調頻');
+    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '愛情調頻' && !p.disabled);
     if (!product) {
       throw new Error('Frequency love product not found');
     }
@@ -287,13 +282,13 @@ export const api = {
   getFrequencyCareerProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/frequency/career');
-    return frequencyProducts.filter(p => p.subCategory === '事業財運調頻');
+    return frequencyProducts.filter(p => p.subCategory === '事業財運調頻' && !p.disabled);
   },
 
   getFrequencyCareerProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/frequency/career/${id}`);
-    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '事業財運調頻');
+    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '事業財運調頻' && !p.disabled);
     if (!product) {
       throw new Error('Frequency career product not found');
     }
@@ -303,13 +298,13 @@ export const api = {
   getFrequencyPersonalProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/frequency/personal');
-    return frequencyProducts.filter(p => p.subCategory === '自身調頻');
+    return frequencyProducts.filter(p => p.subCategory === '自身調頻' && !p.disabled);
   },
 
   getFrequencyPersonalProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/frequency/personal/${id}`);
-    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '自身調頻');
+    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '自身調頻' && !p.disabled);
     if (!product) {
       throw new Error('Frequency personal product not found');
     }
@@ -320,30 +315,29 @@ export const api = {
   getFrequencySingleProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/frequency/single');
-    return frequencyProducts.filter(p => p.subCategory === '單項 & 加急');
+    return frequencyProducts.filter(p => p.subCategory === '單項 & 加急' && !p.disabled);
   },
 
   getFrequencySingleProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/frequency/single/${id}`);
-    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '單項 & 加急');
+    const product = frequencyProducts.find(p => p.id === parseInt(id) && p.subCategory === '單項 & 加急' && !p.disabled);
     if (!product) {
       throw new Error('Frequency single/urgent product not found');
     }
     return product;
   },
-
   // Tarot Products API
   getTarotProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/tarot');
-    return tarotProducts;
+    return tarotProducts.filter(product => !product.disabled);
   },
 
   getTarotProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/tarot/${id}`);
-    const product = tarotProducts.find(p => p.id === parseInt(id));
+    const product = tarotProducts.find(p => p.id === parseInt(id) && !p.disabled);
     if (!product) {
       throw new Error('Tarot product not found');
     }
@@ -354,13 +348,13 @@ export const api = {
   getAstrologyProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/astrology');
-    return astrologyProducts;
+    return astrologyProducts.filter(product => !product.disabled);
   },
 
   getAstrologyProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/astrology/${id}`);
-    const product = astrologyProducts.find(p => p.id === parseInt(id));
+    const product = astrologyProducts.find(p => p.id === parseInt(id) && !p.disabled);
     if (!product) {
       throw new Error('Astrology product not found');
     }
@@ -371,13 +365,13 @@ export const api = {
   getLoveProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/love');
-    return loveProducts;
+    return loveProducts.filter(product => !product.disabled);
   },
 
   getLoveProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/love/${id}`);
-    const product = loveProducts.find(p => p.id === parseInt(id));
+    const product = loveProducts.find(p => p.id === parseInt(id) && !p.disabled);
     if (!product) {
       throw new Error('Love product not found');
     }
@@ -388,13 +382,13 @@ export const api = {
   getPsychicProducts: async () => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/products/psychic');
-    return psychicProducts;
+    return psychicProducts.filter(product => !product.disabled);
   },
 
   getPsychicProduct: async (id) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest(`/products/psychic/${id}`);
-    const product = psychicProducts.find(p => p.id === parseInt(id));
+    const product = psychicProducts.find(p => p.id === parseInt(id) && !p.disabled);
     if (!product) {
       throw new Error('Psychic product not found');
     }

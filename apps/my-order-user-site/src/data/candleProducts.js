@@ -12,7 +12,8 @@ export const candleProducts = [  {
     image: '/images/love-me-lots-candle.jpg',
     hasOptions: false,
     basePrice: 988,
-    soldOut: false
+    soldOut: false,
+    disabled: false
   },
   {
     id: 2,
@@ -24,7 +25,8 @@ export const candleProducts = [  {
     image: '/images/intranquil-candle.jpg',
     hasOptions: false,
     basePrice: 988,
-    soldOut: true
+    soldOut: true,
+    disabled: false
   },
   {
     id: 3,
