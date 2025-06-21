@@ -7,17 +7,32 @@ export const mockOrders = [
     date: '2024-01-20',
     orderDate: '2024-01-20',
     status: '已完成',
-    paymentStatus: '已付款',
     total: 2964,
     totalAmount: 2964,
     completedDate: '2024-01-20',
-    items: [
-      { name: 'Love Me Lots', quantity: 1, price: 988 },
-      { name: 'Intranquil 舊情復熾', quantity: 2, price: 988 }
-    ],
     products: [
-      { name: 'Love Me Lots', quantity: 1, price: 988 },
-      { name: 'Intranquil 舊情復熾', quantity: 2, price: 988 }
+      { 
+        name: 'Love Me Lots', 
+        quantity: 1, 
+        price: 988,
+        category: 'candle',
+        basePrice: 988,
+        hasOptions: false,
+        selectedOptions: {},
+        selectedAddOns: []
+      },
+      { 
+        name: 'Intranquil 舊情復熾', 
+        quantity: 2, 
+        price: 988,
+        category: 'candle',
+        basePrice: 988,
+        hasOptions: true,
+        selectedOptions: {
+          "1": "標準版本"
+        },
+        selectedAddOns: []
+      }
     ]
   },
   {
@@ -27,15 +42,23 @@ export const mockOrders = [
     date: '2024-01-25',
     orderDate: '2024-01-25',
     status: '處理中',
-    paymentStatus: '已付款',
     total: 1476,
     totalAmount: 1476,
     completedDate: null,
-    items: [
-      { name: '靈擺調頻 - 愛情調頻', quantity: 1, price: 1476 }
-    ],
     products: [
-      { name: '靈擺調頻 - 愛情調頻', quantity: 1, price: 1476 }
+      { 
+        name: '靈擺調頻 - 愛情調頻', 
+        quantity: 1, 
+        price: 1476,
+        category: 'frequency',
+        basePrice: 1476,
+        hasOptions: true,
+        selectedOptions: {
+          "1": "遠距離調頻",
+          "2": "3個月"
+        },
+        selectedAddOns: []
+      }
     ]
   },
   {
@@ -45,15 +68,21 @@ export const mockOrders = [
     date: '2024-02-01',
     orderDate: '2024-02-01',
     status: '待處理',
-    paymentStatus: '未付款',
     total: 988,
-    totalAmount: 988,
-    completedDate: null,
-    items: [
-      { name: 'Break Up 分手蠟燭', quantity: 1, price: 988 }
-    ],
+    totalAmount: 988,    completedDate: null,
     products: [
-      { name: 'Break Up 分手蠟燭', quantity: 1, price: 988 }
+      { 
+        name: 'Break Up 分手蠟燭', 
+        quantity: 1, 
+        price: 988,
+        category: 'candle',
+        basePrice: 988,
+        hasOptions: true,
+        selectedOptions: {
+          "1": "標準版本"
+        },
+        selectedAddOns: []
+      }
     ]
   },
   {
@@ -63,15 +92,23 @@ export const mockOrders = [
     date: '2024-02-05',
     orderDate: '2024-02-05',
     status: '已取消',
-    paymentStatus: '已退款',
     total: 1690,
     totalAmount: 1690,
     completedDate: null,
-    items: [
-      { name: '靈擺調頻 - 事業財運調頻', quantity: 1, price: 1690 }
-    ],
     products: [
-      { name: '靈擺調頻 - 事業財運調頻', quantity: 1, price: 1690 }
+      { 
+        name: '靈擺調頻 - 事業財運調頻', 
+        quantity: 1, 
+        price: 1690,
+        category: 'frequency',
+        basePrice: 1690,
+        hasOptions: true,
+        selectedOptions: {
+          "1": "遠距離調頻",
+          "2": "6個月"
+        },
+        selectedAddOns: []
+      }
     ]
   }
 ];

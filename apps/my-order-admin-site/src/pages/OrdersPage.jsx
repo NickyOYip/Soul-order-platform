@@ -7,7 +7,9 @@ const OrdersPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
   const [selectedDate, setSelectedDate] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showOrderDetail, setShowOrderDetail] = useState(false);
+  const [viewingOrder, setViewingOrder] = useState(null);
 
   // Load orders from API service
   useEffect(() => {
@@ -92,6 +94,37 @@ const OrdersPage = () => {
     const totalOrders = orders.length;
 
     return { totalRevenue, pendingOrders, completedOrders, totalOrders };
+  };
+  const viewOrderDetails = (order) => {
+    setSelectedOrder(order);
+    setViewingOrder({ ...order });
+    setShowOrderDetail(true);
+  };
+
+  const closeOrderDetail = () => {
+    setShowOrderDetail(false);
+    setSelectedOrder(null);
+    setViewingOrder(null);
+  };
+
+  const handleViewOrderSave = async () => {
+    try {
+      await apiService.updateOrder(viewingOrder.id, viewingOrder);
+      setOrders(orders.map(order => 
+        order.id === viewingOrder.id 
+          ? viewingOrder
+          : order
+      ));
+      setSelectedOrder(viewingOrder);
+    } catch (error) {
+      console.error('Failed to update order:', error);
+    }
+  };
+  const handleViewOrderChange = (field, value) => {
+    setViewingOrder({
+      ...viewingOrder,
+      [field]: value
+    });
   };
 
   const stats = calculateStats();
@@ -204,9 +237,9 @@ const OrdersPage = () => {
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   操作
-                </th>
-              </tr>
-            </thead>            <tbody className="bg-white divide-y divide-gray-200">
+                </th>              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
               {filteredOrders.map((order) => (
                 <tr key={order.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -231,31 +264,22 @@ const OrdersPage = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     HK$ {order.totalAmount}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <select
-                      value={order.status}
-                      onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                      className={`text-xs font-semibold rounded-full px-2 py-1 border-0 ${getStatusColor(order.status)}`}
-                    >
-                      <option value="待處理">待處理</option>
-                      <option value="處理中">處理中</option>
-                      <option value="已完成">已完成</option>
-                      <option value="已取消">已取消</option>
-                    </select>
+                  </td>                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`text-xs font-semibold rounded-full px-2 py-1 ${getStatusColor(order.status)}`}>
+                      {order.status}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div>下單: {order.orderDate}</div>
                     {order.completedDate && (
                       <div>完成: {order.completedDate}</div>
                     )}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                    <button className="text-purple-600 hover:text-purple-900">
+                  </td>                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <button 
+                      onClick={() => viewOrderDetails(order)}
+                      className="text-purple-600 hover:text-purple-900"
+                    >
                       查看
-                    </button>
-                    <button className="text-blue-600 hover:text-blue-900">
-                      編輯
                     </button>
                   </td>
                 </tr>
@@ -263,7 +287,133 @@ const OrdersPage = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div>      {/* Order Detail Modal */}
+      {showOrderDetail && selectedOrder && viewingOrder && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-96 overflow-y-auto">
+            {/* Modal Header */}
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+              <h3 className="text-lg font-semibold text-gray-900">
+                訂單詳情 - {selectedOrder.id}
+              </h3>
+              <button
+                onClick={closeOrderDetail}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="px-6 py-4 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">客戶 Instagram</label>
+                  <p className="text-sm text-gray-900">@{selectedOrder.customerIgName}</p>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">聯絡電話</label>
+                  <p className="text-sm text-gray-900">{selectedOrder.customerPhone}</p>
+                </div>
+              </div>
+                <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">訂單商品</label>
+                <div className="space-y-3">
+                  {selectedOrder.products.map((product, index) => (
+                    <div key={index} className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900">{product.name}</p>
+                          <p className="text-sm text-gray-500 capitalize">{product.category}</p>
+                          
+                          {/* Selected Options */}
+                          {product.selectedOptions && Object.keys(product.selectedOptions).length > 0 && (
+                            <div className="mt-2 space-y-1">
+                              <p className="text-xs font-medium text-gray-600">選項:</p>
+                              {Object.entries(product.selectedOptions).map(([optionNo, value]) => (
+                                <div key={optionNo} className="text-xs text-gray-700">
+                                  <span className="font-medium">選項 {optionNo}:</span>
+                                  <span className="ml-1">{value}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                          
+                          {/* Selected Add-ons */}
+                          {product.selectedAddOns && product.selectedAddOns.length > 0 && (
+                            <div className="mt-2 space-y-1">
+                              <p className="text-xs font-medium text-gray-600">加購項目:</p>
+                              {product.selectedAddOns.map((addOn, addOnIndex) => (
+                                <div key={addOnIndex} className="text-xs text-gray-700">
+                                  <span>{addOn.name}</span>
+                                  {addOn.price > 0 && (
+                                    <span className="ml-1 text-green-600 font-medium">+HK$ {addOn.price}</span>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        <div className="text-right ml-4">
+                          <p className="text-sm font-medium text-gray-900">x{product.quantity}</p>
+                          <p className="text-sm text-gray-600">HK$ {product.price}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div><div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">訂單狀態</label>
+                  <select
+                    value={viewingOrder.status}
+                    onChange={(e) => handleViewOrderChange('status', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  >
+                    <option value="待處理">待處理</option>
+                    <option value="處理中">處理中</option>
+                    <option value="已完成">已完成</option>
+                    <option value="已取消">已取消</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">總金額</label>
+                  <p className="text-sm text-gray-900">HK$ {selectedOrder.totalAmount}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">下單日期</label>
+                  <p className="text-sm text-gray-900">{selectedOrder.orderDate}</p>
+                </div>
+                {selectedOrder.completedDate && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">完成日期</label>
+                    <p className="text-sm text-gray-900">{selectedOrder.completedDate}</p>
+                  </div>
+                )}
+              </div>
+            </div>            {/* Modal Footer */}
+            <div className="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+              <button
+                onClick={closeOrderDetail}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                關閉
+              </button>
+              <button
+                onClick={handleViewOrderSave}
+                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                儲存變更
+              </button>
+            </div>          </div>
+        </div>
+      )}
     </div>
   );
 };

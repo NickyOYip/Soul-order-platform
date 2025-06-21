@@ -181,9 +181,12 @@ const apiService = {
   getAllOrders: () => {
     return API_CONFIG.USE_MOCK_API ? mockApi.getAllOrders() : realApi.getAllOrders();
   },
-
   updateOrderStatus: (id, status) => {
     return API_CONFIG.USE_MOCK_API ? mockApi.updateOrderStatus(id, status) : realApi.updateOrderStatus(id, status);
+  },
+
+  updateOrder: (id, orderData) => {
+    return API_CONFIG.USE_MOCK_API ? mockApi.updateOrder(id, orderData) : realApi.updateOrder(id, orderData);
   }
 };
 

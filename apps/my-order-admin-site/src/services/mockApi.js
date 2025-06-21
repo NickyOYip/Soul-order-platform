@@ -141,11 +141,18 @@ export const mockApi = {
       }, 100);
     });
   },
-
   updateOrderStatus: (id, status) => {
     return new Promise(resolve => {
       setTimeout(() => {
         resolve({ success: true, id, status });
+      }, 200);
+    });
+  },
+
+  updateOrder: (id, orderData) => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ success: true, id, data: orderData });
       }, 200);
     });
   }
