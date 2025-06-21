@@ -59,7 +59,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
   const handleCloseModal = () => {
     setShowWelcome(false);
-    setFormData({ phone: '', igName: '' });
+    setFormData({ phone: '', igName: '', name: '' });
     setError('');
     onClose();
   };
