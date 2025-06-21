@@ -1,13 +1,14 @@
 import { useState } from 'react';
-import { Bars3Icon, XMarkIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, ChevronDownIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import { getMembershipName, navigationItems, serviceNavigationCategories } from '../services/api';
 import LoginModal from './LoginModal';
+import UserProfileModal from './UserProfileModal';
 
-const Navigation = ({ currentPage, onNavigate }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+const Navigation = ({ currentPage, onNavigate }) => {  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isUserProfileModalOpen, setIsUserProfileModalOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const { user, logout } = useAuth();
   const { getCartCount } = useCart();  const navItems = navigationItems;
@@ -94,14 +95,19 @@ const Navigation = ({ currentPage, onNavigate }) => {
           </div>
 
           {/* User Status & Actions */}
-          <div className="flex items-center space-x-4">
-            <div className="hidden md:block">
+          <div className="flex items-center space-x-4">            <div className="hidden md:block">
               {user ? (
-                <div className="flex items-center space-x-4">
-                  <span className="text-pink-300">
-                    {user.name}
+                <div className="flex items-center space-x-4">                  <span className="text-pink-300">
+                    @{user.igName}
                     {user.membership && ` (${getMembershipName(user.membership)})`}
                   </span>
+                  <button
+                    onClick={() => setIsUserProfileModalOpen(true)}
+                    className="btn-secondary px-3 py-2 rounded-full text-sm hover:bg-gray-700 transition-colors flex items-center gap-1"
+                  >
+                    <UserCircleIcon className="h-4 w-4" />
+                    個人資料
+                  </button>
                   <button
                     onClick={handleLogout}
                     className="btn-secondary px-4 py-2 rounded-full text-sm hover:bg-gray-700 transition-colors"
@@ -166,13 +172,21 @@ const Navigation = ({ currentPage, onNavigate }) => {
                 ))}
               </div>
             </div>
-            
-            {user && (
-              <div className="border-t border-gray-700 pt-3 mt-3">
-                <div className="text-pink-300 py-2">
-                  {user.name}
+              {user && (
+              <div className="border-t border-gray-700 pt-3 mt-3">                <div className="text-pink-300 py-2">
+                  @{user.igName}
                   {user.membership && ` (${getMembershipName(user.membership)})`}
                 </div>
+                <button
+                  onClick={() => {
+                    setIsUserProfileModalOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-left py-2 text-white hover:text-pink-300 transition-colors flex items-center gap-2"
+                >
+                  <UserCircleIcon className="h-4 w-4" />
+                  個人資料
+                </button>
                 <button
                   onClick={handleLogout}
                   className="block w-full text-left py-2 text-white hover:text-pink-300 transition-colors"
@@ -183,12 +197,16 @@ const Navigation = ({ currentPage, onNavigate }) => {
             )}
           </div>
         )}
-      </nav>
-
-      {/* Login Modal */}
+      </nav>      {/* Login Modal */}
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
+      />
+
+      {/* User Profile Modal */}
+      <UserProfileModal
+        isOpen={isUserProfileModalOpen}
+        onClose={() => setIsUserProfileModalOpen(false)}
       />
     </>
   );

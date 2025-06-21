@@ -399,7 +399,9 @@ export const api = {
       throw new Error('Psychic product not found');
     }
     return product;
-  },  // User Authentication API
+  },
+
+  // User Authentication API
   login: async (credentials) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/auth/login', {
@@ -409,12 +411,11 @@ export const api = {
     
     // Temporary mock implementation
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate checking if user exists
+      setTimeout(() => {        // Simulate checking if user exists
         // For demo purposes, if phone starts with '+852', treat as existing user
         if (credentials.phone.startsWith('+852')) {
           resolve({
-            id: 1,
+            id: 1001, // Fixed user ID for existing users
             igName: credentials.igName || 'existing_user',
             phone: credentials.phone,
             membership: determineMembership(1000) // Mock with 1000 spending
@@ -426,7 +427,6 @@ export const api = {
       }, 800);
     });
   },
-
   register: async (userData) => {
     // TODO: Replace with actual API call when backend is ready
     // return await apiRequest('/auth/register', {
@@ -438,7 +438,7 @@ export const api = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          id: Date.now(),
+          id: Date.now(), // Generate new user ID
           ...userData,
           membership: null // New users start with no membership
         });

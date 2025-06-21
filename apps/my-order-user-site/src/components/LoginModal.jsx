@@ -8,8 +8,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   const [showWelcome, setShowWelcome] = useState(false);
   const [welcomeUser, setWelcomeUser] = useState(null);  const [formData, setFormData] = useState({
     phone: '',
-    igName: '',
-    name: ''
+    igName: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -45,7 +44,7 @@ const LoginModal = ({ isOpen, onClose }) => {
       setTimeout(() => {
         setShowWelcome(false);
         onClose();
-        setFormData({ phone: '', igName: '', name: '' });
+        setFormData({ phone: '', igName: '' });
       }, 3000);
     } catch (err) {
       setError(err.message || '操作失敗，請重試');
@@ -59,7 +58,7 @@ const LoginModal = ({ isOpen, onClose }) => {
   };
   const handleCloseModal = () => {
     setShowWelcome(false);
-    setFormData({ phone: '', igName: '', name: '' });
+    setFormData({ phone: '', igName: '' });
     setError('');
     onClose();
   };
@@ -76,8 +75,7 @@ const LoginModal = ({ isOpen, onClose }) => {
               <span className="text-white text-2xl">✨</span>
             </div>            <h2 className="text-2xl font-bold text-gray-800 mb-2">
               {welcomeUser.isGuest ? '歡迎！' : '歡迎回來！'}
-            </h2>
-            <p className="text-gray-600">
+            </h2>            <p className="text-gray-600">
               {welcomeUser.isGuest ? '訪客模式' : `@${welcomeUser.igName}`}
             </p>
           </div>
@@ -148,22 +146,6 @@ const LoginModal = ({ isOpen, onClose }) => {
               onChange={handleInputChange}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="請輸入您的 Instagram 用戶名"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-gray-700 mb-2" htmlFor="name">
-              姓名
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="請輸入您的姓名"
               required
             />
           </div>

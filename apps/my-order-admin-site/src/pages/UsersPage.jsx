@@ -316,11 +316,13 @@ const UsersPage = () => {
                   </svg>
                 </div>
               ) : (
-                <div>
-                  {/* User Info */}
+                <div>                  {/* User Info */}
                   <div className="mb-4">
                     <h4 className="text-md font-semibold text-gray-800">用戶資訊</h4>
                     <div className="mt-2">
+                      <p className="text-sm text-gray-600">
+                        <span className="font-medium">用戶 ID:</span> {selectedUser.id}
+                      </p>
                       <p className="text-sm text-gray-600">
                         <span className="font-medium">用戶名稱:</span> @{selectedUser.igName}
                       </p>
@@ -331,7 +333,7 @@ const UsersPage = () => {
                         <span className="font-medium">加入日期:</span> {selectedUser.joinDate}
                       </p>
                     </div>
-                  </div>                  {/* User Membership */}
+                  </div>{/* User Membership */}
                   <div className="mb-4">
                     <h4 className="text-md font-semibold text-gray-800">會員狀態</h4>
                     <div className="mt-2">
@@ -386,9 +388,8 @@ const UsersPage = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-              <h3 className="text-lg font-semibold text-gray-900">
-                編輯用戶資料 - @{editingUser.igName}
+            <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">              <h3 className="text-lg font-semibold text-gray-900">
+                編輯用戶資料 - ID: {editingUser.id} (@{editingUser.igName})
               </h3>
               <button
                 onClick={closeEditModal}
@@ -409,8 +410,8 @@ const UsersPage = () => {
                 <input
                   type="text"
                   value={editingUser.igName}
-                  readOnly
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed"
+                  onChange={(e) => handleEditChange('igName', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
                   placeholder="Instagram 用戶名"
                 />
               </div>
